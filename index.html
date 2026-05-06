@@ -392,31 +392,18 @@
                     </form>
                 </div>
                 <div class="chart-display" data-reveal>
-                    <div id="chart-container" class="glass-card placeholder-active" style="width: 100%; height: 500px; display: flex; justify-content: center; align-items: center; position: relative; padding: 40px; overflow: hidden; border: 1px solid rgba(197,160,89,0.3); box-shadow: inset 0 0 50px rgba(0,0,0,0.5);">
+                    <div id="chart-container" class="glass-card placeholder-active" style="width: 100%; height: 550px; display: flex; justify-content: center; align-items: center; position: relative; padding: 20px; overflow: visible; border: 1px solid rgba(197,160,89,0.2); box-shadow: inset 0 0 80px rgba(0,0,0,0.6); background: rgba(10, 10, 15, 0.4);">
                         <div id="placeholder-text" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
-                            <!-- Animated SVG Astrolabe Placeholder -->
-                            <svg class="placeholder-astrolabe" viewBox="0 0 200 200" width="160" height="160" style="opacity: 0.8; margin-bottom: 2rem;">
-                                <circle cx="100" cy="100" r="90" stroke="var(--gold)" stroke-width="1" fill="none" stroke-dasharray="8 4">
-                                    <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="30s" repeatCount="indefinite"/>
-                                </circle>
-                                <circle cx="100" cy="100" r="75" stroke="var(--gold-muted)" stroke-width="0.5" fill="none">
-                                    <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="20s" repeatCount="indefinite"/>
-                                </circle>
-                                <circle cx="100" cy="100" r="5" fill="var(--gold)">
-                                    <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" repeatCount="indefinite"/>
-                                </circle>
-                                <!-- Inner Star -->
-                                <path d="M100 20 L105 95 L180 100 L105 105 L100 180 L95 105 L20 100 L95 95 Z" fill="var(--gold-light)" opacity="0.1">
-                                    <animateTransform attributeName="transform" type="scale" values="0.9;1.1;0.9" dur="4s" repeatCount="indefinite" additive="sum"/>
-                                </path>
-                                <path d="M100 40 L103 97 L160 100 L103 103 L100 160 L97 103 L40 100 L97 97 Z" fill="var(--gold)" opacity="0.3" transform="rotate(45 100 100)">
-                                    <animateTransform attributeName="transform" type="rotate" from="45 100 100" to="405 100 100" dur="10s" repeatCount="indefinite" additive="sum"/>
-                                </path>
-                            </svg>
-                            <h3 class="serif" style="font-size: 1.6rem; color: var(--gold-light); margin-bottom: 0.5rem; text-shadow: 0 0 10px rgba(197,160,89,0.3);">Kozmik Yolculuğunuz Başlıyor</h3>
-                            <p style="font-size: 0.95rem; opacity: 0.7; max-width: 280px; line-height: 1.5;">Gezegenlerin doğum anınızdaki dizilimini görmek için sol taraftaki formu doldurun.</p>
+                            <div class="cosmic-loader">
+                                <div class="orbit orbit-1"></div>
+                                <div class="orbit orbit-2"></div>
+                                <div class="orbit orbit-3"></div>
+                                <div class="center-star">✦</div>
+                            </div>
+                            <h3 class="serif" style="font-size: 1.8rem; color: var(--gold-light); margin-top: 2rem; margin-bottom: 0.5rem; text-shadow: 0 0 15px rgba(197,160,89,0.4);">Kaderinizi Gökyüzünde Okuyun</h3>
+                            <p style="font-size: 1rem; opacity: 0.6; max-width: 320px; line-height: 1.6; font-style: italic;">Doğum anınızdaki gökyüzü haritasını oluşturmak için formu doldurun.</p>
                         </div>
-                        <div id="chart-svg-container" style="display: none; width: 100%; height: 100%;"></div>
+                        <div id="chart-svg-container" style="display: none; width: 100%; height: 100%; max-width: 500px; max-height: 500px;"></div>
                     </div>
                 </div>
             </div>

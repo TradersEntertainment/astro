@@ -434,49 +434,82 @@ function generateStory(name, date) {
 function generateChart(name, date, time) {
   const container = document.getElementById('chart-svg-container');
   container.innerHTML = '';
-  const w=500,h=500,cx=w/2,cy=h/2,r=200;
+  const w=500,h=500,cx=w/2,cy=h/2,r=180; // Reduced r to prevent cropping
   const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
   svg.setAttribute("viewBox",`0 0 ${w} ${h}`);
+  svg.setAttribute("id","chart-svg");
   
-  svg.append(mkCircle(cx,cy,r+35,"var(--gold)","none",2));
-  svg.append(mkCircle(cx,cy,r-60,"rgba(197,160,89,0.3)","none",1));
-  svg.append(mkCircle(cx,cy,5,"var(--gold)","var(--gold)",0));
+  // Variation Selector for text-mode symbols
+  const vs = "\uFE0E";
 
-  for (let i=0;i<12;i++) {
-    const a=i*30;
-    svg.append(mkLine(cx+Math.cos(a*Math.PI/180)*(r-60),cy+Math.sin(a*Math.PI/180)*(r-60),cx+Math.cos(a*Math.PI/180)*(r+35),cy+Math.sin(a*Math.PI/180)*(r+35),"rgba(197,160,89,0.4)"));
-    const ta=a+15,tx=cx+Math.cos(ta*Math.PI/180)*(r+15),ty=cy+Math.sin(ta*Math.PI/180)*(r+15);
-    const txt=mkText(tx,ty,zodiacSymbols[i],"var(--gold)","24px","middle");
-    txt.setAttribute("transform",`rotate(${ta+90},${tx},${ty})`);
-    svg.append(txt);
-    const hx=cx+Math.cos(ta*Math.PI/180)*(r-50),hy=cy+Math.sin(ta*Math.PI/180)*(r-50);
-    svg.append(mkText(hx,hy,(i+1).toString(),"rgba(255,255,255,0.2)","9px","middle"));
+  // Background Star Field
+  for(let i=0; i<80; i++) {
+    const sx = Math.random()*w, sy = Math.random()*h, sr = Math.random()*0.8;
+    svg.append(mkCircle(sx,sy,sr,"none","rgba(255,255,255,0.2)",0));
   }
 
-  const seed=(new Date(date).getTime()+(parseInt(time.split(':')[0])*3600000))||12345;
+  // Design elements
+  svg.append(mkCircle(cx,cy,r+45,"rgba(197,160,89,0.1)","none",1)); // Outer boundary
+  svg.append(mkCircle(cx,cy,r+20,"var(--gold)","none",2)); // Zodiac Ring
+  svg.append(mkCircle(cx,cy,r-50,"rgba(197,160,89,0.2)","none",1)); // Inner Ring
+  
+  // Sun Burst in center
+  const burst = document.createElementNS("http://www.w3.org/2000/svg","path");
+  burst.setAttribute("d",`M ${cx-10} ${cy} L ${cx+10} ${cy} M ${cx} ${cy-10} L ${cx} ${cy+10}`);
+  burst.setAttribute("stroke","var(--gold)"); burst.setAttribute("stroke-width","0.5"); svg.append(burst);
+  svg.append(mkCircle(cx,cy,3,"var(--gold)","var(--gold)",0));
+
+  // Draw 12 House Segments & Zodiac Symbols
+  for (let i=0;i<12;i++) {
+    const a = i*30 - 90; // Start from top
+    const aRad = a*Math.PI/180;
+    
+    // House lines
+    svg.append(mkLine(cx+Math.cos(aRad)*(r-50), cy+Math.sin(aRad)*(r-50), cx+Math.cos(aRad)*(r+20), cy+Math.sin(aRad)*(r+20), "rgba(197,160,89,0.3)"));
+    
+    // Degree Ticks
+    for(let d=0; d<30; d+=2) {
+      const da = (a + d) * Math.PI/180;
+      const tLen = d%10===0 ? 8 : 4;
+      svg.append(mkLine(cx+Math.cos(da)*(r+20), cy+Math.sin(da)*(r+20), cx+Math.cos(da)*(r+20+tLen), cy+Math.sin(da)*(r+20+tLen), "rgba(197,160,89,0.15)"));
+    }
+
+    // Zodiac Symbols (using VS to force text mode)
+    const ta = a + 15, tx = cx + Math.cos(ta*Math.PI/180)*(r+4), ty = cy + Math.sin(ta*Math.PI/180)*(r+4);
+    const txt = mkText(tx,ty,zodiacSymbols[i] + vs,"var(--gold)","22px","middle");
+    txt.setAttribute("transform",`rotate(${ta+90},${tx},${ty})`);
+    txt.style.fontWeight = "100";
+    svg.append(txt);
+  }
+
+  const seed = (new Date(date).getTime()+(parseInt(time.split(':')[0])*3600000))||12345;
   const planets = [];
   let pi=0;
-  for(const [,sym] of Object.entries(planetSymbols)){
-    const a=(seed*(pi+7))%360, pr=r-30;
-    const px=cx+Math.cos(a*Math.PI/180)*pr,py=cy+Math.sin(a*Math.PI/180)*pr;
-    planets.push({x:px,y:py,a});
-    const pt=mkText(px,py,sym,"var(--star-white)","22px","middle");
-    pt.style.filter="drop-shadow(0 0 8px var(--gold))";
+  for(const [pname,sym] of Object.entries(planetSymbols)){
+    const a = (seed*(pi+7))%360 - 90, pr = r - 25;
+    const aRad = a*Math.PI/180;
+    const px = cx + Math.cos(aRad)*pr, py = cy + Math.sin(aRad)*pr;
+    planets.push({name:pname, x:px, y:py, a:a+90});
+    
+    const pt = mkText(px,py,sym + vs,"var(--star-white)","20px","middle");
+    pt.style.filter = "drop-shadow(0 0 10px var(--gold))";
     svg.append(pt);
     pi++;
   }
   
+  // Elegant Aspects
   for(let i=0; i<planets.length; i++) {
     for(let j=i+1; j<planets.length; j++) {
       const diff = Math.abs(planets[i].a - planets[j].a);
-      if (Math.abs(diff - 120) < 15) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(100,150,255,0.4)"));
-      if (Math.abs(diff - 90) < 15) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(255,100,100,0.4)"));
+      // Trine (120) Blue, Square (90) Red, Opposition (180) Gold
+      if (Math.abs(diff - 120) < 10) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(100,150,255,0.2)"));
+      if (Math.abs(diff - 90) < 10) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(255,100,100,0.2)"));
+      if (Math.abs(diff - 180) < 10) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(197,160,89,0.2)"));
     }
   }
   container.append(svg);
 }
 
 function mkCircle(cx,cy,r,s,f,w){const e=document.createElementNS("http://www.w3.org/2000/svg","circle");e.setAttribute("cx",cx);e.setAttribute("cy",cy);e.setAttribute("r",r);e.setAttribute("stroke",s);e.setAttribute("fill",f);e.setAttribute("stroke-width",w);return e;}
-function mkLine(x1,y1,x2,y2,s){const e=document.createElementNS("http://www.w3.org/2000/svg","line");e.setAttribute("x1",x1);e.setAttribute("y1",y1);e.setAttribute("x2",x2);e.setAttribute("y2",y2);e.setAttribute("stroke",s);e.setAttribute("stroke-width","0.8");return e;}
-function mkText(x,y,c,col,sz,a){const e=document.createElementNS("http://www.w3.org/2000/svg","text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("fill",col);e.setAttribute("font-size",sz);e.setAttribute("text-anchor",a);e.setAttribute("alignment-baseline","middle");e.textContent=c;return e;}
-
+function mkLine(x1,y1,x2,y2,s){const e=document.createElementNS("http://www.w3.org/2000/svg","line");e.setAttribute("x1",x1);e.setAttribute("y1",y1);e.setAttribute("x2",x2);e.setAttribute("y2",y2);e.setAttribute("stroke",s);e.setAttribute("stroke-width","0.6");return e;}
+function mkText(x,y,c,col,sz,a){const e=document.createElementNS("http://www.w3.org/2000/svg","text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("fill",col);e.setAttribute("font-size",sz);e.setAttribute("text-anchor",a);e.setAttribute("alignment-baseline","middle");e.style.fontFamily="'Outfit', sans-serif";e.textContent=c;return e;}
