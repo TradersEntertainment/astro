@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const blogPanel = document.getElementById('blog-side-panel');
   const blogPanelClose = document.getElementById('blog-side-close');
-  setTimeout(() => blogPanel.classList.add('visible'), 4000);
+  // Removed automatic popup to improve mobile UX as per user request
+  // setTimeout(() => blogPanel.classList.add('visible'), 4000);
 
   // --- Blog Logic ---
   const blogPosts = {
