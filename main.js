@@ -336,13 +336,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
       planets.forEach((p, i) => {
           let lon = 0;
-          if (typeof Astronomy.EclipticLongitude === "function") {
-              lon = Astronomy.EclipticLongitude(p, astroTime);
-          } else {
-              // Fallback for older versions: Astronomy.Ecliptic returns {elon, elat}
-              const eq = Astronomy.Equator(p, astroTime, observer, true, true);
-              const ecl = Astronomy.Ecliptic(eq.vec);
-              lon = ecl.elon !== undefined ? ecl.elon : ecl.lon;
+          try {
+              // We need GEOCENTRIC (apparent) coordinates for a birth chart.
+              // Astronomy.GeoVector gives the vector from Earth to the body.
+              // Astronomy.Ecliptic converts that vector to ecliptic longitude/latitude.
+              const gv = Astronomy.GeoVector(p, astroTime, true);
+              const ecl = Astronomy.Ecliptic(gv);
+              lon = ecl.elon;
+          } catch (err) {
+              console.warn("Calculated fallback for " + p);
+              // Fallback to simpler method if GeoVector fails for some reason
+              if (p === 'Sun') {
+                  const s = Astronomy.SunPosition(astroTime);
+                  // SunPosition returns ecliptic coordinates directly in some versions, 
+                  // but let's be safe and use its vector if it's there.
+                  const secl = Astronomy.Ecliptic(s);
+                  lon = secl.elon;
+              } else if (p === 'Moon') {
+                  const m = Astronomy.EclipticGeoMoon(astroTime);
+                  lon = m.elon;
+              }
           }
 
           if (isNaN(lon) || lon === undefined) lon = 0; // Final safety net
