@@ -28,13 +28,20 @@
   --glass-border: rgba(157, 124, 69, 0.3);
 }
 [data-theme="cream"] .stars {
-  background-image: radial-gradient(1px 1px at 10% 10%,#9d7c45,transparent),
-                    radial-gradient(1px 1px at 20% 50%,#9d7c45,transparent),
-                    radial-gradient(2px 2px at 40% 20%,#9d7c45,transparent),
-                    radial-gradient(1px 1px at 60% 80%,#9d7c45,transparent),
-                    radial-gradient(2px 2px at 80% 40%,#9d7c45,transparent),
-                    radial-gradient(1px 1px at 90% 10%,#9d7c45,transparent);
-  opacity: 0.15;
+  background-image: radial-gradient(2px 2px at 10% 10%,rgba(120,90,40,0.6),transparent),
+                    radial-gradient(2px 2px at 20% 50%,rgba(120,90,40,0.5),transparent),
+                    radial-gradient(3px 3px at 40% 20%,rgba(120,90,40,0.6),transparent),
+                    radial-gradient(2px 2px at 60% 80%,rgba(120,90,40,0.5),transparent),
+                    radial-gradient(3px 3px at 80% 40%,rgba(120,90,40,0.6),transparent),
+                    radial-gradient(2px 2px at 90% 10%,rgba(120,90,40,0.5),transparent),
+                    radial-gradient(2px 2px at 15% 75%,rgba(120,90,40,0.4),transparent),
+                    radial-gradient(3px 3px at 55% 35%,rgba(120,90,40,0.5),transparent),
+                    radial-gradient(2px 2px at 75% 15%,rgba(120,90,40,0.4),transparent),
+                    radial-gradient(2px 2px at 35% 65%,rgba(120,90,40,0.5),transparent),
+                    radial-gradient(3px 3px at 95% 55%,rgba(120,90,40,0.4),transparent),
+                    radial-gradient(2px 2px at 5% 45%,rgba(120,90,40,0.5),transparent);
+  opacity: 1;
+  background-size: 200px 200px;
 }
 [data-theme="cream"] body { color: #2c2418; }
 [data-theme="cream"] .loader { background: #faf8f4; }
@@ -128,12 +135,12 @@ h1, h2, h3, .serif {
 
 /* Canvas */
 #constellation-canvas {
-  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
 }
 
 /* Background */
 .universe-bg {
-  position: fixed; inset: 0; z-index: -1;
+  position: fixed; inset: 0; z-index: -2;
   background: radial-gradient(circle at 50% 50%, var(--deep-nebula) 0%, var(--obsidian) 100%);
   overflow: hidden;
 }
