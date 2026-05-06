@@ -1,12 +1,24 @@
-// main.js
-const zodiacSigns = ["Koç","Boğa","İkizler","Yengeç","Aslan","Başak","Terazi","Akrep","Yay","Oğlak","Kova","Balık"];
+const zodiacSymbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
 const planetSymbols = {Güneş:"☉",Ay:"☽",Merkür:"☿",Venüs:"♀",Mars:"♂",Jüpiter:"♃",Satürn:"♄",Uranüs:"♅",Neptün:"♆",Plüton:"♇"};
 
 document.addEventListener('DOMContentLoaded', () => {
   // --- Loader ---
   setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2200);
 
+  // --- Dynamic Tab Title ---
+  const originalTitle = document.title;
+  window.addEventListener('blur', () => {
+    const phases = ["🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘"];
+    const phaseIdx = Math.floor((((new Date().getTime()/1000 - 947178840) / 86400) % 29.53) / 29.53 * 8) % 8;
+    document.title = `Yıldızlar Sizi Bekliyor ${phases[phaseIdx]}...`;
+  });
+  window.addEventListener('focus', () => {
+    document.title = originalTitle;
+  });
+
   // --- Blog Side Panel ---
+
+
   const blogPanel = document.getElementById('blog-side-panel');
   const blogPanelClose = document.getElementById('blog-side-close');
   setTimeout(() => blogPanel.classList.add('visible'), 4000);
@@ -408,7 +420,7 @@ function generateStory(name, date) {
     "Kova":"Geleceğin fısıltılarını bugünden duyan bir vizyonersin.",
     "Balık":"Evrensel denizin rüyacısı... Şifacı ve sanatçı ruhunla bu dünyada bir rüya görüyorsun."
   };
-  content.innerHTML = `
+  document.getElementById('story-content').innerHTML = `
     <h3 class="serif" style="color:var(--gold);font-size:2rem;margin-bottom:2rem;">Sevgili ${name}, Yıldızlar Senin İçin Konuşuyor...</h3>
     <p class="serif" style="font-size:1.3rem;font-style:italic;line-height:1.8;opacity:0.9;margin-bottom:3rem;">
       "${sign} burcunun kadim enerjisiyle doğduğun o kutsal anda gökyüzü sessizliğe büründü. ${stories[sign] || ''} Ancak bu hikaye sadece bir başlangıç. Haritandaki karmaşık açıların gizlediği daha derin sırlar var."
@@ -419,51 +431,52 @@ function generateStory(name, date) {
     </div>`;
 }
 
-// === Chart Generator ===
 function generateChart(name, date, time) {
   const container = document.getElementById('chart-svg-container');
   container.innerHTML = '';
   const w=500,h=500,cx=w/2,cy=h/2,r=200;
   const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
-  svg.setAttribute("viewBox",`0 0 ${w} ${h}`); svg.setAttribute("id","chart-svg");
-
-  // Defs
-  const defs = document.createElementNS("http://www.w3.org/2000/svg","defs");
-  const grad = document.createElementNS("http://www.w3.org/2000/svg","radialGradient");
-  grad.setAttribute("id","glow");
-  const s1 = document.createElementNS("http://www.w3.org/2000/svg","stop");
-  s1.setAttribute("offset","70%"); s1.setAttribute("stop-color","transparent");
-  const s2 = document.createElementNS("http://www.w3.org/2000/svg","stop");
-  s2.setAttribute("offset","100%"); s2.setAttribute("stop-color","rgba(197,160,89,0.1)");
-  grad.append(s1,s2); defs.append(grad); svg.append(defs);
-  svg.append(mkCircle(cx,cy,r+40,"none","url(#glow)",0));
+  svg.setAttribute("viewBox",`0 0 ${w} ${h}`);
+  
+  svg.append(mkCircle(cx,cy,r+35,"var(--gold)","none",2));
+  svg.append(mkCircle(cx,cy,r-60,"rgba(197,160,89,0.3)","none",1));
+  svg.append(mkCircle(cx,cy,5,"var(--gold)","var(--gold)",0));
 
   for (let i=0;i<12;i++) {
     const a=i*30;
-    svg.append(mkLine(cx+Math.cos(a*Math.PI/180)*(r-60),cy+Math.sin(a*Math.PI/180)*(r-60),cx+Math.cos(a*Math.PI/180)*(r+30),cy+Math.sin(a*Math.PI/180)*(r+30),"rgba(197,160,89,0.4)"));
-    for(let d=1;d<30;d+=5){const da=a+d;svg.append(mkLine(cx+Math.cos(da*Math.PI/180)*(r+20),cy+Math.sin(da*Math.PI/180)*(r+20),cx+Math.cos(da*Math.PI/180)*(r+25),cy+Math.sin(da*Math.PI/180)*(r+25),"rgba(197,160,89,0.15)"));}
-    const ta=a+15,tx=cx+Math.cos(ta*Math.PI/180)*(r+5),ty=cy+Math.sin(ta*Math.PI/180)*(r+5);
-    const txt=mkText(tx,ty,zodiacSigns[i],"var(--gold)","9px","middle");
-    txt.setAttribute("transform",`rotate(${ta+90},${tx},${ty})`); svg.append(txt);
+    svg.append(mkLine(cx+Math.cos(a*Math.PI/180)*(r-60),cy+Math.sin(a*Math.PI/180)*(r-60),cx+Math.cos(a*Math.PI/180)*(r+35),cy+Math.sin(a*Math.PI/180)*(r+35),"rgba(197,160,89,0.4)"));
+    const ta=a+15,tx=cx+Math.cos(ta*Math.PI/180)*(r+15),ty=cy+Math.sin(ta*Math.PI/180)*(r+15);
+    const txt=mkText(tx,ty,zodiacSymbols[i],"var(--gold)","24px","middle");
+    txt.setAttribute("transform",`rotate(${ta+90},${tx},${ty})`);
+    svg.append(txt);
     const hx=cx+Math.cos(ta*Math.PI/180)*(r-50),hy=cy+Math.sin(ta*Math.PI/180)*(r-50);
-    svg.append(mkText(hx,hy,(i+1).toString(),"rgba(255,255,255,0.25)","8px","middle"));
+    svg.append(mkText(hx,hy,(i+1).toString(),"rgba(255,255,255,0.2)","9px","middle"));
   }
-  svg.append(mkCircle(cx,cy,r+30,"var(--gold)","none",1.5));
-  svg.append(mkCircle(cx,cy,r-60,"rgba(197,160,89,0.3)","none",1));
 
   const seed=(new Date(date).getTime()+(parseInt(time.split(':')[0])*3600000))||12345;
+  const planets = [];
   let pi=0;
   for(const [,sym] of Object.entries(planetSymbols)){
-    const a=(seed*(pi+7))%360,pr=r-30;
+    const a=(seed*(pi+7))%360, pr=r-30;
     const px=cx+Math.cos(a*Math.PI/180)*pr,py=cy+Math.sin(a*Math.PI/180)*pr;
-    const pt=mkText(px,py,sym,"var(--star-white)","18px","middle");
-    pt.style.filter="drop-shadow(0 0 5px var(--gold))"; svg.append(pt);
-    svg.append(mkLine(cx,cy,px,py,"rgba(255,255,255,0.04)"));
+    planets.push({x:px,y:py,a});
+    const pt=mkText(px,py,sym,"var(--star-white)","22px","middle");
+    pt.style.filter="drop-shadow(0 0 8px var(--gold))";
+    svg.append(pt);
     pi++;
+  }
+  
+  for(let i=0; i<planets.length; i++) {
+    for(let j=i+1; j<planets.length; j++) {
+      const diff = Math.abs(planets[i].a - planets[j].a);
+      if (Math.abs(diff - 120) < 15) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(100,150,255,0.4)"));
+      if (Math.abs(diff - 90) < 15) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(255,100,100,0.4)"));
+    }
   }
   container.append(svg);
 }
 
 function mkCircle(cx,cy,r,s,f,w){const e=document.createElementNS("http://www.w3.org/2000/svg","circle");e.setAttribute("cx",cx);e.setAttribute("cy",cy);e.setAttribute("r",r);e.setAttribute("stroke",s);e.setAttribute("fill",f);e.setAttribute("stroke-width",w);return e;}
-function mkLine(x1,y1,x2,y2,s){const e=document.createElementNS("http://www.w3.org/2000/svg","line");e.setAttribute("x1",x1);e.setAttribute("y1",y1);e.setAttribute("x2",x2);e.setAttribute("y2",y2);e.setAttribute("stroke",s);e.setAttribute("stroke-width","0.5");return e;}
-function mkText(x,y,c,col,sz,a){const e=document.createElementNS("http://www.w3.org/2000/svg","text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("fill",col);e.setAttribute("font-size",sz);e.setAttribute("text-anchor",a);e.setAttribute("alignment-baseline","middle");e.setAttribute("font-family","serif");e.textContent=c;return e;}
+function mkLine(x1,y1,x2,y2,s){const e=document.createElementNS("http://www.w3.org/2000/svg","line");e.setAttribute("x1",x1);e.setAttribute("y1",y1);e.setAttribute("x2",x2);e.setAttribute("y2",y2);e.setAttribute("stroke",s);e.setAttribute("stroke-width","0.8");return e;}
+function mkText(x,y,c,col,sz,a){const e=document.createElementNS("http://www.w3.org/2000/svg","text");e.setAttribute("x",x);e.setAttribute("y",y);e.setAttribute("fill",col);e.setAttribute("font-size",sz);e.setAttribute("text-anchor",a);e.setAttribute("alignment-baseline","middle");e.textContent=c;return e;}
+
