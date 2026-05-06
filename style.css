@@ -686,6 +686,7 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
   nav { display: none; }
 }
 
+
 /* Analysis Card Enhancements */
 @media (max-width: 992px) {
     .story-grid-layout {
@@ -712,3 +713,79 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
     background: rgba(197, 160, 89, 0.1) !important;
     box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
 }
+
+/* Persistent Side Panel for Desktop */
+@media (min-width: 1025px) {
+  .blog-side-panel {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    width: 380px !important;
+    top: 0 !important;
+    border-right: 1px solid var(--glass-border) !important;
+    background: rgba(10, 10, 18, 0.8) !important;
+  }
+  .blog-side-header {
+    padding-top: 5rem !important;
+  }
+  .blog-panel-trigger {
+    display: none !important;
+  }
+  .blog-side-close {
+    display: none !important;
+  }
+  
+  /* Shift content to the right */
+  body {
+    margin-left: 380px !important;
+  }
+  header {
+    left: 380px !important;
+    width: calc(100% - 380px) !important;
+    padding: 1.2rem 5% !important;
+  }
+  section {
+    padding: 120px 5% 80px !important;
+  }
+  #progress-bar {
+    left: 380px !important;
+    width: calc(100% - 380px) !important;
+  }
+}
+
+/* Mobile Blog Toggle Fixes */
+@media (max-width: 768px) {
+  .blog-side-panel {
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: 2001; /* Above mobile header */
+  }
+  .blog-side-header {
+    padding-top: 5rem;
+  }
+  .blog-side-item {
+    display: block;
+  }
+  .blog-panel-trigger {
+    display: flex !important;
+    top: auto;
+    bottom: 30px;
+    left: 20px;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    justify-content: center;
+    border: 1px solid var(--gold);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  }
+  .blog-panel-trigger .trigger-text {
+    display: none;
+  }
+  .blog-panel-trigger .trigger-icon {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+}
+
