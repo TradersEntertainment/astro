@@ -714,43 +714,29 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
     box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
 }
 
-/* Persistent Side Panel for Desktop */
+/* Desktop Blog Panel behavior: Starts open but hides on scroll */
 @media (min-width: 1025px) {
   .blog-side-panel {
-    transform: translateX(0) !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    width: 380px !important;
-    top: 0 !important;
-    border-right: 1px solid var(--glass-border) !important;
-    background: rgba(10, 10, 18, 0.8) !important;
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
   }
-  .blog-side-header {
-    padding-top: 5rem !important;
+  /* When scrolled, it hides */
+  .blog-side-panel.scrolled {
+    transform: translateX(-110%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
   .blog-panel-trigger {
-    display: none !important;
+    display: flex !important;
+    top: 150px;
+    left: 0;
   }
-  .blog-side-close {
-    display: none !important;
-  }
-  
-  /* Shift content to the right */
-  body {
-    margin-left: 380px !important;
-  }
-  header {
-    left: 380px !important;
-    width: calc(100% - 380px) !important;
-    padding: 1.2rem 5% !important;
-  }
-  section {
-    padding: 120px 5% 80px !important;
-  }
-  #progress-bar {
-    left: 380px !important;
-    width: calc(100% - 380px) !important;
-  }
+  /* No margin shift for persistent sidebar anymore */
+  body { margin-left: 0 !important; }
+  header { left: 0 !important; width: 100% !important; padding: 1.2rem 10% !important; }
+  section { padding: 120px 10% 80px !important; }
+  #progress-bar { left: 0 !important; width: 0; }
 }
 
 /* Mobile Blog Toggle Fixes */
@@ -759,7 +745,7 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
     width: 100%;
     top: 0;
     bottom: 0;
-    z-index: 2001; /* Above mobile header */
+    z-index: 2001; 
   }
   .blog-side-header {
     padding-top: 5rem;
@@ -788,4 +774,5 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
     font-size: 1.5rem;
   }
 }
+
 
