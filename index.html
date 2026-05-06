@@ -32,6 +32,38 @@
         <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor"><path d="M16.004 0C7.168 0 0 7.168 0 16.004c0 2.82.736 5.584 2.136 8.016L0 32l8.2-2.1A15.94 15.94 0 0 0 16.004 32C24.84 32 32 24.84 32 16.004 32 7.168 24.84 0 16.004 0zm0 29.332a13.28 13.28 0 0 1-7.1-2.048l-.508-.304-5.268 1.38 1.408-5.14-.332-.532A13.26 13.26 0 0 1 2.668 16C2.668 8.636 8.636 2.668 16 2.668S29.332 8.636 29.332 16 23.368 29.332 16.004 29.332zm7.296-9.944c-.4-.2-2.368-1.168-2.736-1.3-.368-.136-.636-.2-.904.2-.268.4-1.036 1.3-1.268 1.568-.236.268-.468.3-.868.1-.4-.2-1.688-.624-3.216-1.988-1.188-1.06-1.988-2.372-2.22-2.772-.236-.4-.024-.616.176-.816.18-.18.4-.468.6-.7.2-.236.268-.4.4-.668.136-.268.068-.5-.032-.7-.1-.2-.904-2.176-1.236-2.98-.328-.784-.66-.676-.904-.688-.236-.012-.504-.016-.772-.016s-.7.1-1.068.5c-.368.4-1.4 1.368-1.4 3.34 0 1.972 1.432 3.876 1.632 4.144.2.268 2.82 4.304 6.832 6.032.956.412 1.7.66 2.28.844.96.304 1.832.26 2.524.16.768-.116 2.368-.968 2.704-1.904.336-.936.336-1.74.236-1.904-.1-.168-.368-.268-.768-.468z"/></svg>
     </a>
 
+    <!-- Theme Palette Picker -->
+    <div class="theme-picker" id="theme-picker">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Renk Paleti">
+            <span>🎨</span>
+        </button>
+        <div class="theme-panel" id="theme-panel">
+            <p class="theme-panel-title">Renk Teması Seçin</p>
+            <div class="theme-options">
+                <button class="theme-swatch" data-theme="obsidian" title="Obsidyen & Altın">
+                    <span class="swatch-preview" style="background: linear-gradient(135deg, #0a0a12, #c5a059);"></span>
+                    <span class="swatch-name">Obsidyen</span>
+                </button>
+                <button class="theme-swatch" data-theme="cream" title="Krem & Altın">
+                    <span class="swatch-preview" style="background: linear-gradient(135deg, #faf8f4, #b8945a);"></span>
+                    <span class="swatch-name">Krem</span>
+                </button>
+                <button class="theme-swatch" data-theme="midnight" title="Gece Mavisi & Gümüş">
+                    <span class="swatch-preview" style="background: linear-gradient(135deg, #0d1b2a, #a8b2d1);"></span>
+                    <span class="swatch-name">Gece Mavisi</span>
+                </button>
+                <button class="theme-swatch" data-theme="forest" title="Orman & Zümrüt">
+                    <span class="swatch-preview" style="background: linear-gradient(135deg, #0b1a0b, #50c878);"></span>
+                    <span class="swatch-name">Orman</span>
+                </button>
+                <button class="theme-swatch" data-theme="rose" title="Gül Kurusu & Pembe">
+                    <span class="swatch-preview" style="background: linear-gradient(135deg, #1a0a10, #c97b8b);"></span>
+                    <span class="swatch-name">Gül Kurusu</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Canvas Background -->
     <canvas id="constellation-canvas"></canvas>
     <div class="universe-bg">

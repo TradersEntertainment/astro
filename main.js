@@ -102,6 +102,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const statsEl = document.getElementById('stats');
   if (statsEl) counterObs.observe(statsEl);
 
+  // --- Theme Picker ---
+  const themeToggle = document.getElementById('theme-toggle');
+  const themePanel = document.getElementById('theme-panel');
+  const swatches = document.querySelectorAll('.theme-swatch');
+
+  themeToggle.addEventListener('click', () => themePanel.classList.toggle('open'));
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.theme-picker')) themePanel.classList.remove('open');
+  });
+
+  // Set default active
+  swatches[0].classList.add('active');
+
+  swatches.forEach(s => {
+    s.addEventListener('click', () => {
+      const theme = s.dataset.theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      swatches.forEach(x => x.classList.remove('active'));
+      s.classList.add('active');
+      // Smooth transition flash
+      document.body.style.transition = 'background-color 0.6s ease, color 0.6s ease';
+      setTimeout(() => document.body.style.transition = '', 700);
+    });
+  });
+
   // --- FAQ ---
   document.querySelectorAll('.faq-question').forEach(q => {
     q.addEventListener('click', () => q.parentElement.classList.toggle('active'));
