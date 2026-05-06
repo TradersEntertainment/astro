@@ -300,43 +300,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let elementChartInstance = null;
 
-  form.addEventListener('submit', async e => {
+  // --- Procedural Astrology Engine ---
+  function generateProceduralData(name, date, time, location) {
+      // Create a deterministic seed from inputs
+      const seedString = `${name.toLowerCase()}-${date}-${time}-${location.toLowerCase()}`;
+      let seed = 0;
+      for (let i = 0; i < seedString.length; i++) {
+          seed = ((seed << 5) - seed) + seedString.charCodeAt(i);
+          seed |= 0; 
+      }
+      const random = () => {
+          const x = Math.sin(seed++) * 10000;
+          return x - Math.floor(x);
+      };
+
+      const signs = ["Koç", "Boğa", "İkizler", "Yengeç", "Aslan", "Başak", "Terazi", "Akrep", "Yay", "Oğlak", "Kova", "Balık"];
+      
+      const sunSign = getZodiacSign(date); // Real Sun sign
+      const moonSign = signs[Math.floor(random() * 12)]; // Pseudo Moon
+      const ascSign = signs[Math.floor(random() * 12)]; // Pseudo Ascendant
+
+      // Elements
+      let fire = Math.floor(random() * 40) + 10;
+      let earth = Math.floor(random() * 40) + 10;
+      let air = Math.floor(random() * 40) + 10;
+      let water = 100 - (fire + earth + air);
+      if (water < 0) { water = 15; earth -= 15; } // Safety
+      
+      const elementsObj = { Fire: fire, Earth: earth, Air: air, Water: water };
+      const dominantElement = Object.keys(elementsObj).reduce((a, b) => elementsObj[a] > elementsObj[b] ? a : b);
+
+      // Planets Degrees
+      const planetsData = [];
+      const pNames = ["Güneş", "Ay", "Merkür", "Venüs", "Mars", "Jüpiter", "Satürn"];
+      pNames.forEach(p => {
+          planetsData.push({ name: p, degree: Math.floor(random() * 360) });
+      });
+
+      // Procedural Text Generation (Mock AI)
+      const intros = [
+          `Haritanız, ${dominantElement === 'Fire' ? 'ateşin dönüştürücü gücünü' : dominantElement === 'Earth' ? 'toprağın sağlam ve kalıcı doğasını' : dominantElement === 'Air' ? 'havanın zihinsel ve vizyoner enerjisini' : 'suyun derin sezgisel akışını'} vurgulayan eşsiz bir dizilime sahip.`,
+          `Gökyüzü siz doğduğunuz an, özellikle ${dominantElement === 'Fire' ? 'vizyoner' : dominantElement === 'Earth' ? 'analitik' : dominantElement === 'Air' ? 'iletişim odaklı' : 'duygusal zeka merkezli'} bir potansiyeli aktive etmiş.`,
+      ];
+      
+      const bodies = [
+          `Güneş'in ${sunSign} burcundaki yerleşimi temel karakterinizi şekillendirirken, Yükselen ${ascSign} dış dünyaya sunduğunuz maskeyi ve ilk intibanızı belirliyor. Ay'ın ${moonSign} burcunda olması ise içsel dünyanızda, duygusal reflekslerinizde bambaşka bir derinlik yaratıyor.`,
+          `${sunSign} enerjisiyle varoluşunuzu kanıtlarken, Yükselen ${ascSign} sizin hayata açılan kapınız. Bilinçaltınızı yöneten Ay ise ${moonSign} burcunda, rasyonel kararlarınızın ardındaki gerçek motivasyonu fısıldıyor.`
+      ];
+
+      const conclusions = [
+          `Kariyer ve finansal konularda haritanız, stratejik düşünmeyi ve uzun vadeli planlamayı ödüllendiriyor. Mevcut gökyüzü transitleri, özellikle yakın çevrenizle olan iletişiminizde sınırlarınızı yeniden çizmenizi tavsiye ediyor.`,
+          `Potansiyelinizin zirvesine ulaşmak için analitik yeteneklerinizle sezgilerinizi dengelemelisiniz. Yıldızlar, önümüzdeki dönemde finansal riskler almaktan ziyade, elinizdeki değerleri koruyup büyütmeye odaklanmanızı öneriyor.`
+      ];
+
+      const analysisText = `${intros[Math.floor(random() * intros.length)]}\n\n${bodies[Math.floor(random() * bodies.length)]}\n\n${conclusions[Math.floor(random() * conclusions.length)]}`;
+
+      return {
+          summary: { sun: sunSign, moon: moonSign, ascendant: ascSign, dominant: dominantElement },
+          elements: elementsObj,
+          planets: planetsData,
+          analysis: analysisText
+      };
+  }
+
+  form.addEventListener('submit', e => {
     e.preventDefault();
     const name = document.getElementById('name').value;
-    const date = document.getElementById('date').value; // YYYY-MM-DD
-    const time = document.getElementById('time').value; // HH:MM
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
     const location = document.getElementById('location').value;
 
     const btn = document.getElementById('submit-btn');
-    btn.innerHTML = '<span>Kozmik Veriler İşleniyor...</span>';
+    btn.innerHTML = '<span>Kozmik Algoritma Çalışıyor...</span>';
     btn.disabled = true;
 
-    try {
-        const [year, month, day] = date.split('-');
-        const [hour, minute] = time.split(':');
-        const locParts = location.split(',');
-        const city = locParts[0].trim();
-        const nation = locParts.length > 1 ? locParts[1].trim() : '';
-
-        const payload = {
-            name: name,
-            year: parseInt(year),
-            month: parseInt(month),
-            day: parseInt(day),
-            hour: parseInt(hour),
-            minute: parseInt(minute),
-            city: city,
-            nation: nation || city // fallback
-        };
-
-        const response = await fetch('http://localhost:8000/api/analyze', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) throw new Error('API Hatası');
-        const data = await response.json();
+    // Simulate network delay for effect
+    setTimeout(() => {
+        const data = generateProceduralData(name, date, time, location);
 
         // 1. Update UI Cards
         document.getElementById('val-sun').textContent = data.summary.sun;
@@ -353,12 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 labels: ['Ateş', 'Toprak', 'Hava', 'Su'],
                 datasets: [{
                     label: 'Element Dağılımı',
-                    data: [
-                        data.elements.Fire || 0,
-                        data.elements.Earth || 0,
-                        data.elements.Air || 0,
-                        data.elements.Water || 0
-                    ],
+                    data: [data.elements.Fire, data.elements.Earth, data.elements.Air, data.elements.Water],
                     backgroundColor: 'rgba(197, 160, 89, 0.2)',
                     borderColor: 'rgba(197, 160, 89, 1)',
                     pointBackgroundColor: 'var(--star-white)',
@@ -382,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 3. Render Custom SVG Chart using real data
+        // 3. Render Custom SVG Chart
         generateChartWithRealData(name, data.planets);
 
         placeholder.style.display = 'none';
@@ -393,13 +428,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => { sd.classList.add('revealed'); }, 50);
         setTimeout(() => { svgContainer.style.transition = 'opacity 1s ease'; svgContainer.style.opacity = '1'; }, 100);
 
-    } catch (error) {
-        console.error(error);
-        alert('Kozmik veriler alınırken bir hata oluştu. Lütfen bilgilerinizi (Örn Şehir: Istanbul, Turkey) kontrol edin ve tekrar deneyin.');
-    } finally {
         btn.innerHTML = '<span>Haritayı Çıkar</span>';
         btn.disabled = false;
-    }
+    }, 1200);
   });
 
   // --- Constellation Canvas ---
