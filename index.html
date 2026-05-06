@@ -408,12 +408,50 @@
                 </div>
             </div>
             <!-- Cosmic Story Area -->
-            <div id="story-display" class="glass-card story-card" style="display: none;" data-reveal>
-                <div id="story-content"></div>
+            <div id="story-display" class="glass-card story-card" style="display: none; padding: 3rem;" data-reveal>
+                <div id="story-content">
+                    <h3 id="story-title" class="serif" style="color:var(--gold);font-size:2rem;margin-bottom:2rem;text-align:center;">Kozmik Şifreniz Çözülüyor...</h3>
+                    
+                    <!-- Summary Cards -->
+                    <div class="summary-cards" style="display:flex; justify-content:center; gap:2rem; margin-bottom:3rem; flex-wrap:wrap;">
+                        <div class="stat-card" style="min-width: 150px; text-align: center;">
+                            <div class="stat-number serif" id="val-sun" style="font-size: 1.5rem; color: var(--gold-light);">...</div>
+                            <div class="stat-label">Güneş Burcu</div>
+                        </div>
+                        <div class="stat-card" style="min-width: 150px; text-align: center;">
+                            <div class="stat-number serif" id="val-moon" style="font-size: 1.5rem; color: var(--gold-light);">...</div>
+                            <div class="stat-label">Ay Burcu</div>
+                        </div>
+                        <div class="stat-card" style="min-width: 150px; text-align: center;">
+                            <div class="stat-number serif" id="val-asc" style="font-size: 1.5rem; color: var(--gold-light);">...</div>
+                            <div class="stat-label">Yükselen</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Vis & AI Analysis -->
+                    <div style="display:grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+                        <!-- Radar Chart -->
+                        <div class="element-chart-container" style="background: rgba(0,0,0,0.3); border-radius: 15px; padding: 1.5rem; border: 1px solid var(--glass-border);">
+                            <h4 class="serif" style="color:var(--gold); text-align:center; margin-bottom: 1rem;">Element Dengesi</h4>
+                            <canvas id="elementChart"></canvas>
+                        </div>
+                        
+                        <!-- AI Text -->
+                        <div class="ai-analysis-container" style="background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 15px; border-left: 3px solid var(--gold);">
+                            <p id="ai-text" class="serif" style="font-size:1.1rem; line-height:1.8; opacity:0.9; white-space: pre-line;">Yıldızlar fısıldıyor... Yapay zeka analiziniz hazırlanıyor.</p>
+                            
+                            <div style="border-top:1px solid var(--glass-border); padding-top:2rem; margin-top:2rem;">
+                                <p style="margin-bottom:1.5rem;opacity:0.7;">Analizi sevdin mi? Astrolog Özlem ile birebir seansta daha fazlasını keşfet.</p>
+                                <a href="https://wa.me/905000000000" class="cta-button" target="_blank" style="font-size: 0.9rem; padding: 0.8rem 1.5rem;"><span>Danışmanlık Al</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Testimonials Section -->
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <section id="testimonials" style="overflow: hidden;">
             <div class="section-title" data-reveal>
                 <p>Kozmik Yankılar</p>

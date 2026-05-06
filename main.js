@@ -298,29 +298,108 @@ document.addEventListener('DOMContentLoaded', () => {
   const placeholder = document.getElementById('placeholder-text');
   const svgContainer = document.getElementById('chart-svg-container');
 
-  form.addEventListener('submit', e => {
+  let elementChartInstance = null;
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const name = document.getElementById('name').value;
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
+    const date = document.getElementById('date').value; // YYYY-MM-DD
+    const time = document.getElementById('time').value; // HH:MM
+    const location = document.getElementById('location').value;
 
     const btn = document.getElementById('submit-btn');
-    btn.innerHTML = '<span>Yıldızlar Hesaplanıyor...</span>';
+    btn.innerHTML = '<span>Kozmik Veriler İşleniyor...</span>';
     btn.disabled = true;
 
-    setTimeout(() => {
-      generateChart(name, date, time);
-      generateStory(name, date);
-      placeholder.style.display = 'none';
-      svgContainer.style.display = 'block';
-      svgContainer.style.opacity = '0';
-      const sd = document.getElementById('story-display');
-      sd.style.display = 'block';
-      setTimeout(() => { sd.classList.add('revealed'); }, 50);
-      setTimeout(() => { svgContainer.style.transition = 'opacity 1s ease'; svgContainer.style.opacity = '1'; }, 100);
-      btn.innerHTML = '<span>Haritayı Çıkar</span>';
-      btn.disabled = false;
-    }, 1500);
+    try {
+        const [year, month, day] = date.split('-');
+        const [hour, minute] = time.split(':');
+        const locParts = location.split(',');
+        const city = locParts[0].trim();
+        const nation = locParts.length > 1 ? locParts[1].trim() : '';
+
+        const payload = {
+            name: name,
+            year: parseInt(year),
+            month: parseInt(month),
+            day: parseInt(day),
+            hour: parseInt(hour),
+            minute: parseInt(minute),
+            city: city,
+            nation: nation || city // fallback
+        };
+
+        const response = await fetch('http://localhost:8000/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error('API Hatası');
+        const data = await response.json();
+
+        // 1. Update UI Cards
+        document.getElementById('val-sun').textContent = data.summary.sun;
+        document.getElementById('val-moon').textContent = data.summary.moon;
+        document.getElementById('val-asc').textContent = data.summary.ascendant;
+        document.getElementById('ai-text').textContent = data.analysis;
+
+        // 2. Render Radar Chart
+        const ctx = document.getElementById('elementChart').getContext('2d');
+        if (elementChartInstance) elementChartInstance.destroy();
+        elementChartInstance = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Ateş', 'Toprak', 'Hava', 'Su'],
+                datasets: [{
+                    label: 'Element Dağılımı',
+                    data: [
+                        data.elements.Fire || 0,
+                        data.elements.Earth || 0,
+                        data.elements.Air || 0,
+                        data.elements.Water || 0
+                    ],
+                    backgroundColor: 'rgba(197, 160, 89, 0.2)',
+                    borderColor: 'rgba(197, 160, 89, 1)',
+                    pointBackgroundColor: 'var(--star-white)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'var(--gold)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: { color: 'var(--gold)', font: { family: 'serif', size: 14 } },
+                        ticks: { display: false, max: 100, min: 0 }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // 3. Render Custom SVG Chart using real data
+        generateChartWithRealData(name, data.planets);
+
+        placeholder.style.display = 'none';
+        svgContainer.style.display = 'block';
+        svgContainer.style.opacity = '0';
+        const sd = document.getElementById('story-display');
+        sd.style.display = 'block';
+        setTimeout(() => { sd.classList.add('revealed'); }, 50);
+        setTimeout(() => { svgContainer.style.transition = 'opacity 1s ease'; svgContainer.style.opacity = '1'; }, 100);
+
+    } catch (error) {
+        console.error(error);
+        alert('Kozmik veriler alınırken bir hata oluştu. Lütfen bilgilerinizi (Örn Şehir: Istanbul, Turkey) kontrol edin ve tekrar deneyin.');
+    } finally {
+        btn.innerHTML = '<span>Haritayı Çıkar</span>';
+        btn.disabled = false;
+    }
   });
 
   // --- Constellation Canvas ---
@@ -431,15 +510,14 @@ function generateStory(name, date) {
     </div>`;
 }
 
-function generateChart(name, date, time) {
+function generateChartWithRealData(name, planetsData) {
   const container = document.getElementById('chart-svg-container');
   container.innerHTML = '';
-  const w=500,h=500,cx=w/2,cy=h/2,r=180; // Reduced r to prevent cropping
+  const w=500,h=500,cx=w/2,cy=h/2,r=180;
   const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
   svg.setAttribute("viewBox",`0 0 ${w} ${h}`);
   svg.setAttribute("id","chart-svg");
   
-  // Variation Selector for text-mode symbols
   const vs = "\uFE0E";
 
   // Background Star Field
@@ -461,7 +539,7 @@ function generateChart(name, date, time) {
 
   // Draw 12 House Segments & Zodiac Symbols
   for (let i=0;i<12;i++) {
-    const a = i*30 - 90; // Start from top
+    const a = i*30; 
     const aRad = a*Math.PI/180;
     
     // House lines
@@ -474,7 +552,7 @@ function generateChart(name, date, time) {
       svg.append(mkLine(cx+Math.cos(da)*(r+20), cy+Math.sin(da)*(r+20), cx+Math.cos(da)*(r+20+tLen), cy+Math.sin(da)*(r+20+tLen), "rgba(197,160,89,0.15)"));
     }
 
-    // Zodiac Symbols (using VS to force text mode)
+    // Zodiac Symbols
     const ta = a + 15, tx = cx + Math.cos(ta*Math.PI/180)*(r+4), ty = cy + Math.sin(ta*Math.PI/180)*(r+4);
     const txt = mkText(tx,ty,zodiacSymbols[i] + vs,"var(--gold)","22px","middle");
     txt.setAttribute("transform",`rotate(${ta+90},${tx},${ty})`);
@@ -482,29 +560,30 @@ function generateChart(name, date, time) {
     svg.append(txt);
   }
 
-  const seed = (new Date(date).getTime()+(parseInt(time.split(':')[0])*3600000))||12345;
-  const planets = [];
-  let pi=0;
-  for(const [pname,sym] of Object.entries(planetSymbols)){
-    const a = (seed*(pi+7))%360 - 90, pr = r - 25;
-    const aRad = a*Math.PI/180;
+  const plottedPlanets = [];
+  
+  // Real Planet Data Mapping
+  planetsData.forEach(p => {
+    const sym = planetSymbols[p.name] || "⭐";
+    const a = p.degree; // 0-360
+    const aRad = a * Math.PI/180;
+    const pr = r - 25 - (Math.random()*15); // Slight radius variation to avoid text overlap
+    
     const px = cx + Math.cos(aRad)*pr, py = cy + Math.sin(aRad)*pr;
-    planets.push({name:pname, x:px, y:py, a:a+90});
+    plottedPlanets.push({name: p.name, x: px, y: py, a: a});
     
     const pt = mkText(px,py,sym + vs,"var(--star-white)","20px","middle");
     pt.style.filter = "drop-shadow(0 0 10px var(--gold))";
     svg.append(pt);
-    pi++;
-  }
   
-  // Elegant Aspects
-  for(let i=0; i<planets.length; i++) {
-    for(let j=i+1; j<planets.length; j++) {
-      const diff = Math.abs(planets[i].a - planets[j].a);
+  // Elegant Aspects (Real)
+  for(let i=0; i<plottedPlanets.length; i++) {
+    for(let j=i+1; j<plottedPlanets.length; j++) {
+      const diff = Math.abs(plottedPlanets[i].a - plottedPlanets[j].a);
       // Trine (120) Blue, Square (90) Red, Opposition (180) Gold
-      if (Math.abs(diff - 120) < 10) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(100,150,255,0.2)"));
-      if (Math.abs(diff - 90) < 10) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(255,100,100,0.2)"));
-      if (Math.abs(diff - 180) < 10) svg.append(mkLine(planets[i].x,planets[i].y,planets[j].x,planets[j].y,"rgba(197,160,89,0.2)"));
+      if (Math.abs(diff - 120) < 8 || Math.abs(diff - 240) < 8) svg.append(mkLine(plottedPlanets[i].x,plottedPlanets[i].y,plottedPlanets[j].x,plottedPlanets[j].y,"rgba(100,150,255,0.2)"));
+      if (Math.abs(diff - 90) < 8 || Math.abs(diff - 270) < 8) svg.append(mkLine(plottedPlanets[i].x,plottedPlanets[i].y,plottedPlanets[j].x,plottedPlanets[j].y,"rgba(255,100,100,0.2)"));
+      if (Math.abs(diff - 180) < 8) svg.append(mkLine(plottedPlanets[i].x,plottedPlanets[i].y,plottedPlanets[j].x,plottedPlanets[j].y,"rgba(197,160,89,0.3)"));
     }
   }
   container.append(svg);
