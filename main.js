@@ -206,8 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', () => {
     const st = window.scrollY;
     document.getElementById('progress-bar').style.width = (st / (document.documentElement.scrollHeight - window.innerHeight)) * 100 + '%';
-    if (st > lastScroll && st > 100) header.classList.add('hidden');
-    else header.classList.remove('hidden');
+    if (st > lastScroll && st > 100) {
+      header.classList.add('hidden');
+      blogPanel.classList.add('scrolled');
+    } else {
+      header.classList.remove('hidden');
+      blogPanel.classList.remove('scrolled');
+    }
     lastScroll = st;
   });
 

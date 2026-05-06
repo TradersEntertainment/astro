@@ -345,7 +345,7 @@ input:focus { outline: none; border-color: var(--gold); background: rgba(197,160
   overflow: hidden;
 }
 .blog-side-panel.visible { transform: translateX(0); opacity: 1; }
-.blog-side-panel.hidden { transform: translateX(-110%); opacity: 0; pointer-events: none; }
+.blog-side-panel.hidden, .blog-side-panel.scrolled { transform: translateX(-110%); opacity: 0; pointer-events: none; }
 .blog-side-close {
   position: absolute; top: 18px; right: 18px; background: none; border: none;
   color: var(--star-white); font-size: 1.8rem; opacity: 0.5; cursor: pointer;
