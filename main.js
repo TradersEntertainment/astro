@@ -12,7 +12,91 @@ document.addEventListener('DOMContentLoaded', () => {
   const blogToastLink = document.getElementById('blog-toast-link');
   setTimeout(() => blogToast.classList.add('visible'), 4000);
   blogToastClose.addEventListener('click', () => { blogToast.classList.remove('visible'); blogToast.classList.add('hidden'); });
-  blogToastLink.addEventListener('click', () => { blogToast.classList.remove('visible'); blogToast.classList.add('hidden'); });
+  blogToastLink.addEventListener('click', (e) => { 
+    e.preventDefault();
+    blogToast.classList.remove('visible'); 
+    blogToast.classList.add('hidden');
+    openBlog('pluto-kova'); // Open latest post from toast
+  });
+
+  // --- Blog Logic ---
+  const blogPosts = {
+    "pluto-kova": {
+      title: "Plüton Kova Burcunda: Yeni Bir Çağın Başlangıcı",
+      category: "Astroloji Eğitimi",
+      content: `
+        <p>Güneş sistemimizin en uzak ve en gizemli gezegeni Plüton, Kova burcuna geçiş yaparak yaklaşık 20 yıl sürecek yeni bir dönemi başlattı. Bu geçiş, sadece bireysel hayatlarımızı değil, tüm kolektif bilinci derinden sarsacak ve dönüştürecek bir güce sahip.</p>
+        <p>Kova burcu; teknoloji, toplumsal özgürlükler, inovasyon ve kolektif hareketler ile ilişkilendirilir. Plüton ise ölüm, yeniden doğum ve köklü değişimleri temsil eder. Bu iki enerjinin birleşimi, bildiğimiz dünyanın sınırlarını zorlayan bir teknolojik devrim ve toplumsal uyanış vaat ediyor.</p>
+        <blockquote>"Gelecek artık kapımızda değil, bizzat içimizde şekilleniyor."</blockquote>
+        <p>Bu dönemde yapay zeka, uzay araştırmaları ve sürdürülebilir enerji gibi konularda inanılmaz sıçramalar bekleyebiliriz. Bireysel seviyede ise, kendi özgürlüğümüzü ilan etme ve topluma nasıl bir değer kattığımızı sorgulama vaktimiz geldi.</p>
+      `
+    },
+    "yeni-ay-rituel": {
+      title: "Yeni Ay Manifestasyon Ritüelleri",
+      category: "Ay Döngüleri",
+      content: `
+        <p>Yeni Ay, gökyüzünün karanlığa gömüldüğü ancak en taze tohumların atıldığı andır. Astrolojik olarak niyetlerin, yeni başlangıçların ve manifestasyonların en güçlü olduğu zaman dilimidir.</p>
+        <p>Bir Yeni Ay ritüeli gerçekleştirmek için ihtiyacınız olan en önemli şey, kalbinizden gelen net bir niyettir. İşte adım adım rehber:</p>
+        <ul>
+          <li><strong>Alanınızı Arındırın:</strong> Adaçayı veya tütsü ile bulunduğunuz ortamın enerjisini temizleyin.</li>
+          <li><strong>Niyetinizi Yazın:</strong> Olmasını istediğiniz şeyleri, sanki zaten gerçekleşmiş gibi şimdiki zamanda bir kağıda aktarın.</li>
+          <li><strong>Görselleştirin:</strong> Gözlerinizi kapatın ve o niyetin içindeki sizi, hissettiklerinizi en ince ayrıntısına kadar hayal edin.</li>
+        </ul>
+        <p>Ununmayın, gökyüzü sadece bir rehberdir; asıl güç sizin niyetinizin saflığında ve kararlılığındadır.</p>
+      `
+    },
+    "venus-retro": {
+      title: "Venüs Retrogradında Aşka Dair Bilmeniz Gerekenler",
+      category: "İlişkiler",
+      content: `
+        <p>Aşkın ve değerlerin gezegeni Venüs geri hareketine başladığında, kalbimizin derinliklerindeki eski defterler yeniden açılır. Bu dönem, yeni bir ilişkiye başlamaktan ziyade, mevcut olanı veya geçmişten geleni şifalandırma vaktidir.</p>
+        <p>Venüs retrosu sırasında sıkça karşılaşılan durumlar şunlardır:</p>
+        <ul>
+          <li>Eski sevgililerin aniden ortaya çıkması veya rüyalara girmesi.</li>
+          <li>İlişkideki değer algısının ve özgüvenin sorgulanması.</li>
+          <li>Estetik ve finansal konularda kararsızlıklar yaşanması.</li>
+        </ul>
+        <p>Bu süreci bir kriz değil, bir fırsat olarak görün. Gerçekten neyi hak ettiğinizi ve sevgi dilinizin ne olduğunu keşfetmek için muazzam bir içsel yolculuk dönemidir.</p>
+      `
+    }
+  };
+
+  const blogModal = document.getElementById('blog-modal');
+  const blogModalBody = document.getElementById('blog-modal-body');
+  const blogModalClose = document.getElementById('blog-modal-close');
+
+  function openBlog(id) {
+    const post = blogPosts[id];
+    if (post) {
+      blogModalBody.innerHTML = `
+        <span class="blog-category">${post.category}</span>
+        <h2 class="serif modal-title">${post.title}</h2>
+        <div class="modal-divider"></div>
+        <div class="modal-text">${post.content}</div>
+      `;
+      blogModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  document.querySelectorAll('[data-blog-id]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openBlog(btn.dataset.blogId);
+    });
+  });
+
+  blogModalClose.addEventListener('click', () => {
+    blogModal.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  blogModal.addEventListener('click', (e) => {
+    if (e.target === blogModal) {
+      blogModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
 
   // --- Typewriter ---
   const title = "Yıldızların Fısıltısını Dinleyin";

@@ -546,6 +546,40 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
     .newsletter-form { flex-direction: column; }
 }
 
+/* Blog Modal */
+.blog-modal {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+  z-index: 2000; display: flex; justify-content: center; align-items: center;
+  opacity: 0; visibility: hidden; transition: var(--transition);
+}
+.blog-modal.active { opacity: 1; visibility: visible; }
+.blog-modal-content {
+  max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto;
+  position: relative; padding: 4rem; border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 100px rgba(0,0,0,0.8);
+}
+.blog-modal-close {
+  position: absolute; top: 20px; right: 25px; background: none; border: none;
+  color: var(--star-white); font-size: 2.5rem; cursor: pointer; opacity: 0.5;
+  transition: var(--transition); line-height: 1;
+}
+.blog-modal-close:hover { opacity: 1; color: var(--gold); transform: rotate(90deg); }
+.modal-title { font-size: 2.5rem; color: var(--gold-light); margin-bottom: 1.5rem; line-height: 1.2; }
+.modal-divider { width: 60px; height: 2px; background: var(--gold); margin-bottom: 2rem; }
+.modal-text { font-size: 1.1rem; line-height: 1.8; color: var(--star-white); opacity: 0.9; }
+.modal-text p { margin-bottom: 1.5rem; }
+.modal-text blockquote {
+  border-left: 3px solid var(--gold); padding-left: 1.5rem; margin: 2rem 0;
+  font-style: italic; color: var(--gold-light); font-size: 1.3rem;
+}
+.modal-text ul { margin-bottom: 1.5rem; padding-left: 1.2rem; }
+.modal-text li { margin-bottom: 0.8rem; }
+@media (max-width: 768px) {
+  .blog-modal-content { padding: 3rem 1.5rem; }
+  .modal-title { font-size: 1.8rem; }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .calculator-container, .profile-content { grid-template-columns: 1fr; gap: 3rem; }
