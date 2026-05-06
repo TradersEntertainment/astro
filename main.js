@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Loader ---
   setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2200);
 
+  // --- Blog Toast ---
+  const blogToast = document.getElementById('blog-toast');
+  const blogToastClose = document.getElementById('blog-toast-close');
+  const blogToastLink = document.getElementById('blog-toast-link');
+  setTimeout(() => blogToast.classList.add('visible'), 4000);
+  blogToastClose.addEventListener('click', () => { blogToast.classList.remove('visible'); blogToast.classList.add('hidden'); });
+  blogToastLink.addEventListener('click', () => { blogToast.classList.remove('visible'); blogToast.classList.add('hidden'); });
+
   // --- Typewriter ---
   const title = "Yıldızların Fısıltısını Dinleyin";
   const el = document.getElementById('hero-title');
