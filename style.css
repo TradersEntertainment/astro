@@ -16,16 +16,25 @@
 
 /* Cream & Gold */
 [data-theme="cream"] {
-  --obsidian: #faf8f4;
-  --deep-nebula: #f0ece4;
-  --gold: #b8945a;
-  --gold-muted: #a07e4a;
-  --gold-light: #8c6d3a;
+  --obsidian: #f2eee5;
+  --deep-nebula: #e8e3d8;
+  --gold: #9d7c45;
+  --gold-muted: #846738;
+  --gold-light: #7a5e35;
   --star-white: #2c2418;
-  --nebula-purple: rgba(180, 160, 130, 0.1);
-  --nebula-blue: rgba(180, 160, 130, 0.08);
-  --glass: rgba(0, 0, 0, 0.03);
-  --glass-border: rgba(184, 148, 90, 0.25);
+  --nebula-purple: rgba(160, 140, 110, 0.15);
+  --nebula-blue: rgba(140, 120, 100, 0.12);
+  --glass: rgba(0, 0, 0, 0.04);
+  --glass-border: rgba(157, 124, 69, 0.3);
+}
+[data-theme="cream"] .stars {
+  background-image: radial-gradient(1px 1px at 10% 10%,#9d7c45,transparent),
+                    radial-gradient(1px 1px at 20% 50%,#9d7c45,transparent),
+                    radial-gradient(2px 2px at 40% 20%,#9d7c45,transparent),
+                    radial-gradient(1px 1px at 60% 80%,#9d7c45,transparent),
+                    radial-gradient(2px 2px at 80% 40%,#9d7c45,transparent),
+                    radial-gradient(1px 1px at 90% 10%,#9d7c45,transparent);
+  opacity: 0.15;
 }
 [data-theme="cream"] body { color: #2c2418; }
 [data-theme="cream"] .loader { background: #faf8f4; }
