@@ -300,42 +300,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let elementChartInstance = null;
 
-  // --- Procedural Astrology Engine ---
-  function generateProceduralData(name, date, time, location) {
-      // Create a deterministic seed from inputs
-      const seedString = `${name.toLowerCase()}-${date}-${time}-${location.toLowerCase()}`;
-      let seed = 0;
-      for (let i = 0; i < seedString.length; i++) {
-          seed = ((seed << 5) - seed) + seedString.charCodeAt(i);
-          seed |= 0; 
-      }
-      const random = () => {
-          const x = Math.sin(seed++) * 10000;
-          return x - Math.floor(x);
-      };
+  // --- Accurate Astronomical Engine (Using astronomy-engine) ---
+  const cityCoords = {
+      "istanbul": {lat: 41.0082, lon: 28.9784}, "ankara": {lat: 39.9334, lon: 32.8597}, "izmir": {lat: 38.4237, lon: 27.1428},
+      "bursa": {lat: 40.1828, lon: 29.0667}, "antalya": {lat: 36.8969, lon: 30.7133}, "adana": {lat: 37.0000, lon: 35.3213},
+      "konya": {lat: 37.8746, lon: 32.4833}, "gaziantep": {lat: 37.0662, lon: 37.3833}, "kayseri": {lat: 38.7348, lon: 35.4663},
+      "eskişehir": {lat: 39.7767, lon: 30.5206}, "trabzon": {lat: 41.0027, lon: 39.7168}, "samsun": {lat: 41.2867, lon: 36.3300}
+  };
 
+  function getSignFromDegree(deg) {
       const signs = ["Koç", "Boğa", "İkizler", "Yengeç", "Aslan", "Başak", "Terazi", "Akrep", "Yay", "Oğlak", "Kova", "Balık"];
-      
-      const sunSign = getZodiacSign(date); // Real Sun sign
-      const moonSign = signs[Math.floor(random() * 12)]; // Pseudo Moon
-      const ascSign = signs[Math.floor(random() * 12)]; // Pseudo Ascendant
+      return signs[Math.floor(deg / 30) % 12];
+  }
 
-      // Elements
-      let fire = Math.floor(random() * 40) + 10;
-      let earth = Math.floor(random() * 40) + 10;
-      let air = Math.floor(random() * 40) + 10;
-      let water = 100 - (fire + earth + air);
-      if (water < 0) { water = 15; earth -= 15; } // Safety
-      
-      const elementsObj = { Fire: fire, Earth: earth, Air: air, Water: water };
-      const dominantElement = Object.keys(elementsObj).reduce((a, b) => elementsObj[a] > elementsObj[b] ? a : b);
+  function generateAstronomicalData(name, date, time, location) {
+      // 1. Get Coordinates
+      let locKey = location.toLowerCase().split(',')[0].trim();
+      let coords = cityCoords[locKey];
+      if (!coords) coords = {lat: 41.0082, lon: 28.9784}; // Fallback to Istanbul
 
-      // Planets Degrees
+      // 2. Setup Time (Assuming Turkey time UTC+3)
+      // To ensure accuracy for Turkey users regardless of browser location:
+      const d = new Date(`${date}T${time}:00+03:00`); 
+      const astroTime = new Astronomy.AstroTime(d);
+      const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+
+      // 3. Calculate Planets
+      const planets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
+      const trNames = ['Güneş', 'Ay', 'Merkür', 'Venüs', 'Mars', 'Jüpiter', 'Satürn'];
       const planetsData = [];
-      const pNames = ["Güneş", "Ay", "Merkür", "Venüs", "Mars", "Jüpiter", "Satürn"];
-      pNames.forEach(p => {
-          planetsData.push({ name: p, degree: Math.floor(random() * 360) });
+      const elementCount = { Fire: 0, Earth: 0, Air: 0, Water: 0 };
+      const signElements = ["Fire", "Earth", "Air", "Water", "Fire", "Earth", "Air", "Water", "Fire", "Earth", "Air", "Water"];
+
+      let sunSign = "", moonSign = "";
+
+      planets.forEach((p, i) => {
+          const eq = Astronomy.Equator(p, astroTime, observer, true, true);
+          const ecl = Astronomy.Ecliptic(eq.vec);
+          const lon = ecl.lon;
+          const signIndex = Math.floor(lon / 30) % 12;
+          
+          if (p === 'Sun') sunSign = getSignFromDegree(lon);
+          if (p === 'Moon') moonSign = getSignFromDegree(lon);
+          
+          elementCount[signElements[signIndex]] += 1;
+          planetsData.push({ name: trNames[i], degree: lon });
       });
+
+      // 4. Calculate Exact Ascendant
+      const gmst = Astronomy.SiderealTime(astroTime); // hours
+      let lstDeg = (gmst * 15 + coords.lon) % 360;
+      if (lstDeg < 0) lstDeg += 360;
+
+      const tilt = Astronomy.eTilt(astroTime);
+      const epsDeg = tilt.true_eps;
+
+      const rad = Math.PI / 180;
+      const y = Math.cos(lstDeg * rad);
+      const x = -(Math.sin(lstDeg * rad) * Math.cos(epsDeg * rad) + Math.tan(coords.lat * rad) * Math.sin(epsDeg * rad));
+      
+      let ascRad = Math.atan2(y, x);
+      let ascDeg = ascRad / rad;
+      ascDeg = ascDeg % 360;
+      if (ascDeg < 0) ascDeg += 360;
+
+      const ascSign = getSignFromDegree(ascDeg);
+
+      // Elements %
+      const total = planets.length;
+      const elementsObj = {
+          Fire: Math.round((elementCount.Fire / total) * 100),
+          Earth: Math.round((elementCount.Earth / total) * 100),
+          Air: Math.round((elementCount.Air / total) * 100),
+          Water: Math.round((elementCount.Water / total) * 100)
+      };
+      const dominantElement = Object.keys(elementsObj).reduce((a, b) => elementsObj[a] > elementsObj[b] ? a : b);
 
       // Procedural Text Generation (Mock AI)
       const intros = [
@@ -353,7 +392,11 @@ document.addEventListener('DOMContentLoaded', () => {
           `Potansiyelinizin zirvesine ulaşmak için analitik yeteneklerinizle sezgilerinizi dengelemelisiniz. Yıldızlar, önümüzdeki dönemde finansal riskler almaktan ziyade, elinizdeki değerleri koruyup büyütmeye odaklanmanızı öneriyor.`
       ];
 
-      const analysisText = `${intros[Math.floor(random() * intros.length)]}\n\n${bodies[Math.floor(random() * bodies.length)]}\n\n${conclusions[Math.floor(random() * conclusions.length)]}`;
+      // Use a simple seed for random text selection so it stays consistent for the user
+      const seed = ascDeg + planetsData[0].degree;
+      const rPick = (arr) => arr[Math.floor(seed) % arr.length];
+
+      const analysisText = `${rPick(intros)}\n\n${rPick(bodies)}\n\n${rPick(conclusions)}`;
 
       return {
           summary: { sun: sunSign, moon: moonSign, ascendant: ascSign, dominant: dominantElement },
@@ -376,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Simulate network delay for effect
     setTimeout(() => {
-        const data = generateProceduralData(name, date, time, location);
+        const data = generateAstronomicalData(name, date, time, location);
 
         // 1. Update UI Cards
         document.getElementById('val-sun').textContent = data.summary.sun;
