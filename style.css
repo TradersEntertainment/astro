@@ -395,9 +395,9 @@ input:focus { outline: none; border-color: var(--gold); background: rgba(197,160
 }
 .blog-side-item:hover .blog-side-read { letter-spacing: 3px; }
 @media (max-width: 768px) {
-  .blog-side-panel { width: 100%; top: 60px; }
-  .blog-side-item { display: none; }
-  .blog-side-item:first-child { display: block; }
+  .blog-side-panel { width: 100%; top: 0; bottom: 0; }
+  .blog-side-header { padding-top: 4rem; }
+  .blog-side-item { display: block; }
 }
 
 /* Blog Panel Trigger */
