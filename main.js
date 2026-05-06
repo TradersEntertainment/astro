@@ -6,18 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Loader ---
   setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2200);
 
-  // --- Blog Toast ---
-  const blogToast = document.getElementById('blog-toast');
-  const blogToastClose = document.getElementById('blog-toast-close');
-  const blogToastLink = document.getElementById('blog-toast-link');
-  setTimeout(() => blogToast.classList.add('visible'), 4000);
-  blogToastClose.addEventListener('click', () => { blogToast.classList.remove('visible'); blogToast.classList.add('hidden'); });
-  blogToastLink.addEventListener('click', (e) => { 
-    e.preventDefault();
-    blogToast.classList.remove('visible'); 
-    blogToast.classList.add('hidden');
-    openBlog('pluto-kova'); // Open latest post from toast
-  });
+  // --- Blog Side Panel ---
+  const blogPanel = document.getElementById('blog-side-panel');
+  const blogPanelClose = document.getElementById('blog-side-close');
+  setTimeout(() => blogPanel.classList.add('visible'), 4000);
+  blogPanelClose.addEventListener('click', () => { blogPanel.classList.remove('visible'); blogPanel.classList.add('hidden'); });
 
   // --- Blog Logic ---
   const blogPosts = {
@@ -42,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <li><strong>Niyetinizi Yazın:</strong> Olmasını istediğiniz şeyleri, sanki zaten gerçekleşmiş gibi şimdiki zamanda bir kağıda aktarın.</li>
           <li><strong>Görselleştirin:</strong> Gözlerinizi kapatın ve o niyetin içindeki sizi, hissettiklerinizi en ince ayrıntısına kadar hayal edin.</li>
         </ul>
-        <p>Ununmayın, gökyüzü sadece bir rehberdir; asıl güç sizin niyetinizin saflığında ve kararlılığındadır.</p>
+        <p>Unutmayın, gökyüzü sadece bir rehberdir; asıl güç sizin niyetinizin saflığında ve kararlılığındadır.</p>
       `
     },
     "venus-retro": {
@@ -57,6 +50,46 @@ document.addEventListener('DOMContentLoaded', () => {
           <li>Estetik ve finansal konularda kararsızlıklar yaşanması.</li>
         </ul>
         <p>Bu süreci bir kriz değil, bir fırsat olarak görün. Gerçekten neyi hak ettiğinizi ve sevgi dilinizin ne olduğunu keşfetmek için muazzam bir içsel yolculuk dönemidir.</p>
+      `
+    },
+    "saturn-donusu": {
+      title: "Satürn Dönüşü: 29 Yaşında Hayatınız Neden Değişir?",
+      category: "Gezegen Döngüleri",
+      content: `
+        <p>Satürn, Güneş'in etrafındaki yörüngesini yaklaşık 29.5 yılda tamamlar. Doğum haritanızdaki yerine geri döndüğünde, "Satürn Dönüşü" olarak adlandırılan bu dönem, hayatınızdaki en büyük dönüm noktalarından birini işaret eder.</p>
+        <p>Bu dönemde genellikle şunlar yaşanır:</p>
+        <ul>
+          <li><strong>Kariyer Krizi:</strong> Gerçekten istediğiniz mesleği mi yapıyorsunuz, yoksa başkalarının beklentilerini mi karşılıyorsunuz?</li>
+          <li><strong>İlişki Sorgulaması:</strong> Kim olduğunuzu bilen ve destekleyen insanlarla mı çevrilmisiniz?</li>
+          <li><strong>Kimlik Dönüşümü:</strong> Artık gençlik maskenizi bırakıp gerçek kimliğinize adım atma zamanı.</li>
+        </ul>
+        <blockquote>"Satürn sizi cezalandırmaz — olgunlaştırır."</blockquote>
+        <p>İlk Satürn Dönüşü 27-30 yaş arasında, ikincisi 56-60 yaş arasında gerçekleşir. Her biri, hayatınızın yeni bir bölümünün kapılarını açar.</p>
+      `
+    },
+    "merkur-retro": {
+      title: "Merkür Retrosu Gerçekte Ne Anlama Geliyor?",
+      category: "Retro Dönemleri",
+      content: `
+        <p>Yılda yaklaşık üç kez yaşanan Merkür retrosu, astrolojinin en çok konuşulan ve en çok yanlış anlaşılan fenomenlerinden biridir. Merkür aslında geri gitmiyor — optik bir illüzyon sonucu Dünya'dan bakıldığında geri gidiyor gibi görünüyor.</p>
+        <p>Ancak astrolojik etkileri son derece gerçektir:</p>
+        <ul>
+          <li><strong>İletişim Aksaklıkları:</strong> E-postalar kaybolur, mesajlar yanlış anlaşılır, sözleşmeler karışır.</li>
+          <li><strong>Teknoloji Sorunları:</strong> Elektronik cihazlar beklenmedik şekilde arızalanabilir.</li>
+          <li><strong>Geçmişten Gelen Temaslar:</strong> Eski arkadaşlar, eski projeler ve tamamlanmamış işler geri döner.</li>
+        </ul>
+        <p>Merkür retrosunu korkmak yerine, durup gözden geçirmek, yeniden planlamak ve tamamlanmamış işleri bitirmek için mükemmel bir fırsat olarak değerlendirebilirsiniz.</p>
+      `
+    },
+    "ay-dugum": {
+      title: "Ay Düğümleri ve Karmik Yolculuğunuz",
+      category: "Karmik Astroloji",
+      content: `
+        <p>Ay'ın yörüngesinin Güneş'in ekliptik düzlemiyle kesiştiği iki nokta, Kuzey ve Güney Ay Düğümleri olarak adlandırılır. Bu noktalar, doğum haritanızdaki en derin karmik mesajları taşır.</p>
+        <p><strong>Güney Düğüm (Ketu):</strong> Geçmiş yaşamlardan getirdiğiniz yetenekleri, alışkanlıkları ve konfor alanınızı temsil eder. Burası tanıdık ama artık büyümenizi engelleyen bölgedir.</p>
+        <p><strong>Kuzey Düğüm (Rahu):</strong> Bu hayatta yönelmeniz gereken hedefi, ruhunuzun evrim yolunu gösterir. Başlangıçta rahatsız hissettirebilir, ama gerçek tatmin burada yatar.</p>
+        <blockquote>"Güney Düğüm'ü bırakmak cesaret ister; Kuzey Düğüm'e yürümek ise bilgelik."</blockquote>
+        <p>Ay düğümlerinizin burcunu ve evini bilmek, hayatınızdaki tekrarlayan kalıpları anlamanın ve kırmanın anahtarıdır.</p>
       `
     }
   };
@@ -76,6 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       blogModal.classList.add('active');
       document.body.style.overflow = 'hidden';
+      // Close the side panel when reading
+      blogPanel.classList.remove('visible');
+      blogPanel.classList.add('hidden');
     }
   }
 
