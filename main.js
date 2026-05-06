@@ -335,9 +335,18 @@ document.addEventListener('DOMContentLoaded', () => {
       let sunSign = "", moonSign = "";
 
       planets.forEach((p, i) => {
-          const eq = Astronomy.Equator(p, astroTime, observer, true, true);
-          const ecl = Astronomy.Ecliptic(eq.vec);
-          const lon = ecl.lon;
+          let lon = 0;
+          if (typeof Astronomy.EclipticLongitude === "function") {
+              lon = Astronomy.EclipticLongitude(p, astroTime);
+          } else {
+              // Fallback for older versions: Astronomy.Ecliptic returns {elon, elat}
+              const eq = Astronomy.Equator(p, astroTime, observer, true, true);
+              const ecl = Astronomy.Ecliptic(eq.vec);
+              lon = ecl.elon !== undefined ? ecl.elon : ecl.lon;
+          }
+
+          if (isNaN(lon) || lon === undefined) lon = 0; // Final safety net
+
           const signIndex = Math.floor(lon / 30) % 12;
           
           if (p === 'Sun') sunSign = getSignFromDegree(lon);
