@@ -395,9 +395,27 @@ input:focus { outline: none; border-color: var(--gold); background: rgba(197,160
 }
 .blog-side-item:hover .blog-side-read { letter-spacing: 3px; }
 @media (max-width: 768px) {
-  .blog-side-panel { width: 100%; }
+  .blog-side-panel { width: 100%; top: 60px; }
   .blog-side-item { display: none; }
   .blog-side-item:first-child { display: block; }
+}
+
+/* Blog Panel Trigger */
+.blog-panel-trigger {
+  position: fixed; left: 0; top: 150px; z-index: 998;
+  background: var(--obsidian); border: 1px solid var(--glass-border);
+  border-left: none; padding: 1.5rem 0.6rem;
+  color: var(--gold); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+  border-radius: 0 8px 8px 0; transition: all 0.4s ease;
+  transform: translateX(-100%); opacity: 0;
+}
+.blog-panel-trigger.visible { transform: translateX(0); opacity: 1; }
+.blog-panel-trigger:hover { background: var(--gold); color: var(--obsidian); padding-left: 1rem; }
+.trigger-icon { font-size: 1.2rem; }
+.trigger-text {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 3px;
 }
 
 /* CTA Banner */

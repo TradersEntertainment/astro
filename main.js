@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const blogPanel = document.getElementById('blog-side-panel');
   const blogPanelClose = document.getElementById('blog-side-close');
   setTimeout(() => blogPanel.classList.add('visible'), 4000);
-  blogPanelClose.addEventListener('click', () => { blogPanel.classList.remove('visible'); blogPanel.classList.add('hidden'); });
 
   // --- Blog Logic ---
   const blogPosts = {
@@ -109,11 +108,22 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       blogModal.classList.add('active');
       document.body.style.overflow = 'hidden';
-      // Close the side panel when reading
-      blogPanel.classList.remove('visible');
-      blogPanel.classList.add('hidden');
     }
   }
+
+  const blogPanelTrigger = document.getElementById('blog-panel-trigger');
+  
+  blogPanelClose.addEventListener('click', () => { 
+    blogPanel.classList.remove('visible'); 
+    blogPanel.classList.add('hidden');
+    blogPanelTrigger.classList.add('visible');
+  });
+
+  blogPanelTrigger.addEventListener('click', () => {
+    blogPanel.classList.remove('hidden');
+    blogPanel.classList.add('visible');
+    blogPanelTrigger.classList.remove('visible');
+  });
 
   document.querySelectorAll('[data-blog-id]').forEach(btn => {
     btn.addEventListener('click', (e) => {
