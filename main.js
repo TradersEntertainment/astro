@@ -445,6 +445,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = generateAstronomicalData(name, date, time, location);
 
         // 1. Update UI Cards
+        const firstName = name.split(' ')[0];
+        document.getElementById('story-title').textContent = `${firstName} İçin Kozmik Analiz Raporu`;
         document.getElementById('val-sun').textContent = data.summary.sun;
         document.getElementById('val-moon').textContent = data.summary.moon;
         document.getElementById('val-asc').textContent = data.summary.ascendant;
@@ -489,9 +491,40 @@ document.addEventListener('DOMContentLoaded', () => {
         placeholder.style.display = 'none';
         svgContainer.style.display = 'block';
         svgContainer.style.opacity = '0';
-        const sd = document.getElementById('story-display');
-        sd.style.display = 'block';
-        setTimeout(() => { sd.classList.add('revealed'); }, 50);
+        const storyDisplay = document.getElementById('story-display');
+        storyDisplay.style.display = 'block';
+        
+        // Share Feature Implementation
+        const shareBtn = document.getElementById('share-card-btn');
+        if (shareBtn) {
+          shareBtn.onclick = () => {
+            const card = document.getElementById('story-display');
+            const originalBtnText = shareBtn.innerHTML;
+            shareBtn.innerHTML = '<span>Hazırlanıyor...</span>';
+            
+            html2canvas(card, {
+              backgroundColor: '#0a0a14',
+              scale: 2,
+              logging: false,
+              useCORS: true,
+              windowWidth: 1200 // Ensure desktop layout for capture
+            }).then(canvas => {
+              const link = document.createElement('a');
+              link.download = `AstroCelestial-Analiz-${firstName}.png`;
+              link.href = canvas.toDataURL('image/png');
+              link.click();
+              shareBtn.innerHTML = originalBtnText;
+            }).catch(err => {
+              console.error("Capture error:", err);
+              shareBtn.innerHTML = originalBtnText;
+              alert("Görsel oluşturulurken bir hata oluştu.");
+            });
+          };
+        }
+
+        setTimeout(() => {
+          storyDisplay.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         setTimeout(() => { svgContainer.style.transition = 'opacity 1s ease'; svgContainer.style.opacity = '1'; }, 100);
 
       } catch (error) {

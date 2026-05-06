@@ -685,3 +685,30 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
   .testimonial-item { width: 320px; }
   nav { display: none; }
 }
+
+/* Analysis Card Enhancements */
+@media (max-width: 992px) {
+    .story-grid-layout {
+        grid-template-columns: 1fr !important;
+        gap: 2.5rem !important;
+    }
+    .element-chart-wrapper {
+        max-width: 100%;
+        width: 100%;
+    }
+    #story-title {
+        font-size: 1.8rem !important;
+    }
+}
+
+.premium-stat:hover {
+    background: rgba(197, 160, 89, 0.08) !important;
+    border-color: rgba(197, 160, 89, 0.5) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+#share-card-btn:hover {
+    background: rgba(197, 160, 89, 0.1) !important;
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+}

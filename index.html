@@ -408,41 +408,64 @@
                 </div>
             </div>
             <!-- Cosmic Story Area -->
-            <div id="story-display" class="glass-card story-card" style="display: none; padding: 3rem;" data-reveal>
-                <div id="story-content">
-                    <h3 id="story-title" class="serif" style="color:var(--gold);font-size:2rem;margin-bottom:2rem;text-align:center;">Kozmik Şifreniz Çözülüyor...</h3>
+            <div id="story-display" class="glass-card story-card" style="display: none; padding: 4rem 3rem; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15,15,25,0.95), rgba(25,25,45,0.95)); border: 2px solid rgba(197,160,89,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(197,160,89,0.1);" data-reveal>
+                <div class="card-bg-decoration" style="position:absolute; top:-50px; right:-50px; width:200px; height:200px; background: radial-gradient(circle, rgba(197,160,89,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none;"></div>
+                <div class="card-bg-decoration" style="position:absolute; bottom:-50px; left:-50px; width:200px; height:200px; background: radial-gradient(circle, rgba(197,160,89,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none;"></div>
+
+                <div id="story-content" style="position: relative; z-index: 2;">
+                    <div style="text-align: center; margin-bottom: 3.5rem;">
+                        <h3 id="story-title" class="serif" style="color:var(--gold); font-size:2.5rem; margin-bottom:1rem; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Kozmik Analiz Raporu</h3>
+                        <div style="width: 80px; height: 2px; background: var(--gold); margin: 0 auto;"></div>
+                    </div>
                     
                     <!-- Summary Cards -->
-                    <div class="summary-cards" style="display:flex; justify-content:center; gap:2rem; margin-bottom:3rem; flex-wrap:wrap;">
-                        <div class="stat-card" style="min-width: 150px; text-align: center;">
-                            <div class="stat-number serif" id="val-sun" style="font-size: 1.5rem; color: var(--gold-light);">...</div>
-                            <div class="stat-label">Güneş Burcu</div>
+                    <div class="summary-cards" style="display:flex; justify-content:center; gap:2.5rem; margin-bottom:4rem; flex-wrap:wrap;">
+                        <div class="stat-card premium-stat" style="min-width: 160px; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(197,160,89,0.2); transition: all 0.3s ease;">
+                            <div class="stat-label" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; opacity: 0.6;">Güneş Burcu</div>
+                            <div class="stat-number serif" id="val-sun" style="font-size: 1.8rem; color: var(--gold-light); text-shadow: 0 0 10px rgba(197,160,89,0.3);">...</div>
                         </div>
-                        <div class="stat-card" style="min-width: 150px; text-align: center;">
-                            <div class="stat-number serif" id="val-moon" style="font-size: 1.5rem; color: var(--gold-light);">...</div>
-                            <div class="stat-label">Ay Burcu</div>
+                        <div class="stat-card premium-stat" style="min-width: 160px; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(197,160,89,0.2); transition: all 0.3s ease;">
+                            <div class="stat-label" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; opacity: 0.6;">Ay Burcu</div>
+                            <div class="stat-number serif" id="val-moon" style="font-size: 1.8rem; color: var(--gold-light); text-shadow: 0 0 10px rgba(197,160,89,0.3);">...</div>
                         </div>
-                        <div class="stat-card" style="min-width: 150px; text-align: center;">
-                            <div class="stat-number serif" id="val-asc" style="font-size: 1.5rem; color: var(--gold-light);">...</div>
-                            <div class="stat-label">Yükselen</div>
+                        <div class="stat-card premium-stat" style="min-width: 160px; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(197,160,89,0.2); transition: all 0.3s ease;">
+                            <div class="stat-label" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; opacity: 0.6;">Yükselen</div>
+                            <div class="stat-number serif" id="val-asc" style="font-size: 1.8rem; color: var(--gold-light); text-shadow: 0 0 10px rgba(197,160,89,0.3);">...</div>
                         </div>
                     </div>
                     
                     <!-- Data Vis & AI Analysis -->
-                    <div style="display:grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+                    <div class="story-grid-layout" style="display:grid; grid-template-columns: 350px 1fr; gap: 4rem; align-items: start;">
                         <!-- Radar Chart -->
-                        <div class="element-chart-container" style="background: rgba(0,0,0,0.3); border-radius: 15px; padding: 1.5rem; border: 1px solid var(--glass-border);">
-                            <h4 class="serif" style="color:var(--gold); text-align:center; margin-bottom: 1rem;">Element Dengesi</h4>
-                            <canvas id="elementChart"></canvas>
+                        <div class="element-chart-wrapper">
+                            <div class="element-chart-container" style="background: rgba(0,0,0,0.4); border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                                <h4 class="serif" style="color:var(--gold); text-align:center; margin-bottom: 2rem; font-size: 1.3rem; letter-spacing: 1px;">Elementel Öz</h4>
+                                <div style="position: relative;">
+                                    <canvas id="elementChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- AI Text -->
-                        <div class="ai-analysis-container" style="background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 15px; border-left: 3px solid var(--gold);">
-                            <p id="ai-text" class="serif" style="font-size:1.1rem; line-height:1.8; opacity:0.9; white-space: pre-line;">Yıldızlar fısıldıyor... Yapay zeka analiziniz hazırlanıyor.</p>
+                        <div class="ai-analysis-container" style="padding-top: 0;">
+                            <div style="background: rgba(255,255,255,0.02); padding: 3rem; border-radius: 20px; border-left: 4px solid var(--gold); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                                <div style="position: absolute; top: 1rem; right: 2rem; font-size: 4rem; opacity: 0.05; color: var(--gold); font-family: serif;">"</div>
+                                <p id="ai-text" class="serif" style="font-size:1.2rem; line-height:2; opacity:0.95; white-space: pre-line; color: #f0f0f0;">Yıldızlar fısıldıyor... Yapay zeka analiziniz hazırlanıyor.</p>
+                            </div>
                             
-                            <div style="border-top:1px solid var(--glass-border); padding-top:2rem; margin-top:2rem;">
-                                <p style="margin-bottom:1.5rem;opacity:0.7;">Analizi sevdin mi? Astrolog Özlem ile birebir seansta daha fazlasını keşfet.</p>
-                                <a href="https://wa.me/905000000000" class="cta-button" target="_blank" style="font-size: 0.9rem; padding: 0.8rem 1.5rem;"><span>Danışmanlık Al</span></a>
+                            <div style="display: flex; gap: 2rem; align-items: center; margin-top: 3.5rem; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 250px;">
+                                    <p style="margin-bottom:0.5rem; font-weight: 500; color: var(--gold-light);">Derinleşmek ister misin?</p>
+                                    <p style="opacity:0.6; font-size: 0.9rem;">Astrolog Özlem ile birebir seansta tüm potansiyelini keşfet.</p>
+                                </div>
+                                <div style="display: flex; gap: 1rem;">
+                                    <button id="share-card-btn" class="cta-button secondary" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);">
+                                        <span>Kartı Paylaş 📸</span>
+                                    </button>
+                                    <a href="https://wa.me/905000000000" class="cta-button" target="_blank">
+                                        <span>Randevu Al ✨</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -453,6 +476,7 @@
         <!-- Libraries -->
         <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
         <section id="testimonials" style="overflow: hidden;">
             <div class="section-title" data-reveal>
                 <p>Kozmik Yankılar</p>
