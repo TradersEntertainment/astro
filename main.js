@@ -606,6 +606,7 @@ function generateChartWithRealData(name, planetsData) {
     const pt = mkText(px,py,sym + vs,"var(--star-white)","20px","middle");
     pt.style.filter = "drop-shadow(0 0 10px var(--gold))";
     svg.append(pt);
+  }); // <-- Added missing closing bracket here
   
   // Elegant Aspects (Real)
   for(let i=0; i<plottedPlanets.length; i++) {
