@@ -184,6 +184,13 @@ function initConstellation() {
 
   function draw() {
     ctx.clearRect(0, 0, w, h);
+    // Detect theme for color adaptation
+    const theme = document.documentElement.getAttribute('data-theme');
+    const isLight = (theme === 'cream');
+    const starColor = isLight ? 'rgba(160,126,74,0.35)' : 'rgba(197,160,89,0.4)';
+    const lineColor = isLight ? [160,126,74] : [197,160,89];
+    const mouseColor = isLight ? [140,109,58] : [226,201,141];
+
     for (let i = 0; i < stars.length; i++) {
       const s = stars[i];
       s.x += s.vx; s.y += s.vy;
@@ -191,7 +198,7 @@ function initConstellation() {
       if (s.y < 0) s.y = h; if (s.y > h) s.y = 0;
 
       ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(197,160,89,0.4)'; ctx.fill();
+      ctx.fillStyle = starColor; ctx.fill();
 
       // Connect nearby stars
       for (let j = i + 1; j < stars.length; j++) {
@@ -199,7 +206,7 @@ function initConstellation() {
         const dist = Math.sqrt(dx*dx + dy*dy);
         if (dist < 120) {
           ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(stars[j].x, stars[j].y);
-          ctx.strokeStyle = `rgba(197,160,89,${0.1*(1-dist/120)})`; ctx.stroke();
+          ctx.strokeStyle = `rgba(${lineColor[0]},${lineColor[1]},${lineColor[2]},${0.1*(1-dist/120)})`; ctx.stroke();
         }
       }
       // Connect to mouse
@@ -207,7 +214,7 @@ function initConstellation() {
       const md = Math.sqrt(dmx*dmx + dmy*dmy);
       if (md < 200) {
         ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(226,201,141,${0.15*(1-md/200)})`; ctx.stroke();
+        ctx.strokeStyle = `rgba(${mouseColor[0]},${mouseColor[1]},${mouseColor[2]},${0.15*(1-md/200)})`; ctx.stroke();
       }
     }
     requestAnimationFrame(draw);
