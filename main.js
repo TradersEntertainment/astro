@@ -352,8 +352,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let lstDeg = (gmst * 15 + coords.lon) % 360;
       if (lstDeg < 0) lstDeg += 360;
 
-      const tilt = Astronomy.eTilt(astroTime);
-      const epsDeg = tilt.true_eps;
+      // Obliquity of the ecliptic (constant approximation is perfectly fine for this)
+      const epsDeg = 23.4392911;
 
       const rad = Math.PI / 180;
       const y = Math.cos(lstDeg * rad);
@@ -419,6 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Simulate network delay for effect
     setTimeout(() => {
+      try {
         const data = generateAstronomicalData(name, date, time, location);
 
         // 1. Update UI Cards
@@ -471,8 +472,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => { sd.classList.add('revealed'); }, 50);
         setTimeout(() => { svgContainer.style.transition = 'opacity 1s ease'; svgContainer.style.opacity = '1'; }, 100);
 
+      } catch (error) {
+        console.error("Cosmic Algorithm Error:", error);
+        alert("Hesaplama sırasında bir hata oluştu. Lütfen tekrar deneyin.");
+      } finally {
         btn.innerHTML = '<span>Haritayı Çıkar</span>';
         btn.disabled = false;
+      }
     }, 1200);
   });
 
