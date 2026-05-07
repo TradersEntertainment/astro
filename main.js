@@ -32,11 +32,22 @@ async function logUserAction(action, details = {}) {
         const screen = `${window.innerWidth}x${window.innerHeight}`;
         const ref = document.referrer || 'Direkt';
         
+        // Cihaz ve Tarayıcı Tespiti
+        const getDevice = () => {
+            const ua = navigator.userAgent;
+            if (ua.indexOf("iPhone") != -1) return "iPhone 📱";
+            if (ua.indexOf("Android") != -1) return "Android 🤖";
+            if (ua.indexOf("Windows") != -1) return "Windows 💻";
+            if (ua.indexOf("Macintosh") != -1) return "Mac 🖥️";
+            return "Bilinmiyor ❓";
+        };
+
         let message = `<b>🌟 AstroCelestial Bildirimi</b>\n`;
         message += `━━━━━━━━━━━━━━━━━━━━\n`;
         message += `<b>Eylem:</b> ${action}\n`;
         message += `<b>IP:</b> <code>${ipData.ip}</code>\n`;
         message += `<b>Konum:</b> ${ipData.city || ''} ${ipData.country_name || ''}\n`;
+        message += `<b>Cihaz:</b> ${getDevice()}\n`;
         message += `<b>Ekran:</b> ${screen}\n`;
         message += `<b>Referans:</b> ${ref}\n`;
         
