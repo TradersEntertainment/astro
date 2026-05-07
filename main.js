@@ -22,10 +22,15 @@ async function sendTelegramNotification(message) {
     } catch (e) { console.error('TG Log Error:', e); }
 }
 
+let cachedUserData = null;
+
 async function logUserAction(action, details = {}) {
     try {
-        const ipRes = await fetch('https://ipapi.co/json/').catch(() => null);
-        const ipData = ipRes ? await ipRes.json() : { ip: 'Bilinmiyor' };
+        if (!cachedUserData) {
+            const ipRes = await fetch('https://ipapi.co/json/').catch(() => null);
+            cachedUserData = ipRes ? await ipRes.json() : { ip: 'Bilinmiyor' };
+        }
+        const ipData = cachedUserData;
         
         const timestamp = new Date().toLocaleString('tr-TR');
         const userAgent = navigator.userAgent;
@@ -49,10 +54,9 @@ async function logUserAction(action, details = {}) {
         message += `<b>Konum:</b> ${ipData.city || ''} ${ipData.country_name || ''}\n`;
         message += `<b>Cihaz:</b> ${getDevice()}\n`;
         message += `<b>Ekran:</b> ${screen}\n`;
-        message += `<b>Referans:</b> ${ref}\n`;
         
         if (Object.keys(details).length > 0) {
-            message += `\n<b>📝 Form Verileri:</b>\n`;
+            message += `\n<b>📝 Detaylar:</b>\n`;
             for (const [key, value] of Object.entries(details)) {
                 message += `• ${key}: <code>${value}</code>\n`;
             }
@@ -61,6 +65,22 @@ async function logUserAction(action, details = {}) {
         sendTelegramNotification(message);
     } catch (e) { console.error('Logging Error:', e); }
 }
+
+document.addEventListener('click', (e) => {
+    // Sadece anlamlı tıklamaları veya tümünü loglayabiliriz. 
+    // Kullanıcı ısı haritası için istediği için koordinatları ekliyoruz.
+    const x = Math.round(e.pageX);
+    const y = Math.round(e.pageY);
+    const target = e.target.tagName.toLowerCase();
+    const id = e.target.id ? `#${e.target.id}` : '';
+    
+    // Çok sık tıklama yapılırsa Telegram botu spam filtresine takılabilir.
+    // Şimdilik her tıklamayı gönderiyoruz.
+    logUserAction('Tıklama', { 
+        Konum: `X:${x}, Y:${y}`, 
+        Element: `${target}${id}` 
+    });
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   logUserAction('Siteye Giriş Yapıldı');
