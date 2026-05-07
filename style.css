@@ -795,5 +795,18 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
     font-size: 1.5rem;
   }
 }
+/* Mobile UI Fixes for small screens */
+@media (max-width: 480px) {
+  section { padding: 80px 5% 60px !important; }
+  .glass-card { padding: 1.5rem !important; }
+  .calculator-container { gap: 2rem !important; }
+  input { padding: 1rem 1rem 1rem 2.5rem !important; font-size: 0.9rem !important; }
+  .input-icon { left: 0.8rem !important; font-size: 1rem !important; }
+  .section-title h2 { font-size: 2rem !important; }
+  .cta-button { padding: 1rem 1.5rem !important; font-size: 0.9rem !important; }
+  .form-group label { font-size: 0.65rem !important; margin-bottom: 0.5rem !important; }
+  .story-card { padding: 2rem 1rem !important; }
+  #story-title { font-size: 1.5rem !important; }
+}
 
 

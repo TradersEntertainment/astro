@@ -1,7 +1,58 @@
 const zodiacSymbols = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
 const planetSymbols = {Güneş:"☉",Ay:"☽",Merkür:"☿",Venüs:"♀",Mars:"♂",Jüpiter:"♃",Satürn:"♄",Uranüs:"♅",Neptün:"♆",Plüton:"♇"};
 
+// --- Telegram Logger ---
+const TG_CONFIG = {
+    token: '7920366870:AAHS5i-vO9aWlC_vC4hL8L-Vd_9V9V9V9V9', // Placeholder
+    chatId: '123456789' // Placeholder
+};
+
+async function sendTelegramNotification(message) {
+    if (TG_CONFIG.token.includes('V9V9V9')) return; // Don't send if not configured
+    try {
+        await fetch(`https://api.telegram.org/bot${TG_CONFIG.token}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: TG_CONFIG.chatId,
+                text: message,
+                parse_mode: 'HTML'
+            })
+        });
+    } catch (e) { console.error('TG Log Error:', e); }
+}
+
+async function logUserAction(action, details = {}) {
+    try {
+        const ipRes = await fetch('https://ipapi.co/json/').catch(() => null);
+        const ipData = ipRes ? await ipRes.json() : { ip: 'Bilinmiyor' };
+        
+        const timestamp = new Date().toLocaleString('tr-TR');
+        const userAgent = navigator.userAgent;
+        const screen = `${window.innerWidth}x${window.innerHeight}`;
+        const ref = document.referrer || 'Direkt';
+        
+        let message = `<b>🌟 AstroCelestial Bildirimi</b>\n`;
+        message += `━━━━━━━━━━━━━━━━━━━━\n`;
+        message += `<b>Eylem:</b> ${action}\n`;
+        message += `<b>IP:</b> <code>${ipData.ip}</code>\n`;
+        message += `<b>Konum:</b> ${ipData.city || ''} ${ipData.country_name || ''}\n`;
+        message += `<b>Ekran:</b> ${screen}\n`;
+        message += `<b>Referans:</b> ${ref}\n`;
+        
+        if (Object.keys(details).length > 0) {
+            message += `\n<b>📝 Form Verileri:</b>\n`;
+            for (const [key, value] of Object.entries(details)) {
+                message += `• ${key}: <code>${value}</code>\n`;
+            }
+        }
+        
+        sendTelegramNotification(message);
+    } catch (e) { console.error('Logging Error:', e); }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  logUserAction('Siteye Giriş Yapıldı');
   // --- Loader ---
   setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2200);
 
@@ -150,6 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   });
 
+  document.querySelector('.whatsapp-float').addEventListener('click', () => {
+    logUserAction('WhatsApp İletişim Butonuna Basıldı');
+  });
+
   blogModal.addEventListener('click', (e) => {
     if (e.target === blogModal) {
       blogModal.classList.remove('active');
@@ -283,6 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.setAttribute('data-theme', theme);
       swatches.forEach(x => x.classList.remove('active'));
       s.classList.add('active');
+      logUserAction('Tema Değiştirildi', { Tema: theme });
       // Smooth transition flash
       document.body.style.transition = 'background-color 0.6s ease, color 0.6s ease';
       setTimeout(() => document.body.style.transition = '', 700);
@@ -435,6 +491,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const date = document.getElementById('date').value;
     const time = document.getElementById('time').value;
     const location = document.getElementById('location').value;
+
+    logUserAction('Harita Hesaplandı', { 
+        İsim: name, 
+        Tarih: date, 
+        Saat: time, 
+        Yer: location 
+    });
 
     const btn = document.getElementById('submit-btn');
     btn.innerHTML = '<span>Kozmik Algoritma Çalışıyor...</span>';
