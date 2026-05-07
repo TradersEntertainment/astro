@@ -3,12 +3,12 @@ const planetSymbols = {Güneş:"☉",Ay:"☽",Merkür:"☿",Venüs:"♀",Mars:"�
 
 // --- Telegram Logger ---
 const TG_CONFIG = {
-    token: '7920366870:AAHS5i-vO9aWlC_vC4hL8L-Vd_9V9V9V9V9', // Placeholder
-    chatId: '123456789' // Placeholder
+    token: import.meta.env.VITE_TG_TOKEN,
+    chatId: import.meta.env.VITE_TG_CHAT_ID
 };
 
 async function sendTelegramNotification(message) {
-    if (TG_CONFIG.token.includes('V9V9V9')) return; // Don't send if not configured
+    if (!TG_CONFIG.token || !TG_CONFIG.chatId) return; 
     try {
         await fetch(`https://api.telegram.org/bot${TG_CONFIG.token}/sendMessage`, {
             method: 'POST',
