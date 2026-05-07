@@ -67,19 +67,28 @@ async function logUserAction(action, details = {}) {
 }
 
 document.addEventListener('click', (e) => {
-    // Sadece anlamlı tıklamaları veya tümünü loglayabiliriz. 
-    // Kullanıcı ısı haritası için istediği için koordinatları ekliyoruz.
     const x = Math.round(e.pageX);
     const y = Math.round(e.pageY);
-    const target = e.target.tagName.toLowerCase();
-    const id = e.target.id ? `#${e.target.id}` : '';
     
-    // Çok sık tıklama yapılırsa Telegram botu spam filtresine takılabilir.
-    // Şimdilik her tıklamayı gönderiyoruz.
-    logUserAction('Tıklama', { 
-        Konum: `X:${x}, Y:${y}`, 
-        Element: `${target}${id}` 
-    });
+    // En yakın tıklanabilir elementi bul (button veya link)
+    const interactiveEl = e.target.closest('button, a, .service-card, .blog-card, .theme-swatch');
+    
+    if (interactiveEl) {
+        // Buton metnini veya başlığını al
+        let label = interactiveEl.innerText.trim().split('\n')[0];
+        if (!label && interactiveEl.getAttribute('aria-label')) label = interactiveEl.getAttribute('aria-label');
+        if (!label) label = interactiveEl.tagName.toLowerCase();
+        
+        logUserAction('Etkileşim', { 
+            Buton: label,
+            Konum: `X:${x}, Y:${y}` 
+        });
+    } else {
+        // Boş yere tıklandıysa sadece koordinat (Isı haritası için)
+        logUserAction('Tıklama', { 
+            Konum: `X:${x}, Y:${y}` 
+        });
+    }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
