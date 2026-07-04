@@ -93,6 +93,82 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   logUserAction('Siteye Giriş Yapıldı');
+
+  // --- Background Video Loop with Custom Fade ---
+  const video = document.getElementById('hero-bg-video');
+  if (video) {
+    let animFrameId = null;
+    let fadingOut = false;
+    let currentOpacity = 0;
+
+    const animateOpacity = (target, duration, onComplete) => {
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+      }
+
+      const startOpacity = currentOpacity;
+      const startTime = performance.now();
+
+      const update = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        currentOpacity = startOpacity + (target - startOpacity) * progress;
+        video.style.opacity = currentOpacity.toString();
+
+        if (progress < 1) {
+          animFrameId = requestAnimationFrame(update);
+        } else {
+          animFrameId = null;
+          if (onComplete) onComplete();
+        }
+      };
+
+      animFrameId = requestAnimationFrame(update);
+    };
+
+    const handleCanPlay = () => {
+      video.play()
+        .then(() => {
+          animateOpacity(1, 500);
+        })
+        .catch(err => console.log("Video play failed:", err));
+    };
+
+    const handleTimeUpdate = () => {
+      if (video.duration && !fadingOut) {
+        const remaining = video.duration - video.currentTime;
+        if (remaining <= 0.55) {
+          fadingOut = true;
+          animateOpacity(0, 500);
+        }
+      }
+    };
+
+    const handleEnded = () => {
+      fadingOut = false;
+      video.style.opacity = '0';
+      currentOpacity = 0;
+      setTimeout(() => {
+        if (video) {
+          video.currentTime = 0;
+          video.play()
+            .then(() => {
+              animateOpacity(1, 500);
+            })
+            .catch(err => console.log("Video replay failed:", err));
+        }
+      }, 100);
+    };
+
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('ended', handleEnded);
+
+    if (video.readyState >= 3) {
+      handleCanPlay();
+    }
+  }
   // --- Loader ---
   setTimeout(() => document.getElementById('loader').classList.add('hidden'), 2200);
 

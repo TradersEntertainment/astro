@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap');
 
 :root, [data-theme="obsidian"] {
   --obsidian: #0a0a12;
@@ -116,7 +116,7 @@ body {
 a, button, input { cursor: none; }
 
 h1, h2, h3, .serif {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Instrument Serif', serif;
   font-weight: 400;
   letter-spacing: 0.02em;
 }
@@ -159,13 +159,43 @@ h1, h2, h3, .serif {
 
 /* Header */
 header {
-  position: fixed; top: 0; width: 100%; padding: 1.2rem 10%;
-  display: flex; justify-content: space-between; align-items: center;
-  z-index: 100; background: rgba(10,10,18,0.6); backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--glass-border);
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1024px;
+  padding: 0.75rem 2rem;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   transition: transform 0.4s ease, background 0.4s ease;
+  
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
 }
-header.hidden { transform: translateY(-100%); }
+
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+header.hidden { transform: translate(-50%, -150%); }
 .logo { font-size: 1.4rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 4px; display: flex; align-items: center; gap: 0.5rem; }
 .logo-icon { font-size: 1.6rem; }
 nav a {
@@ -237,11 +267,29 @@ section { min-height: 100vh; padding: 120px 10% 80px; display: flex; flex-direct
 .daily-date { font-size: 0.75rem; opacity: 0.5; }
 .daily-quote { font-size: 1.3rem; margin-top: 1rem; font-style: italic; line-height: 1.6; }
 
-/* Glass Card */
-.glass-card {
-  background: var(--glass); backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border); padding: 3rem; border-radius: 4px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+/* Glass Card & Liquid Glass */
+.glass-card, .liquid-glass {
+  background: rgba(255, 255, 255, 0.01) !important;
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: none !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 20px 50px rgba(0,0,0,0.5) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before, .liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* Calculator */
@@ -807,6 +855,19 @@ footer { border-top: 1px solid var(--glass-border); padding: 4rem 10% 2rem; }
   .form-group label { font-size: 0.65rem !important; margin-bottom: 0.5rem !important; }
   .story-card { padding: 2rem 1rem !important; }
   #story-title { font-size: 1.5rem !important; }
+}
+
+/* Background Video */
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateY(17%);
+  pointer-events: none;
+  z-index: 0;
+  transition: none !important;
 }
 
 
