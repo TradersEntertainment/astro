@@ -286,19 +286,33 @@ section { min-height: 100vh; padding: 120px 10% 80px; display: flex; flex-direct
 @media (min-width: 1025px) {
   .hero-info-card {
     position: absolute !important;
-    bottom: 2rem !important;
-    right: 2% !important;
+    bottom: 165px !important; /* Positioned directly above the theme-picker and whatsapp buttons */
+    right: 30px !important;
     left: auto !important;
     margin-top: 0 !important;
-    width: 320px !important;
+    width: 250px !important; /* Slim, vertical card layout */
     background: rgba(10, 10, 18, 0.65) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    padding: 1.5rem !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    padding: 1.2rem !important;
     border-radius: 16px !important;
     border: 1px solid rgba(197, 160, 89, 0.15) !important;
     box-shadow: inset 0 1px 1px rgba(255,255,255,0.1), 0 20px 50px rgba(0,0,0,0.6) !important;
     z-index: 10 !important;
+    gap: 0.8rem !important;
+  }
+  .stats-sub-grid {
+    grid-template-columns: 1fr !important; /* Single column vertical stats layout */
+    gap: 0.6rem !important;
+  }
+  .stats-sub-grid .stat-item {
+    align-items: center !important;
+  }
+  .press-sub-logos .press-logos-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* 2x2 grid for press logos on desktop */
+    gap: 0.5rem !important;
+    text-align: center !important;
   }
 }
 .hero h1 {
