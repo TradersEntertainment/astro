@@ -389,6 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const header = document.getElementById('main-header');
   window.addEventListener('scroll', () => {
     const st = window.scrollY;
+    const scrollOverlay = document.getElementById('scroll-overlay');
+    if (scrollOverlay) {
+      const opacity = Math.min(st / 500, 0.92);
+      scrollOverlay.style.opacity = opacity.toString();
+    }
     document.getElementById('progress-bar').style.width = (st / (document.documentElement.scrollHeight - window.innerHeight)) * 100 + '%';
     if (st > lastScroll && st > 100) {
       header.classList.add('hidden');
