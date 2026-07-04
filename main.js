@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.3 });
-  const statsEl = document.querySelector('.hero-stats');
+  const statsEl = document.querySelector('.hero-info-card');
   if (statsEl) counterObs.observe(statsEl);
 
   // --- Theme Picker ---

@@ -153,50 +153,55 @@
             <div class="scroll-indicator" data-reveal>
                 <div class="scroll-arrow"></div>
             </div>
-            <!-- Hero Stats (Floating on Desktop, grid on Mobile) -->
-            <div class="hero-stats" data-reveal>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="2847">0</span>
-                    <span class="stat-label">Mutlu Danışan</span>
+            <!-- Combined Hero Info Card (Stats, Daily Insight, Press Logos) -->
+            <div class="hero-info-card glass-card" data-reveal>
+                <!-- Daily Insight Section -->
+                <div class="hero-card-section daily-sub-widget">
+                    <div class="daily-header">
+                        <span class="daily-badge">✦ GÜNLÜK</span>
+                        <span id="daily-date" class="daily-date"></span>
+                    </div>
+                    <p class="serif card-sub-title" style="color: var(--gold); letter-spacing: 2px; margin-top: 0.5rem; font-size: 0.8rem; text-transform: uppercase;">Günün Kozmik Fısıltısı</p>
+                    <h4 id="daily-text" class="daily-quote" style="font-size: 1.05rem; line-height: 1.4; margin-top: 0.4rem; opacity: 0.9; font-style: italic;"></h4>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="20">0</span>
-                    <span class="stat-label">Yıl Deneyim</span>
+
+                <div class="card-divider"></div>
+
+                <!-- Stats Section -->
+                <div class="hero-card-section stats-sub-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="2847">0</span>
+                        <span class="stat-label">Mutlu Danışan</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="20">0</span>
+                        <span class="stat-label">Yıl Deneyim</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="12">0</span>
+                        <span class="stat-label">Uzmanlık</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="98">0</span>
+                        <span class="stat-label">% Memnuniyet</span>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="12">0</span>
-                    <span class="stat-label">Uzmanlık Alanı</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="98">0</span>
-                    <span class="stat-label">% Memnuniyet</span>
+
+                <div class="card-divider"></div>
+
+                <!-- Press Logos Section -->
+                <div class="hero-card-section press-sub-logos">
+                    <p class="press-title" style="text-transform: uppercase; font-size: 0.6rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; opacity: 0.7;">Basında Biz</p>
+                    <div class="press-logos-row" style="display: flex; justify-content: space-between; align-items: center; opacity: 0.5; font-size: 0.8rem; gap: 0.8rem;">
+                        <span class="serif" style="font-size: 1.1rem; letter-spacing: 1px;">VOGUE</span>
+                        <span class="serif" style="font-size: 1.1rem; font-style: italic; letter-spacing: 0.5px;">BAZAAR</span>
+                        <span style="font-weight: bold; font-size: 0.9rem; letter-spacing: 2px;">ELLE</span>
+                        <span class="serif" style="font-size: 1.1rem;">CLAIRE</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-
-        <!-- Featured In -->
-        <section id="featured-in" style="min-height: auto; padding: 30px 10%; border-bottom: 1px solid var(--glass-border); border-top: 1px solid var(--glass-border); background: rgba(255,255,255,0.01);">
-            <p style="text-align: center; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 20px;">Basında Biz</p>
-            <div class="featured-logos" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 2rem; opacity: 0.4; filter: grayscale(100%);">
-                <span class="serif" style="font-size: 1.8rem; letter-spacing: 2px;">VOGUE</span>
-                <span class="serif" style="font-size: 1.8rem; font-style: italic;">Harper's BAZAAR</span>
-                <span style="font-family: sans-serif; font-weight: bold; font-size: 1.5rem; letter-spacing: 4px;">ELLE</span>
-                <span class="serif" style="font-size: 1.8rem;">Marie Claire</span>
-            </div>
-        </section>
-
-        <!-- Daily Insight -->
-        <section id="daily" style="min-height: auto; padding: 60px 10%;">
-            <div class="daily-widget glass-card" data-reveal>
-                <div class="daily-header">
-                    <span class="daily-badge">✦ GÜNLÜK</span>
-                    <span id="daily-date" class="daily-date"></span>
-                </div>
-                <p class="serif" style="color: var(--gold); letter-spacing: 2px; margin-top: 1rem;">Günün Kozmik Fısıltısı</p>
-                <h3 id="daily-text" class="daily-quote"></h3>
-            </div>
-        </section>
 
         <!-- Services Section -->
         <section id="services">
