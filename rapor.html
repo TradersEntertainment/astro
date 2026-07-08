@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gökyüzü Raporu — Şablon (dahili araç)</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2393341f%22>✳</text></svg>">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./rapor.css">
+</head>
+<body class="rapor-body">
+
+    <!-- Araç çubuğu: yazdırmada görünmez -->
+    <div class="toolbar no-print">
+        <div class="tb-inner">
+            <strong class="serif">Gökyüzü Raporu — Şablon</strong>
+            <span class="tb-hint">Dahili araç: bilgileri girin, "Haritayı İşle" deyin, metin alanlarına tıklayıp yazın, sonra "Yazdır / PDF".</span>
+            <form id="rapor-form">
+                <input type="text" id="r-name" placeholder="Danışanın adı soyadı" required>
+                <input type="date" id="r-date" required>
+                <input type="time" id="r-time" required>
+                <input type="text" id="r-city" placeholder="Doğum yeri (il)" required>
+                <input type="date" id="r-session" title="Seans tarihi">
+                <button type="submit" class="btn">Haritayı İşle</button>
+                <button type="button" class="btn btn-outline" onclick="window.print()">Yazdır / PDF</button>
+            </form>
+            <span class="tb-note" id="r-citynote"></span>
+        </div>
+    </div>
+
+    <!-- ============ SAYFA 1: KAPAK ============ -->
+    <section class="sheet">
+        <div class="sheet-frame">
+            <header class="rp-head">
+                <span class="wm-name-print">ÖZLEM</span>
+                <span class="wm-sub-print">ASTROLOJİ · TARİH · DANIŞMANLIK</span>
+            </header>
+
+            <div class="rp-title-block">
+                <span class="rp-kicker">✳&#xFE0E; Kişiye Özel ✳&#xFE0E;</span>
+                <h1 class="rp-doc-title">Gökyüzü Raporu</h1>
+                <p class="rp-client" id="rp-client">—</p>
+                <p class="rp-birth" id="rp-birth">—</p>
+            </div>
+
+            <div class="rp-chart" id="rp-chart">
+                <p class="rp-chart-ph">Harita, yukarıdaki form işlendiğinde burada belirir.</p>
+            </div>
+
+            <div class="rp-summary" id="rp-summary">
+                <div><span class="rp-sl">Güneş</span><span class="rp-sv" id="rp-sun">—</span></div>
+                <div><span class="rp-sl">Ay</span><span class="rp-sv" id="rp-moon">—</span></div>
+                <div><span class="rp-sl">Yükselen</span><span class="rp-sv" id="rp-asc">—</span></div>
+            </div>
+
+            <footer class="rp-foot">
+                <span id="rp-session-line">Seans tarihi: —</span>
+                <span>Hazırlayan: Özlem</span>
+            </footer>
+        </div>
+    </section>
+
+    <!-- ============ SAYFA 2+: YORUM ============ -->
+    <section class="sheet">
+        <div class="sheet-frame text-sheet">
+            <h2 class="rp-h2"><span class="rp-roman">I.</span> Genel Bakış</h2>
+            <div class="rp-editable" contenteditable="true" data-ph="Haritanın genel iklimini, baskın elementi ve ana temaları buraya yazın…"></div>
+
+            <h2 class="rp-h2"><span class="rp-roman">II.</span> Karakter ve Potansiyel</h2>
+            <div class="rp-editable" contenteditable="true" data-ph="Güneş, Ay ve Yükselen'in birlikte anlattığı karakter portresini buraya yazın…"></div>
+
+            <h2 class="rp-h2"><span class="rp-roman">III.</span> Kariyer ve Kaynaklar</h2>
+            <div class="rp-editable" contenteditable="true" data-ph="MC, 2. ve 10. ev vurgularını, mesleki potansiyeli buraya yazın…"></div>
+        </div>
+    </section>
+
+    <section class="sheet">
+        <div class="sheet-frame text-sheet">
+            <h2 class="rp-h2"><span class="rp-roman">IV.</span> Dönemsel Döngüler</h2>
+            <div class="rp-editable" contenteditable="true" data-ph="Güncel transitler, retrolar ve önümüzdeki dönemin iklimini buraya yazın…"></div>
+
+            <h2 class="rp-h2"><span class="rp-roman">V.</span> Önemli Tarihler</h2>
+            <table class="rp-dates">
+                <thead>
+                    <tr><th>Tarih</th><th>Gökyüzü</th><th>Not</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td contenteditable="true">…</td><td contenteditable="true">…</td><td contenteditable="true">…</td></tr>
+                    <tr><td contenteditable="true">…</td><td contenteditable="true">…</td><td contenteditable="true">…</td></tr>
+                    <tr><td contenteditable="true">…</td><td contenteditable="true">…</td><td contenteditable="true">…</td></tr>
+                    <tr><td contenteditable="true">…</td><td contenteditable="true">…</td><td contenteditable="true">…</td></tr>
+                    <tr><td contenteditable="true">…</td><td contenteditable="true">…</td><td contenteditable="true">…</td></tr>
+                </tbody>
+            </table>
+
+            <h2 class="rp-h2"><span class="rp-roman">VI.</span> Kapanış</h2>
+            <div class="rp-editable" contenteditable="true" data-ph="Kapanış notunuzu ve önerilerinizi buraya yazın…"></div>
+
+            <div class="rp-sign">
+                <span class="rp-sign-star">✳&#xFE0E;</span>
+                <span class="rp-sign-name">Özlem</span>
+                <span class="rp-sign-sub">Astroloji Danışmanı</span>
+            </div>
+
+            <p class="rp-legal">Bu rapor kişiye özeldir; astrolojik yorumlar tıbbi, hukuki veya finansal tavsiye değildir.</p>
+        </div>
+    </section>
+
+    <script type="module" src="./rapor.js"></script>
+</body>
+</html>

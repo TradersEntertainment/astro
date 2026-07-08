@@ -1,0 +1,257 @@
+/* ============================================================
+   Gökyüzü Raporu — A4 baskı şablonu (dahili araç)
+   style.css'in üzerine gelir; parşömen estetiğini kâğıda taşır.
+   ============================================================ */
+
+.rapor-body { background: #d8d0bd; }
+.rapor-body::before, .rapor-body::after { display: none; }
+
+/* ---------- Araç çubuğu ---------- */
+
+.toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.9rem var(--pad-x);
+}
+
+.toolbar .tb-inner {
+    max-width: 1100px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem 1.4rem;
+    flex-wrap: wrap;
+}
+
+.toolbar strong { font-size: 1.15rem; font-weight: 500; }
+
+.toolbar .tb-hint {
+    font-size: 0.78rem;
+    opacity: 0.65;
+    max-width: 40ch;
+}
+
+.toolbar form { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+
+.toolbar input {
+    background: rgba(243, 236, 221, 0.08);
+    border: 1px solid rgba(243, 236, 221, 0.25);
+    color: var(--paper);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    padding: 0.5rem 0.7rem;
+}
+.toolbar input::placeholder { color: rgba(243, 236, 221, 0.5); }
+.toolbar input:focus { outline: none; border-color: var(--gold-soft); }
+
+.toolbar .btn { padding: 0.6rem 1.2rem; font-size: 0.62rem; background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.toolbar .btn:hover { background: var(--gold-soft); border-color: var(--gold-soft); }
+.toolbar .btn-outline { background: transparent; color: var(--paper); border-color: rgba(243, 236, 221, 0.4); }
+.toolbar .btn-outline:hover { background: var(--paper); color: var(--ink); }
+
+.toolbar .tb-note { font-size: 0.75rem; color: var(--gold-soft); font-style: italic; }
+
+/* ---------- A4 yaprak ---------- */
+
+.sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    background: var(--paper);
+    box-shadow: 0 6px 30px rgba(38, 34, 25, 0.3);
+    padding: 14mm;
+    box-sizing: border-box;
+}
+
+.sheet-frame {
+    border: 1px solid var(--rule);
+    outline: 1px solid var(--rule-soft);
+    outline-offset: 4px;
+    height: 100%;
+    min-height: calc(297mm - 28mm - 2px);
+    padding: 12mm 14mm;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* ---------- Kapak ---------- */
+
+.rp-head { text-align: center; padding-bottom: 6mm; border-bottom: 1px solid var(--rule-soft); }
+
+.wm-name-print {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24pt;
+    letter-spacing: 0.34em;
+    padding-left: 0.34em;
+}
+.wm-sub-print {
+    display: block;
+    margin-top: 2mm;
+    font-family: var(--font-label);
+    font-size: 6.5pt;
+    letter-spacing: 0.5em;
+    padding-left: 0.5em;
+    color: var(--gold);
+}
+
+.rp-title-block { text-align: center; margin-top: 10mm; }
+
+.rp-kicker {
+    font-family: var(--font-label);
+    font-size: 7pt;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--madder);
+}
+
+.rp-doc-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 30pt;
+    margin: 4mm 0 6mm;
+}
+
+.rp-client {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17pt;
+}
+
+.rp-birth {
+    font-family: var(--font-label);
+    font-size: 8pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 2mm;
+}
+
+.rp-chart {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    margin: 6mm 0;
+}
+.rp-chart svg { width: 118mm; height: auto; }
+.rp-chart-ph { font-style: italic; color: var(--ink-faint); font-size: 10pt; max-width: 50ch; text-align: center; }
+
+.rp-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule-soft);
+}
+.rp-summary > div { background: var(--paper); text-align: center; padding: 5mm 2mm; }
+.rp-summary .rp-sl {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 6.5pt;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1.5mm;
+}
+.rp-summary .rp-sv { font-family: var(--font-display); font-weight: 500; font-size: 15pt; }
+
+.rp-foot {
+    margin-top: 6mm;
+    padding-top: 4mm;
+    border-top: 1px solid var(--rule-soft);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-label);
+    font-size: 7pt;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+/* ---------- Metin sayfaları ---------- */
+
+.text-sheet { display: block; }
+
+.rp-h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 15pt;
+    margin: 8mm 0 3mm;
+    padding-bottom: 2mm;
+    border-bottom: 1px solid var(--rule-soft);
+}
+.rp-h2:first-child { margin-top: 0; }
+.rp-h2 .rp-roman { color: var(--madder); margin-right: 2mm; }
+
+.rp-editable {
+    min-height: 28mm;
+    font-size: 10.5pt;
+    line-height: 1.75;
+    padding: 2mm 1mm;
+    outline: none;
+}
+.rp-editable:empty::before {
+    content: attr(data-ph);
+    color: var(--ink-faint);
+    font-style: italic;
+}
+.rp-editable:focus { background: rgba(143, 116, 49, 0.06); }
+
+.rp-dates { width: 100%; border-collapse: collapse; font-size: 10pt; }
+.rp-dates th {
+    font-family: var(--font-label);
+    font-weight: 400;
+    font-size: 7pt;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--madder);
+    text-align: left;
+    padding: 2mm 2mm;
+    border-bottom: 1px solid var(--rule);
+}
+.rp-dates td { padding: 2.5mm 2mm; border-bottom: 1px solid var(--rule-soft); }
+.rp-dates td:focus { outline: none; background: rgba(143, 116, 49, 0.06); }
+
+.rp-sign { text-align: center; margin-top: 12mm; }
+.rp-sign-star { display: block; color: var(--madder); font-size: 12pt; margin-bottom: 2mm; }
+.rp-sign-name { display: block; font-family: var(--font-display); font-style: italic; font-size: 20pt; }
+.rp-sign-sub {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 6.5pt;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 1.5mm;
+}
+
+.rp-legal {
+    margin-top: 10mm;
+    text-align: center;
+    font-size: 7.5pt;
+    font-style: italic;
+    color: var(--ink-faint);
+}
+
+/* ---------- Baskı ---------- */
+
+@page { size: A4; margin: 0; }
+
+@media print {
+    .no-print { display: none !important; }
+    .rapor-body { background: none; }
+    .sheet {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+    }
+    .sheet:last-of-type { page-break-after: auto; }
+    .rp-editable:empty::before { content: ""; }
+    .rp-editable:focus, .rp-dates td:focus { background: none; }
+}

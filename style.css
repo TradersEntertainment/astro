@@ -4,6 +4,20 @@
    sade-lüks bir tasarım dili.
    ============================================================ */
 
+/* Fontlar (self-host, tüm sayfalar bu dosya üzerinden alır) */
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/400-italic.css";
+@import "@fontsource/cormorant-garamond/500-italic.css";
+@import "@fontsource/jost/300.css";
+@import "@fontsource/jost/400.css";
+@import "@fontsource/jost/500.css";
+@import "@fontsource/spectral/300.css";
+@import "@fontsource/spectral/400.css";
+@import "@fontsource/spectral/300-italic.css";
+@import "@fontsource/spectral/400-italic.css";
+
 :root {
     --paper: #f3ecdd;
     --paper-warm: #ede2ca;
@@ -638,6 +652,155 @@ figure.plate figcaption .credit {
     font-size: 0.96rem;
     color: var(--ink-soft);
     max-width: 68ch;
+}
+
+/* ---------- Nemrut köşesi ---------- */
+
+.nemrut {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    border: 1px solid var(--rule);
+    background: var(--paper-warm);
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    padding: clamp(2rem, 5vw, 3.2rem);
+    align-items: center;
+}
+
+.nemrut .nemrut-text h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.nemrut .nemrut-text p { font-size: 0.98rem; max-width: 58ch; }
+.nemrut .nemrut-text p + p { margin-top: 0.9rem; }
+
+.nemrut-sky { position: relative; display: grid; place-items: center; }
+.nemrut-sky svg { width: min(100%, 340px); height: auto; }
+
+.nemrut-sky .ns-caption {
+    margin-top: 0.9rem;
+    font-family: var(--font-label);
+    font-size: 0.6rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: center;
+    line-height: 1.9;
+}
+
+/* ---------- Almanak ---------- */
+
+.almanac-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: start;
+}
+
+.almanac-list { border-top: 1px solid var(--rule); }
+
+.almanac-row {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) auto;
+    gap: 1.2rem;
+    align-items: baseline;
+    padding: 1rem 0.2rem;
+    border-bottom: 1px solid var(--rule);
+}
+
+.almanac-row .al-date {
+    font-family: var(--font-label);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.almanac-row .al-today { color: var(--madder); }
+
+.almanac-row .al-event {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.15rem;
+}
+
+.almanac-row .al-detail {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--ink-faint);
+}
+
+.almanac-side {
+    border: 1px solid var(--rule);
+    background: var(--paper-warm);
+    padding: clamp(1.5rem, 3.5vw, 2.2rem);
+}
+
+.almanac-side h4 {
+    font-family: var(--font-label);
+    font-weight: 400;
+    font-size: 0.66rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--madder);
+    margin-bottom: 1rem;
+}
+
+.almanac-side .al-retro, .almanac-side .al-ok {
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+.almanac-side .al-retro { color: var(--madder); }
+.almanac-side .al-ok { color: var(--ink-soft); font-style: italic; }
+
+.almanac-side .al-note {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule-soft);
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--ink-faint);
+}
+
+/* ---------- Lügat ---------- */
+
+.lugat-grid {
+    columns: 2;
+    column-gap: clamp(2rem, 5vw, 4rem);
+    border-top: 1px solid var(--rule);
+    padding-top: 0.5rem;
+}
+
+.lugat-item {
+    break-inside: avoid;
+    padding: 1.1rem 0.2rem;
+    border-bottom: 1px solid var(--rule-soft);
+}
+
+.lugat-item dt {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.lugat-item dt .lu-alt {
+    font-family: var(--font-label);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-left: 0.5rem;
+}
+
+.lugat-item dd {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
 }
 
 /* ---------- Burçlar kataloğu ---------- */
@@ -1506,6 +1669,9 @@ footer.site-footer {
 
 @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; }
+    .nemrut { grid-template-columns: 1fr; }
+    .almanac-grid { grid-template-columns: 1fr; }
+    .lugat-grid { columns: 1; }
     .wheel-wrap { order: -1; }
     .wheel-svg { width: min(72vw, 380px); }
     .chart-section-grid { grid-template-columns: 1fr; }
@@ -1541,6 +1707,8 @@ footer.site-footer {
     .era-note { grid-column: 1; }
     .article-row { grid-template-columns: minmax(0, 1fr) auto; }
     .article-row .a-num { display: none; }
+    .almanac-row { grid-template-columns: 96px minmax(0, 1fr); }
+    .almanac-row .al-detail { grid-column: 2; }
     .process-grid { grid-template-columns: 1fr; }
     .reading-summary { grid-template-columns: 1fr; }
     .reading-cta { flex-direction: column; align-items: flex-start; }
