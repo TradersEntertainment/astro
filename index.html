@@ -3,435 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstroCelestial | Gökyüzünün Rehberliği</title>
-    <meta name="description" content="Doğum haritanızı çıkarın, yıldızların fısıltısını dinleyin. Profesyonel astroloji danışmanlığı.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☽</text></svg>">
+    <title>Özlem · Astroloji — Babil'den Bugüne Gökyüzünün Bilgeliği</title>
+    <meta name="description" content="Astroloji burçlardan ibaret değildir. Babil'in kil tabletlerinden Rönesans el yazmalarına, gökyüzünü okuma sanatının dört bin yıllık tarihi ve birebir doğum haritası danışmanlığı.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2393341f%22>✳</text></svg>">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loader" class="loader">
-        <div class="loader-content">
-            <svg class="loader-zodiac" viewBox="0 0 100 100" width="80" height="80">
-                <circle cx="50" cy="50" r="40" stroke="var(--gold)" stroke-width="0.5" fill="none" opacity="0.3"/>
-                <circle cx="50" cy="50" r="35" stroke="var(--gold)" stroke-width="1" fill="none" stroke-dasharray="5 5">
-                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="50" cy="50" r="3" fill="var(--gold)">
-                    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
-                </circle>
-            </svg>
-            <p class="serif loader-text">Yıldızlar hizalanıyor...</p>
-        </div>
-    </div>
 
-    <div class="scroll-progress" id="progress-bar"></div>
-    <div class="custom-cursor" id="cursor"></div>
-    <div class="cursor-follower" id="cursor-follower"></div>
-
-    <a href="https://wa.me/905000000000?text=Merhaba,%20danışmanlık%20hakkında%20bilgi%20almak%20istiyorum." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
-        <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor"><path d="M16.004 0C7.168 0 0 7.168 0 16.004c0 2.82.736 5.584 2.136 8.016L0 32l8.2-2.1A15.94 15.94 0 0 0 16.004 32C24.84 32 32 24.84 32 16.004 32 7.168 24.84 0 16.004 0zm0 29.332a13.28 13.28 0 0 1-7.1-2.048l-.508-.304-5.268 1.38 1.408-5.14-.332-.532A13.26 13.26 0 0 1 2.668 16C2.668 8.636 8.636 2.668 16 2.668S29.332 8.636 29.332 16 23.368 29.332 16.004 29.332zm7.296-9.944c-.4-.2-2.368-1.168-2.736-1.3-.368-.136-.636-.2-.904.2-.268.4-1.036 1.3-1.268 1.568-.236.268-.468.3-.868.1-.4-.2-1.688-.624-3.216-1.988-1.188-1.06-1.988-2.372-2.22-2.772-.236-.4-.024-.616.176-.816.18-.18.4-.468.6-.7.2-.236.268-.4.4-.668.136-.268.068-.5-.032-.7-.1-.2-.904-2.176-1.236-2.98-.328-.784-.66-.676-.904-.688-.236-.012-.504-.016-.772-.016s-.7.1-1.068.5c-.368.4-1.4 1.368-1.4 3.34 0 1.972 1.432 3.876 1.632 4.144.2.268 2.82 4.304 6.832 6.032.956.412 1.7.66 2.28.844.96.304 1.832.26 2.524.16.768-.116 2.368-.968 2.704-1.904.336-.936.336-1.74.236-1.904-.1-.168-.368-.268-.768-.468z"/></svg>
+    <a href="https://wa.me/905000000000?text=Merhaba,%20astroloji%20danışmanlığı%20hakkında%20bilgi%20almak%20istiyorum." class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp ile yazın" data-wa-label="Sabit buton">
+        <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.004 0C7.168 0 0 7.168 0 16.004c0 2.82.736 5.584 2.136 8.016L0 32l8.2-2.1A15.94 15.94 0 0 0 16.004 32C24.84 32 32 24.84 32 16.004 32 7.168 24.84 0 16.004 0zm0 29.332a13.28 13.28 0 0 1-7.1-2.048l-.508-.304-5.268 1.38 1.408-5.14-.332-.532A13.26 13.26 0 0 1 2.668 16C2.668 8.636 8.636 2.668 16 2.668S29.332 8.636 29.332 16 23.368 29.332 16.004 29.332zm7.296-9.944c-.4-.2-2.368-1.168-2.736-1.3-.368-.136-.636-.2-.904.2-.268.4-1.036 1.3-1.268 1.568-.236.268-.468.3-.868.1-.4-.2-1.688-.624-3.216-1.988-1.188-1.06-1.988-2.372-2.22-2.772-.236-.4-.024-.616.176-.816.18-.18.4-.468.6-.7.2-.236.268-.4.4-.668.136-.268.068-.5-.032-.7-.1-.2-.904-2.176-1.236-2.98-.328-.784-.66-.676-.904-.688-.236-.012-.504-.016-.772-.016s-.7.1-1.068.5c-.368.4-1.4 1.368-1.4 3.34 0 1.972 1.432 3.876 1.632 4.144.2.268 2.82 4.304 6.832 6.032.956.412 1.7.66 2.28.844.96.304 1.832.26 2.524.16.768-.116 2.368-.968 2.704-1.904.336-.936.336-1.74.236-1.904-.1-.168-.368-.268-.768-.468z"/></svg>
     </a>
 
-    <!-- Theme Palette Picker -->
-    <div class="theme-picker" id="theme-picker">
-        <button class="theme-toggle" id="theme-toggle" aria-label="Renk Paleti">
-            <span>🎨</span>
-        </button>
-        <div class="theme-panel" id="theme-panel">
-            <p class="theme-panel-title">Renk Teması Seçin</p>
-            <div class="theme-options">
-                <button class="theme-swatch" data-theme="obsidian" title="Obsidyen & Altın">
-                    <span class="swatch-preview" style="background: linear-gradient(135deg, #0a0a12, #c5a059);"></span>
-                    <span class="swatch-name">Obsidyen</span>
-                </button>
-                <button class="theme-swatch" data-theme="cream" title="Krem & Altın">
-                    <span class="swatch-preview" style="background: linear-gradient(135deg, #faf8f4, #b8945a);"></span>
-                    <span class="swatch-name">Krem</span>
-                </button>
-                <button class="theme-swatch" data-theme="midnight" title="Gece Mavisi & Gümüş">
-                    <span class="swatch-preview" style="background: linear-gradient(135deg, #0d1b2a, #a8b2d1);"></span>
-                    <span class="swatch-name">Gece Mavisi</span>
-                </button>
-                <button class="theme-swatch" data-theme="forest" title="Orman & Zümrüt">
-                    <span class="swatch-preview" style="background: linear-gradient(135deg, #0b1a0b, #50c878);"></span>
-                    <span class="swatch-name">Orman</span>
-                </button>
-                <button class="theme-swatch" data-theme="rose" title="Gül Kurusu & Pembe">
-                    <span class="swatch-preview" style="background: linear-gradient(135deg, #1a0a10, #c97b8b);"></span>
-                    <span class="swatch-name">Gül Kurusu</span>
-                </button>
-            </div>
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+        <div class="masthead-top">
+            <span class="masthead-meta" id="masthead-date">—</span>
+            <a class="wordmark" href="#top">
+                <span class="wm-name">Özlem</span>
+                <span class="wm-sub">Astroloji · Tarih · Danışmanlık</span>
+            </a>
+            <span class="masthead-meta right">Gökyüzünde <span class="madder" data-moon-phase>—</span></span>
         </div>
-    </div>
-
-    <!-- Blog Panel Trigger -->
-    <button class="blog-panel-trigger" id="blog-panel-trigger">
-        <span class="trigger-icon">☽</span>
-        <span class="trigger-text">YAZILAR</span>
-    </button>
-
-    <!-- Blog Side Panel -->
-    <div class="blog-side-panel" id="blog-side-panel">
-        <button class="blog-side-close" id="blog-side-close" aria-label="Kapat">&times;</button>
-        <div class="blog-side-header">
-            <span class="blog-side-badge">☽ KOZMİK KÜTÜPHANE</span>
-            <h3 class="serif blog-side-title">Son Yazılar</h3>
-        </div>
-        <div class="blog-side-list">
-            <a href="#" class="blog-side-item" data-blog-id="pluto-kova">
-                <span class="blog-side-item-badge">YENİ</span>
-                <h4 class="serif">Plüton Kova Burcunda: Yeni Bir Çağın Başlangıcı</h4>
-                <p>Kolektif bilincin dönüşümü başlıyor. 20 yıllık bu döngü, teknolojik devrimler ve toplumsal özgürlüklerin anahtarı olacak.</p>
-                <span class="blog-side-read">Devamını Oku →</span>
-            </a>
-            <a href="#" class="blog-side-item" data-blog-id="yeni-ay-rituel">
-                <h4 class="serif">Yeni Ay Manifestasyon Ritüelleri</h4>
-                <p>Yeni başlangıçlar için Ay'ın enerjisini nasıl kullanabilirsiniz? Adım adım ritüel rehberi.</p>
-                <span class="blog-side-read">Devamını Oku →</span>
-            </a>
-            <a href="#" class="blog-side-item" data-blog-id="venus-retro">
-                <h4 class="serif">Venüs Retrogradında Aşka Dair Bilmeniz Gerekenler</h4>
-                <p>Geçmişten gelen bağlar ve karmik ilişkiler bu dönemde neden tekrar yüzeye çıkar?</p>
-                <span class="blog-side-read">Devamını Oku →</span>
-            </a>
-            <a href="#" class="blog-side-item" data-blog-id="saturn-donusu">
-                <h4 class="serif">Satürn Dönüşü: 29 Yaşında Hayatınız Neden Değişir?</h4>
-                <p>Satürn'ün 29 yıllık döngüsü tamamlandığında, evrenin size verdiği en büyük sınavla yüzleşirsiniz.</p>
-                <span class="blog-side-read">Devamını Oku →</span>
-            </a>
-            <a href="#" class="blog-side-item" data-blog-id="merkur-retro">
-                <h4 class="serif">Merkür Retrosu Gerçekte Ne Anlama Geliyor?</h4>
-                <p>İletişim kazaları, teknoloji aksaklıkları ve eski mesajlar... Merkür retrosunun gerçek astrolojik anlamı.</p>
-                <span class="blog-side-read">Devamını Oku →</span>
-            </a>
-            <a href="#" class="blog-side-item" data-blog-id="ay-dugum">
-                <h4 class="serif">Ay Düğümleri ve Karmik Yolculuğunuz</h4>
-                <p>Kuzey ve Güney Ay düğümleri, ruhunuzun bu hayatta nereye yönelmesi gerektiğini gösterir.</p>
-                <span class="blog-side-read">Devamını Oku →</span>
-            </a>
-        </div>
-    </div>
-
-    <!-- Canvas Background -->
-    <canvas id="constellation-canvas"></canvas>
-    <div class="universe-bg">
-        <video id="hero-bg-video" src="/assets/hero_bg.mp4" muted playsinline autoplay style="opacity: 0;" class="hero-bg-video"></video>
-        <div class="nebula"></div>
-        <div class="stars"></div>
-    </div>
-    <div id="scroll-overlay" class="scroll-overlay"></div>
-
-    <header id="main-header">
-        <div class="logo">
-            <span class="logo-icon">☽</span> AstroCelestial
-        </div>
-        <nav>
-            <a href="#hero">Ana Sayfa</a>
-            <a href="#services">Hizmetler</a>
-            <a href="#process">Süreç</a>
-            <a href="#calculator">Harita</a>
-            <a href="#testimonials">Yorumlar</a>
-            <a href="#library">Kütüphane</a>
-        </nav>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
-            <div class="hero-badge" data-reveal>
-                <span id="moon-phase-icon">🌙</span>
-                <span id="moon-phase-text">Ay Evresi Yükleniyor...</span>
-            </div>
-            <h1 id="hero-title" data-reveal></h1>
-            <p data-reveal>Doğduğunuz an gökyüzü nasıl konumlanmıştı? Kaderinizin haritasını birlikte çıkaralım ve yıldızların size fısıldadığı sırları keşfedelim.</p>
-            <div data-reveal>
-                <button class="cta-button glow-pulse" onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})">
-                    <span>Haritanı Keşfet</span>
-                </button>
-            </div>
-            <div class="scroll-indicator" data-reveal>
-                <div class="scroll-arrow"></div>
-            </div>
-            <!-- Combined Hero Info Card (Stats, Daily Insight, Press Logos) -->
-            <div class="hero-info-card glass-card" data-reveal>
-                <!-- Daily Insight Section -->
-                <div class="hero-card-section daily-sub-widget">
-                    <div class="daily-header">
-                        <span class="daily-badge">✦ GÜNLÜK</span>
-                        <span id="daily-date" class="daily-date"></span>
+    <nav class="site-nav" aria-label="Ana gezinme">
+        <div class="nav-inner">
+            <a href="#tarihce">Tarihçe</a>
+            <a href="#ogreti">Öğreti</a>
+            <a href="#harita">Harita</a>
+            <a href="#seanslar">Seanslar</a>
+            <a href="#yazilar">Yazılar</a>
+            <a href="#hakkinda">Hakkında</a>
+            <a href="#kaynakca">Kaynakça</a>
+        </div>
+    </nav>
+
+    <main id="top">
+
+        <!-- ============ HERO ============ -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <span class="kicker" data-reveal>MÖ 2000'den Bugüne</span>
+                    <h1 data-reveal>Astroloji, <em>burçlardan</em> ibaret değildir.</h1>
+                    <p class="lede" data-reveal>Babil'in kil tabletlerinden Ortaçağ'ın resimli el yazmalarına; gökyüzünü okuma sanatının dört bin yıllık hikâyesi ve bu hikâyenin sizin haritanızdaki karşılığı.</p>
+                    <div class="hero-ctas" data-reveal>
+                        <a href="#tarihce" class="btn">Tarihçeyi Keşfedin</a>
+                        <a href="#harita" class="link-arrow">Haritanızı Çizin →</a>
                     </div>
-                    <p class="serif card-sub-title" style="color: var(--gold); letter-spacing: 2px; margin-top: 0.5rem; font-size: 0.8rem; text-transform: uppercase;">Günün Kozmik Fısıltısı</p>
-                    <h4 id="daily-text" class="daily-quote" style="font-size: 1.05rem; line-height: 1.4; margin-top: 0.4rem; opacity: 0.9; font-style: italic;"></h4>
+                    <p class="hero-note" data-reveal>
+                        <span>✳&#xFE0E;</span>
+                        <span>Bu gece gökyüzünde: <span class="madder" data-moon-phase>—</span></span>
+                    </p>
                 </div>
-
-                <div class="card-divider"></div>
-
-                <!-- Stats Section -->
-                <div class="hero-card-section stats-sub-grid">
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="2847">0</span>
-                        <span class="stat-label">Mutlu Danışan</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="20">0</span>
-                        <span class="stat-label">Yıl Deneyim</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="12">0</span>
-                        <span class="stat-label">Uzmanlık</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="98">0</span>
-                        <span class="stat-label">% Memnuniyet</span>
-                    </div>
-                </div>
-
-                <div class="card-divider"></div>
-
-                <!-- Press Logos Section -->
-                <div class="hero-card-section press-sub-logos">
-                    <p class="press-title" style="text-transform: uppercase; font-size: 0.6rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; opacity: 0.7;">Basında Biz</p>
-                    <div class="press-logos-row" style="display: flex; justify-content: space-between; align-items: center; opacity: 0.5; font-size: 0.8rem; gap: 0.8rem;">
-                        <span class="serif" style="font-size: 1.1rem; letter-spacing: 1px;">VOGUE</span>
-                        <span class="serif" style="font-size: 1.1rem; font-style: italic; letter-spacing: 0.5px;">BAZAAR</span>
-                        <span style="font-weight: bold; font-size: 0.9rem; letter-spacing: 2px;">ELLE</span>
-                        <span class="serif" style="font-size: 1.1rem;">CLAIRE</span>
-                    </div>
+                <div class="wheel-wrap" data-reveal>
+                    <div id="zodiac-wheel"></div>
+                    <p class="wheel-caption">Zodyak Çarkı — On İki Burç, Dört Element</p>
                 </div>
             </div>
         </section>
 
-
-        <!-- Calculator Section -->
-        <section id="process" class="process-section" style="position: relative;">
-            <svg class="bg-decoration" viewBox="0 0 100 100" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80vh; height: 80vh; opacity: 0.03; z-index: -1; pointer-events: none;">
-                <circle cx="50" cy="50" r="40" stroke="var(--gold)" fill="none" stroke-width="0.5"/>
-                <circle cx="50" cy="50" r="30" stroke="var(--gold)" fill="none" stroke-width="0.5"/>
-                <path d="M50 0 L50 100 M0 50 L100 50 M15 15 L85 85 M15 85 L85 15" stroke="var(--gold)" stroke-width="0.2"/>
-            </svg>
-            <div class="section-title" data-reveal>
-                <p>Kozmik Yolculuk</p>
-                <h2>Danışmanlık Süreci</h2>
-            </div>
-            <div class="process-steps" data-reveal>
-                <div class="step">
-                    <div class="step-visual">
-                        <img src="/assets/step1.png" alt="Bağlantı">
-                    </div>
-                    <div class="step-number serif">01</div>
-                    <h4 class="serif">Bağlantı & Form</h4>
-                    <p>Doğum bilgilerinizi (gün, ay, yıl, saat ve yer) detaylı bir şekilde ileterek kozmik haritanızın şifrelerini açmak için ilk adımı atarsınız.</p>
+        <!-- ============ MANİFESTO ============ -->
+        <section class="manifesto" style="padding-block: 0;">
+            <div class="container manifesto-grid" style="padding-block: clamp(2.5rem, 5vw, 3.6rem);">
+                <div class="manifesto-item" data-reveal>
+                    <span class="m-num">i.</span>
+                    <h3>Dört bin yıllık kayıt</h3>
+                    <p>Astroloji, insanlığın kesintisiz tutulmuş en eski gözlem külliyatlarından birinin üzerinde durur: kil tabletler, papirüsler, el yazmaları.</p>
                 </div>
-                <div class="step">
-                    <div class="step-visual">
-                        <img src="/assets/step2.png" alt="Analiz">
-                    </div>
-                    <div class="step-number serif">02</div>
-                    <h4 class="serif">Derin Analiz</h4>
-                    <p>Özlem, gezegen konumlarınızı, açılarınızı ve ev yerleşimlerinizi kadim tekniklerle detaylıca inceler. Yaklaşık 2-3 günlük bir ön hazırlık süreci başlar.</p>
+                <div class="manifesto-item" data-reveal>
+                    <span class="m-num">ii.</span>
+                    <h3>Bilgiyle, usulüyle</h3>
+                    <p>Burada okuyacağınız her tarihsel bilgi gerçek akademik kaynaklara dayanır ve sayfa sonunda usulüne uygun biçimde kaynak gösterilir.</p>
                 </div>
-                <div class="step">
-                    <div class="step-visual">
-                        <img src="/assets/step3.png" alt="Seans">
-                    </div>
-                    <div class="step-number serif">03</div>
-                    <h4 class="serif">Birebir Seans</h4>
-                    <p>Canlı video veya sesli görüşme ile haritanızın hikayesi size aktarılır. Potansiyelleriniz ve gelecek dönem öngörüleri gökyüzü rehberliğinde yanıtlanır.</p>
-                </div>
-                <div class="step">
-                    <div class="step-visual">
-                        <img src="/assets/step4.png" alt="Rehber">
-                    </div>
-                    <div class="step-number serif">04</div>
-                    <h4 class="serif">Kozmik Rehber</h4>
-                    <p>Görüşme sonrası, önemli tarihleri ve kişisel döngülerinizi içeren detaylı bir PDF rapor e-postanıza gönderilir. Bu sizin yaşam boyu rehberiniz olacaktır.</p>
+                <div class="manifesto-item" data-reveal>
+                    <span class="m-num">iii.</span>
+                    <h3>Haritadan seansa</h3>
+                    <p>Güneş burcunuz yalnızca ilk katmandır. Ay, yükselen, evler ve açılar; ancak birebir seansta bütün olarak okunur.</p>
                 </div>
             </div>
         </section>
 
-        
-        <section id="library">
-            <div class="section-title" data-reveal>
-                <p>Kozmik Kütüphane</p>
-                <h2>Gökyüzü Fısıltıları</h2>
-            </div>
-            <div class="blog-grid" data-reveal>
-                <article class="blog-card glass-card">
-                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1532968961962-8a0cb3a2d4f5?q=80&w=600&auto=format&fit=crop');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">Astroloji Eğitimi</span>
-                        <h4 class="serif">Plüton Kova Burcunda: Yeni Bir Çağın Başlangıcı</h4>
-                        <p>Kolektif bilincin dönüşümü ve teknolojik devrimlerin astrolojik etkilerini inceliyoruz.</p>
-                        <a href="#" class="btn-secondary read-more-btn" data-blog-id="pluto-kova" style="margin-top:auto;">Devamını Oku →</a>
-                    </div>
-                </article>
-                <article class="blog-card glass-card">
-                    <div class="blog-img" style="background-image: url('/assets/new_moon.png');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">Ay Döngüleri</span>
-                        <h4 class="serif">Yeni Ay Manifestasyon Ritüelleri</h4>
-                        <p>Yeni başlangıçlar için Ay'ın enerjisini nasıl kullanabilirsiniz? Adım adım ritüel rehberi.</p>
-                        <a href="#" class="btn-secondary read-more-btn" data-blog-id="yeni-ay-rituel" style="margin-top:auto;">Devamını Oku →</a>
-                    </div>
-                </article>
-                <article class="blog-card glass-card">
-                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=600&auto=format&fit=crop');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">İlişkiler</span>
-                        <h4 class="serif">Venüs Retrogradında Aşka Dair Bilmeniz Gerekenler</h4>
-                        <p>Geçmişten gelen bağlar ve karmik ilişkiler bu dönemde neden tekrar yüzeye çıkar?</p>
-                        <a href="#" class="btn-secondary read-more-btn" data-blog-id="venus-retro" style="margin-top:auto;">Devamını Oku →</a>
-                    </div>
-                </article>
-                <article class="blog-card glass-card">
-                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1614732414444-096e5f1122d5?q=80&w=600&auto=format&fit=crop');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">Gezegen Döngüleri</span>
-                        <h4 class="serif">Satürn Dönüşü: 29 Yaşında Hayatınız Neden Değişir?</h4>
-                        <p>Satürn'ün 29 yıllık döngüsü tamamlandığında, evrenin size verdiği en büyük sınavla yüzleşirsiniz.</p>
-                        <a href="#" class="btn-secondary read-more-btn" data-blog-id="saturn-donusu" style="margin-top:auto;">Devamını Oku →</a>
-                    </div>
-                </article>
-                <article class="blog-card glass-card">
-                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=600&auto=format&fit=crop');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">Retro Dönemleri</span>
-                        <h4 class="serif">Merkür Retrosu Gerçekte Ne Anlama Geliyor?</h4>
-                        <p>İletişim kazaları, teknoloji aksaklıkları ve eski mesajlar... Merkür retrosunun gerçek anlamı.</p>
-                        <a href="#" class="btn-secondary read-more-btn" data-blog-id="merkur-retro" style="margin-top:auto;">Devamını Oku →</a>
-                    </div>
-                </article>
-                <article class="blog-card glass-card">
-                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=600&auto=format&fit=crop');"></div>
-                    <div class="blog-content">
-                        <span class="blog-category">Karmik Astroloji</span>
-                        <h4 class="serif">Ay Düğümleri ve Karmik Yolculuğunuz</h4>
-                        <p>Kuzey ve Güney Ay düğümleri, ruhunuzun bu hayatta nereye yönelmesi gerektiğini gösterir.</p>
-                        <a href="#" class="btn-secondary read-more-btn" data-blog-id="ay-dugum" style="margin-top:auto;">Devamını Oku →</a>
-                    </div>
-                </article>
+        <!-- ============ TARİHÇE ============ -->
+        <section id="tarihce">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <span class="kicker">Tarihçe</span>
+                    <h2>Gökyüzünü Okumanın Kısa Tarihi</h2>
+                    <div class="head-rule"></div>
+                    <p class="head-desc">Astrolojinin hikâyesi, yazının icadıyla neredeyse yaşıttır. Aşağıdaki bölümler, bu dört bin yıllık yolculuğun ana duraklarını akademik kaynaklardan derler.</p>
+                </div>
+
+                <div class="timeline">
+                    <!-- ERA:babil -->
+                    <article class="era" data-reveal>
+                        <div class="era-rubric">
+                            <span class="roman">I</span>
+                            <span class="era-label">MÖ 2000 – MÖ 300<br>Mezopotamya</span>
+                        </div>
+                        <div class="era-body">
+                            <h3>Gökyüzü Kâhinleri</h3>
+                            <p>Babil düşüncesinde gök, tanrıların iradesinin yazıldığı bir yüzeydi; kil tabletlere kaydedilen alâmetler krala ve ülkeye dair uyarılar olarak okunurdu. Kökleri MÖ 2. binyıla uzanan Enûma Anu Enlil serisi, yaklaşık yetmiş tablette 6.500–7.000 dolayında gök alâmetini bir araya getirir; en iyi korunmuş nüshaları Ninova'daki Asurbanipal kütüphanesinden (MÖ 7. yüzyıl) gelmektedir. MÖ 1000 civarında derlendiği düşünülen, bilinen en eski nüshası MÖ 687'ye tarihlenen MUL.APIN ise iki tablet üzerinde yıldız ve takımyıldız adlarını, doğuş ve batış tarihlerini sistemli biçimde sıralayan bir astronomi derlemesidir.<sup class="fn"><a href="#kaynakca">1</a>,&#8202;<a href="#kaynakca">2</a></sup></p>
+                            <p>MÖ 5. yüzyılda Babilli kâtipler, ekliptiği her biri otuz derecelik on iki eşit burca bölerek bugün de kullanılan zodyak şemasını standartlaştırdılar; Ossendrijver bu "zodyak dönüşümünü" astral bilimler tarihinde bir dönüm noktası sayar. Devlete ilişkin alâmetlerin yerini giderek bireyin yazgısı almaya başladı: bilinen en eski kişisel horoskop, MÖ 410'da Babil'de doğan bir çocuk için gezegen konumlarını kaydeden çivi yazılı bir tablettir. Rochberg'in "göğün yazısı" diye nitelediği bu gelenek, Helenistik dünyaya aktarılarak Batı astrolojisinin temelini oluşturacaktı.<sup class="fn"><a href="#kaynakca">2</a>,&#8202;<a href="#kaynakca">5</a></sup></p>
+                        </div>
+                        <aside class="era-note">Bilinen en eski kişisel horoskop, MÖ 410 yılında Babil'de doğan bir çocuğun gökyüzünü kaydeden çivi yazılı bir kil tablettir.<sup class="fn"><a href="#kaynakca">2</a></sup></aside>
+                    </article>
+
+                    <!-- ERA:helenistik -->
+                    <article class="era" data-reveal>
+                        <div class="era-rubric">
+                            <span class="roman">II</span>
+                            <span class="era-label">MÖ 332 – MS 200<br>Mısır &amp; Helenistik Dünya</span>
+                        </div>
+                        <div class="era-body">
+                            <h3>İskenderiye Sentezi</h3>
+                            <p>Büyük İskender'in MÖ 332'de Mısır'ı fethinin ardından İskenderiye, Babil'in matematiksel gök bilimi ile Mısır'ın yıldız geleneklerinin buluştuğu bir sentez merkezine dönüştü. Babil kehanet literatürünün gezegen gözlemleri, Yunan geometrisi ve felsefesiyle birleşerek yeni bir disiplin doğurdu: doğum anındaki gökyüzünü esas alan horoskopik astroloji. Sistemin eksenindeki kavram, doğu ufkunda o an yükselmekte olan burç derecesini gösteren <em>horoskopos</em> — "saat gözcüsü" — idi; disiplin adını da bu kavramdan alır. MÖ 2. yüzyılda Kral Nekhepso ile rahip Petosiris'e atfedilen Yunanca metinler, bu öğretinin ilk kapsamlı derlemeleri sayılır.<sup class="fn"><a href="#kaynakca">8</a></sup></p>
+                            <p>Bu sentezin en somut tanığı, Hathor Tapınağı'nın çatısındaki Osiris şapelinin tavanından sökülen Dendera zodyağıdır: MÖ 50 civarına tarihlenen bu dairesel kabartma, on iki burcu Mısır'ın otuz altı dekanıyla — geceyi ölçmekte kullanılan on günlük yıldız grupları — aynı gök haritasında birleştirir. 1821'de yerinden çıkarılan eser bugün Louvre'dadır. Sistemin kuramsal mimarisini ise MS 2. yüzyılda İskenderiyeli Batlamyus (Klaudios Ptolemaios) kurdu: dört kitaptan oluşan Tetrabiblos, astrolojiyi Aristotelesçi doğa felsefesine dayandırarak bin yılı aşkın süre başvurulacak sistemli bir külliyata dönüştürdü.<sup class="fn"><a href="#kaynakca">7</a>,&#8202;<a href="#kaynakca">8</a></sup></p>
+                        </div>
+                        <aside class="era-note">Yunanca yazıtlı en eski horoskop tasvirlerinden biri Türkiye'dedir: Nemrut Dağı'ndaki "Aslan Horoskopu", Kommagene Kralı I. Antiokhos için 7 Temmuz MÖ 62 gökyüzünü betimler.<sup class="fn"><a href="#kaynakca">6</a></sup></aside>
+                    </article>
+
+                    <!-- ERA:islam -->
+                    <article class="era" data-reveal>
+                        <div class="era-rubric">
+                            <span class="roman">III</span>
+                            <span class="era-label">MS 750 – 1200<br>İslam Dünyası</span>
+                        </div>
+                        <div class="era-body">
+                            <h3>Bağdat'tan Toledo'ya</h3>
+                            <p>Abbâsî halifesi el-Mansûr, yeni başkenti Bağdat'ın temelini 30 Temmuz 762'de, saray müneccimleri Nevbaht ile Mâşâallah'ın seçtiği saatte attırdı; şehir, kuruluş anının yıldız haritası çıkarılarak doğan ender başkentlerdendir. Halife Me'mûn döneminde (813–833) parlayan Beytü'l-Hikme çevresinde Batlamyus'un Almagest'i ve Tetrabiblos'u Yunancadan Arapçaya aktarıldı; Hint ve Sâsânî gelenekleri de bu birikime katıldı. Belh doğumlu Ebû Ma'şer (787–886), 848 dolayında Bağdat'ta kaleme aldığı Kitâbü'l-Medhali'l-Kebîr ile astrolojiyi Aristotelesçi doğa felsefesine dayandırarak sistemleştirdi.<sup class="fn"><a href="#kaynakca">9</a></sup></p>
+                            <p>Bu bilgi maddede de cisimleşti: günümüze ulaşan tarihli en eski usturlab, 927–928'de Bağdat'ta Nastûlus'un elinden çıkmıştır; Hârizmî'nin 820 dolayında derlediği zîcler gezegen konumlarının hesaplanmasını sağlayan tablolar sunuyordu. On ikinci yüzyılda akış yön değiştirdi: Toledo'da Cremonalı Gerard, Almagest dahil yetmişi aşkın Arapça eseri Latinceye çevirdi; Sevillalı Juan'ın 1133'te çevirdiği Kitâbü'l-Medhal ise "Albumasar" adıyla tanınan Ebû Ma'şer'i Latin Avrupa'nın en çok okunan astroloji yazarına dönüştürdü. Skolastik Batı, Aristoteles'in doğa felsefesiyle ilk kez büyük ölçüde bir astroloğun eseri aracılığıyla tanıştı.<sup class="fn"><a href="#kaynakca">9</a>,&#8202;<a href="#kaynakca">10</a></sup></p>
+                        </div>
+                        <aside class="era-note">Bağdat, temel atma saati saray müneccimlerince seçilen ve kuruluş yıldız haritası günümüze ulaşan ender başkentlerden biridir: 30 Temmuz 762.<sup class="fn"><a href="#kaynakca">9</a></sup></aside>
+                    </article>
+
+                    <!-- ERA:ortacag -->
+                    <article class="era" data-reveal>
+                        <div class="era-rubric">
+                            <span class="roman">IV</span>
+                            <span class="era-label">MS 800 – 1500<br>Ortaçağ Avrupası</span>
+                        </div>
+                        <div class="era-body">
+                            <h3>Tezhipli El Yazmalarında Gökyüzü</h3>
+                            <p>Ortaçağ Avrupası'nda astronomi ile astroloji henüz ayrı disiplinler değildi; Latince <em>astronomia</em> ve <em>astrologia</em> sözcükleri yüzyıllar boyunca birbirinin yerine kullanıldı. Gök bilgisi, manastır yazıhanelerinde ve Chartres gibi katedral okullarında aritmetik, geometri ve müzikle birlikte <em>quadrivium</em>'un dört yolundan biri olarak okutuluyordu. Bu geleneğin en zarif tanıklarından biri, 9. yüzyılda muhtemelen Karolenj sarayı çevresinde istinsah edilen ve bugün British Library'de korunan Harley MS 647'dir: Cicero'nun Aratea çevirisine eşlik eden takımyıldız figürleri, Hyginus'un Astronomica'sından alınmış satırlarla biçimlendirilmiştir.<sup class="fn"><a href="#kaynakca">9</a></sup></p>
+                            <p>On ikinci yüzyılda Arapçadan yapılan çeviriler — Ebû Ma'şer'in eserleri ile Batlamyus'un Tetrabiblos'u — gök bilgisini üniversite müfredatına taşıdı. Bologna Üniversitesi'nde 1322'de astroloji kürsüsüne getirilen hekim Cecco d'Ascoli, yıldız bilgisini tıp eğitiminin ayrılmaz parçası sayıyordu. Hekimler, her uzvu bir burcun yönettiğini varsayan <em>homo signorum</em>, yani "burçlar insanı" şemalarına başvurur; Ay ilgili burçtayken o uzuvdan kan almaktan kaçınırlardı. Bu tasavvurun en görkemli örneği, Limbourg kardeşlerin 1411–1416 arasında Berry Dükü Jean için resimlediği Très Riches Heures'ün takvim bölümünü kapatan zodyak insanı minyatürüdür.<sup class="fn"><a href="#kaynakca">9</a></sup></p>
+                        </div>
+                        <aside class="era-note">Harley MS 647'de takımyıldız figürleri fırçayla değil sözcüklerle çizilmiştir: Hyginus'tan alınan satırlar, hayvan bedenlerinin içini doldurur.</aside>
+                    </article>
+
+                    <!-- ERA:ronesans -->
+                    <article class="era" data-reveal>
+                        <div class="era-rubric">
+                            <span class="roman">V</span>
+                            <span class="era-label">MS 1450 – 1700<br>Rönesans</span>
+                        </div>
+                        <div class="era-body">
+                            <h3>Ayrılan Yollar: Rönesans ve Bilimsel Devrim</h3>
+                            <p>Rönesans saraylarında müneccimlik hâlâ saygın bir meslekti; hekim, filozof ve yıldız bilgini çoğu zaman aynı kişiydi. Medici Floransa'sının Platoncu filozofu Marsilio Ficino, 1489'da yayımlanan De vita libri tres'in üçüncü kitabında gök etkilerinden tılsımlar, müzik ve perhiz yoluyla yararlanmayı öneriyordu. Aynı yıllarda matbaa, yıldız bilgisini saray duvarlarının dışına taşıdı: Nürnberg'de kendi basımevini kuran Regiomontanus'un 1474 tarihli Ephemerides'i gezegen konumlarını binlerce okura ulaştırdı; ucuz almanaklar erken modern Avrupa'nın en yaygın basılı türlerinden biri hâline geldi.<sup class="fn"><a href="#kaynakca">9</a></sup></p>
+                            <p>Bilimsel devrimin kurucuları da yıldız hesaplarıyla geçiniyordu. Danimarka kralının Hven adasında yaptırdığı Uraniborg gözlemevinin (1576) sahibi Tycho Brahe, saraya yıllık astrolojik takvimler ve prens doğumlarında horoskoplar sunmakla yükümlüydü. Prag'da onun yerini alan imparatorluk matematikçisi Johannes Kepler, gezegen yasalarını keşfederken doğum haritaları çıkarmayı sürdürdü: el yazmaları arasında sekiz yüzü aşkın horoskop korunur; 1608'de adı gizli tutulan bir soylu — geleceğin başkomutanı Wallenstein — için hazırladığı yorumu 1625'te genişletti. Teleskop ve Newton fiziğinin ardından iki disiplinin yolları sessizce ayrıldı; astroloji 1700'e gelindiğinde Avrupa üniversitelerinden büyük ölçüde çekilmişti.<sup class="fn"><a href="#kaynakca">9</a></sup></p>
+                        </div>
+                        <aside class="era-note">1660'larda İngiltere'de yılda yaklaşık 400.000 almanak satılıyordu — kabaca her üç haneden birinin her yıl bir almanak edindiği anlamına gelir.<sup class="fn"><a href="#kaynakca">9</a></sup></aside>
+                    </article>
+
+                    <!-- ERA:modern -->
+                    <article class="era" data-reveal>
+                        <div class="era-rubric">
+                            <span class="roman">VI</span>
+                            <span class="era-label">MS 1875 – Günümüz<br>Modern Dönem</span>
+                        </div>
+                        <div class="era-body">
+                            <h3>Psikolojik Astrolojinin Doğuşu</h3>
+                            <p>Aydınlanma'nın gölgesinde itibarını yitiren astroloji, on dokuzuncu yüzyılın sonunda, 1875'te New York'ta kurulan Teosofi Cemiyeti'nin çevresinde yeniden canlandı. Londralı astrolog Alan Leo (1860–1917), 1895'ten itibaren yayımladığı Modern Astrology dergisinde disiplini olay kehanetinden karakter çözümlemesine yöneltti; bu yaklaşım ona "modern astrolojinin babası" unvanını kazandırdı. 24 Ağustos 1930'da Sunday Express, R. H. Naylor'ın yeni doğan Prenses Margaret için hazırladığı yıldız yorumunu yayımladı; yazının gördüğü ilgi, basın tarihinin ilk düzenli burç köşesini doğurdu.<sup class="fn"><a href="#kaynakca">9</a></sup></p>
+                            <p>Astrolojinin yirminci yüzyıldaki en beklenmedik muhatabı ise psikolojiydi. C. G. Jung, 1911'de Freud'a yazdığı bir mektupta akşamlarını horoskop hesaplarına ayırdığını anlatıyor, gezegen sembollerini kolektif bilinçdışının arketipleriyle ilişkilendiriyordu. 1952 tarihli Senkronisite denemesinde 483 evli çiftin 966 doğum haritasını istatistiksel olarak inceledi; sonuçlar anlamlı çıkmadı, fakat deney astrolojiyi nedensellik yerine "eşzamanlılık" kavramıyla düşünmenin yolunu açtı. Besteci Dane Rudhyar (1895–1985) ise The Astrology of Personality (1936) ile Jung psikolojisini astrolojiye taşıdı: hümanistik astrolojide harita, kaderin hükmü değil, bireyleşme sürecinin simgesel bir planıydı.<sup class="fn"><a href="#kaynakca">12</a></sup></p>
+                        </div>
+                        <aside class="era-note">"Modern astrolojinin babası" Alan Leo, Temmuz 1917'de Londra'da falcılık suçundan mahkûm edildi; birkaç hafta sonra, 30 Ağustos 1917'de öldü.<sup class="fn"><a href="#kaynakca">9</a></sup></aside>
+                    </article>
+                </div>
+
+                <!-- FIGURES -->
+                <div class="figure-row" data-reveal id="figure-row">
+                    <figure class="plate">
+                        <div class="plate-frame">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/British_Museum_Cuneiform_planisphere_K8538.jpg/1000px-British_Museum_Cuneiform_planisphere_K8538.jpg" alt="Ninova planisferi: takımyıldızları daire içinde gösteren çivi yazılı kil tablet" loading="lazy">
+                        </div>
+                        <figcaption>
+                            <span class="plate-no">Levha I · MÖ y. 650</span>
+                            Ninova Kraliyet Kütüphanesi'nden çivi yazılı gökyüzü haritası (planisfer).
+                            <span class="credit">British Museum, K.8538 — Wikimedia Commons (CC0)</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="plate">
+                        <div class="plate-frame">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Dendera_zodiac%2C_Louvre.jpg" alt="Dendera zodyağı kabartması, Louvre Müzesi" loading="lazy">
+                        </div>
+                        <figcaption>
+                            <span class="plate-no">Levha II · MÖ y. 50</span>
+                            Dendera Zodyağı: on iki burcu Mısır dekanlarıyla birleştiren tavan kabartması.
+                            <span class="credit">Musée du Louvre, D 38 — Wikimedia Commons (kamu malı)</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="plate">
+                        <div class="plate-frame">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Illustration_of_the_constellation_Sirius_-_Harley_Aratus_%28c.820-840%29%2C_f.8v_-_BL_Harley_MS_647.jpg/1000px-Illustration_of_the_constellation_Sirius_-_Harley_Aratus_%28c.820-840%29%2C_f.8v_-_BL_Harley_MS_647.jpg" alt="Harley MS 647'den Sirius takımyıldızı tasviri" loading="lazy">
+                        </div>
+                        <figcaption>
+                            <span class="plate-no">Levha III · MS y. 820–840</span>
+                            Cicero'nun Aratea'sından Sirius: bedeni Hyginus'un satırlarıyla örülmüş köpek figürü.
+                            <span class="credit">British Library, Harley MS 647, f. 8v — Wikimedia Commons (kamu malı)</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="plate">
+                        <div class="plate-frame">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Astrolabe_of_%E2%80%98Umar_ibn_Yusuf_ibn_%E2%80%98Umar_al-Muzaffari_MET_DP170386.jpg/1000px-Astrolabe_of_%E2%80%98Umar_ibn_Yusuf_ibn_%E2%80%98Umar_al-Muzaffari_MET_DP170386.jpg" alt="Ömer bin Yusuf'un imzalı pirinç usturlabı, 1291" loading="lazy">
+                        </div>
+                        <figcaption>
+                            <span class="plate-no">Levha IV · MS 1291</span>
+                            Ömer bin Yusuf el-Muzafferî'nin imzalı pirinç usturlabı: gökyüzünü avuç içine sığdıran alet.
+                            <span class="credit">The Metropolitan Museum of Art, 91.1.535a–h — Wikimedia Commons (CC0)</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="plate">
+                        <div class="plate-frame">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Anatomical_Man.jpg/1000px-Anatomical_Man.jpg" alt="Zodyak İnsanı minyatürü, Très Riches Heures" loading="lazy">
+                        </div>
+                        <figcaption>
+                            <span class="plate-no">Levha V · MS 1411–1416</span>
+                            Zodyak İnsanı (homo signorum): on iki burcun bedenin uzuvlarına dağılımı, Limbourg kardeşler.
+                            <span class="credit">Musée Condé, MS 65, f. 14v — Wikimedia Commons (kamu malı)</span>
+                        </figcaption>
+                    </figure>
+                </div>
             </div>
         </section>
 
-        <!-- Process Section -->
-        <section id="calculator">
-            <div class="section-title" data-reveal>
-                <p>Kozmik Harita</p>
-                <h2>Gökyüzü Portreniz</h2>
+        <!-- ============ ALINTI ============ -->
+        <section class="interlude" style="padding-block: clamp(4rem, 8vw, 6rem);">
+            <div class="container" data-reveal>
+                <blockquote>«Ölümlü olduğumu, bir günün çocuğu olduğumu bilirim; ama yıldızların sarmal yollarını izlerken ayaklarım artık yere değmez.»</blockquote>
+                <cite>Batlamyus'a atfedilen epigram — Yunan Antolojisi, IX. 577</cite>
             </div>
-            <div class="calculator-container">
-                <div class="glass-card" data-reveal>
-                    <h2 class="serif" style="font-size: 2rem; margin-bottom: 2rem; color: var(--gold-light);">Doğum Bilgilerinizi Girin</h2>
-                    <form id="natal-form" class="styled-form">
-                        <div class="form-group input-icon-group">
-                            <label for="name">İsim</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">✦</span>
-                                <input type="text" id="name" placeholder="Tam Adınız" required>
-                            </div>
+        </section>
+
+        <!-- ============ ÖĞRETİ ============ -->
+        <section id="ogreti">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <span class="kicker">Öğreti</span>
+                    <h2>Bir Haritanın Dört Katmanı</h2>
+                    <div class="head-rule"></div>
+                    <p class="head-desc">Doğum haritası, doğduğunuz an ve yer için çizilmiş bir gökyüzü fotoğrafıdır. Gelenek onu dört soruyla okur.</p>
+                </div>
+
+                <div class="layers-grid" data-reveal>
+                    <div class="layer">
+                        <span class="layer-q">Ne? — Enerjinin kendisi</span>
+                        <h3>Gezegenler</h3>
+                        <p>Güneş kimliği, Ay duygusal doğayı, Merkür zihni, Venüs değerleri, Mars iradeyi anlatır. Jüpiter ve Satürn toplumsal döngüleri, dış gezegenler kuşakların imzasını taşır.</p>
+                        <div class="glyph-row">☉&#xFE0E; ☽&#xFE0E; ☿&#xFE0E; ♀&#xFE0E; ♂&#xFE0E; ♃&#xFE0E; ♄&#xFE0E;</div>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-q">Nasıl? — Enerjinin üslubu</span>
+                        <h3>Burçlar</h3>
+                        <p>On iki burç, gezegen enerjisinin hangi üslupla ifade edildiğini gösterir. Her biri bir elemente (ateş, toprak, hava, su) ve bir niteliğe (öncü, sabit, değişken) aittir.</p>
+                        <div class="glyph-row">♈&#xFE0E; ♉&#xFE0E; ♊&#xFE0E; ♋&#xFE0E; ♌&#xFE0E; ♍&#xFE0E; ♎&#xFE0E; ♏&#xFE0E; ♐&#xFE0E; ♑&#xFE0E; ♒&#xFE0E; ♓&#xFE0E;</div>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-q">Nerede? — Hayat alanı</span>
+                        <h3>Evler</h3>
+                        <p>Harita, doğum anındaki ufka göre on iki "ev"e bölünür: kimlik, kaynaklar, iletişim, yuva, yaratıcılık, hizmet, ortaklıklar, dönüşüm, anlam, kariyer, topluluk ve bilinçdışı.</p>
+                        <div class="glyph-row">I · IV · VII · X</div>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-q">İlişki? — Enerjilerin diyaloğu</span>
+                        <h3>Açılar</h3>
+                        <p>Gezegenler arasındaki geometrik açılar haritanın cümle yapısıdır: kavuşum birleştirir, üçgen destekler, kare gerilim ve gelişim alanı yaratır, karşıtlık dengeyi arar.</p>
+                        <div class="glyph-row">☌ △ □ ☍</div>
+                    </div>
+                </div>
+
+                <p class="ogreti-footnote" data-reveal>
+                    <strong style="font-weight:400; font-style:italic;">Not:</strong> Gazetelerde okuduğunuz "burcunuz", yalnızca Güneş'inizin burcudur — haritanın tek bir katmanının tek bir öğesi. Aynı Güneş burcuna sahip iki kişinin haritaları, Ay'ları, yükselenleri ve açıları bambaşka olabilir. Astrolojinin klasik metinleri de kişiyi tek burca indirgemez; haritayı bütün olarak okur.<sup class="fn"><a href="#kaynakca">7</a></sup>
+                </p>
+            </div>
+        </section>
+
+        <div class="container"><div class="section-sep">✦ ✦ ✦</div></div>
+
+        <!-- ============ BURÇLAR ============ -->
+        <section id="burclar" style="padding-top: clamp(2.5rem, 5vw, 4rem);">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <span class="kicker">Katalog</span>
+                    <h2>On İki Burç</h2>
+                    <div class="head-rule"></div>
+                    <p class="head-desc">Zodyak kuşağının on iki eşit dilimi; MÖ 5. yüzyılda Babil'de standartlaşan haliyle. Tarihler tropikal zodyağa göredir ve yıldan yıla bir gün oynayabilir.</p>
+                </div>
+
+                <div class="signs-grid" data-reveal>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♈&#xFE0E;</span>
+                        <h4>Koç</h4>
+                        <span class="sign-latin">Aries</span>
+                        <span class="sign-meta">21 Mart – 19 Nisan<br>Ateş · Öncü · <span class="gold">Mars</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♉&#xFE0E;</span>
+                        <h4>Boğa</h4>
+                        <span class="sign-latin">Taurus</span>
+                        <span class="sign-meta">20 Nisan – 20 Mayıs<br>Toprak · Sabit · <span class="gold">Venüs</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♊&#xFE0E;</span>
+                        <h4>İkizler</h4>
+                        <span class="sign-latin">Gemini</span>
+                        <span class="sign-meta">21 Mayıs – 20 Haziran<br>Hava · Değişken · <span class="gold">Merkür</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♋&#xFE0E;</span>
+                        <h4>Yengeç</h4>
+                        <span class="sign-latin">Cancer</span>
+                        <span class="sign-meta">21 Haziran – 22 Temmuz<br>Su · Öncü · <span class="gold">Ay</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♌&#xFE0E;</span>
+                        <h4>Aslan</h4>
+                        <span class="sign-latin">Leo</span>
+                        <span class="sign-meta">23 Temmuz – 22 Ağustos<br>Ateş · Sabit · <span class="gold">Güneş</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♍&#xFE0E;</span>
+                        <h4>Başak</h4>
+                        <span class="sign-latin">Virgo</span>
+                        <span class="sign-meta">23 Ağustos – 22 Eylül<br>Toprak · Değişken · <span class="gold">Merkür</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♎&#xFE0E;</span>
+                        <h4>Terazi</h4>
+                        <span class="sign-latin">Libra</span>
+                        <span class="sign-meta">23 Eylül – 22 Ekim<br>Hava · Öncü · <span class="gold">Venüs</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♏&#xFE0E;</span>
+                        <h4>Akrep</h4>
+                        <span class="sign-latin">Scorpius</span>
+                        <span class="sign-meta">23 Ekim – 21 Kasım<br>Su · Sabit · <span class="gold">Mars</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♐&#xFE0E;</span>
+                        <h4>Yay</h4>
+                        <span class="sign-latin">Sagittarius</span>
+                        <span class="sign-meta">22 Kasım – 21 Aralık<br>Ateş · Değişken · <span class="gold">Jüpiter</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♑&#xFE0E;</span>
+                        <h4>Oğlak</h4>
+                        <span class="sign-latin">Capricornus</span>
+                        <span class="sign-meta">22 Aralık – 19 Ocak<br>Toprak · Öncü · <span class="gold">Satürn</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♒&#xFE0E;</span>
+                        <h4>Kova</h4>
+                        <span class="sign-latin">Aquarius</span>
+                        <span class="sign-meta">20 Ocak – 18 Şubat<br>Hava · Sabit · <span class="gold">Satürn</span></span>
+                    </div>
+                    <div class="sign-cell">
+                        <span class="sign-glyph">♓&#xFE0E;</span>
+                        <h4>Balık</h4>
+                        <span class="sign-latin">Pisces</span>
+                        <span class="sign-meta">19 Şubat – 20 Mart<br>Su · Değişken · <span class="gold">Jüpiter</span></span>
+                    </div>
+                </div>
+                <p class="form-smallprint" data-reveal style="margin-top: 1.2rem;">Yönetici gezegenler klasik (geleneksel) atamalara göre verilmiştir; modern okulda Akrep'e Plüton, Kova'ya Uranüs, Balık'a Neptün de atanır.</p>
+            </div>
+        </section>
+
+        <!-- ============ HARİTA ============ -->
+        <section id="harita" style="background: var(--paper-warm); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <span class="kicker">Gökyüzü Portreniz</span>
+                    <h2>Doğum Haritanızı Çizin</h2>
+                    <div class="head-rule"></div>
+                    <p class="head-desc">Doğum bilgilerinizi girin; doğduğunuz andaki gökyüzü, gerçek astronomik hesapla çizilsin. Çıkan özet bir ön okumadır — haritanın tamamı seansta konuşulur.</p>
+                </div>
+
+                <div class="chart-section-grid">
+                    <form id="natal-form" class="ledger-form" data-reveal>
+                        <div class="form-row">
+                            <label for="f-name">İsim</label>
+                            <input type="text" id="f-name" placeholder="Adınız ve soyadınız" autocomplete="name" required>
                         </div>
-                        <div class="form-group input-icon-group">
-                            <label for="date">Doğum Tarihi</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">☽</span>
-                                <input type="date" id="date" required>
-                            </div>
+                        <div class="form-row">
+                            <label for="f-date">Doğum Tarihi</label>
+                            <input type="date" id="f-date" required>
                         </div>
-                        <div class="form-group input-icon-group">
-                            <label for="time">Doğum Saati</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">⏳</span>
-                                <input type="time" id="time" required>
-                            </div>
+                        <div class="form-row">
+                            <label for="f-time">Doğum Saati</label>
+                            <input type="time" id="f-time" required>
                         </div>
-                        <div class="form-group input-icon-group">
-                            <label for="location">Doğum Yeri</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">📍</span>
-                                <input type="text" id="location" placeholder="Şehir, Ülke" required>
-                            </div>
+                        <div class="form-row">
+                            <label for="f-location">Doğum Yeri</label>
+                            <input type="text" id="f-location" placeholder="Şehir (ör. İstanbul)" required>
                         </div>
-                        <button type="submit" class="cta-button submit-btn glow-pulse" style="width: 100%; margin-top: 1.5rem; font-size: 1.1rem; padding: 1.2rem;" id="submit-btn">
-                            <span>Kozmik Şifreyi Çöz</span>
-                        </button>
+                        <button type="submit" class="btn" id="natal-submit">Haritayı Çiz</button>
+                        <p class="form-smallprint">Bilgileriniz sunucuya kaydedilmez; hesap tarayıcınızda yapılır. Yükselen burç, doğum saatinin doğruluğuna duyarlıdır.</p>
                     </form>
-                </div>
-                <div class="chart-display" data-reveal>
-                    <div id="chart-container" class="glass-card placeholder-active" style="width: 100%; height: 550px; display: flex; justify-content: center; align-items: center; position: relative; padding: 20px; overflow: visible; border: 1px solid rgba(197,160,89,0.2); box-shadow: inset 0 0 80px rgba(0,0,0,0.6); background: rgba(10, 10, 15, 0.4);">
-                        <div id="placeholder-text" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; width: 100%;">
-                            <div class="cosmic-loader">
-                                <div class="orbit orbit-1"></div>
-                                <div class="orbit orbit-2"></div>
-                                <div class="orbit orbit-3"></div>
-                                <div class="center-star">✦</div>
-                            </div>
-                            <h3 class="serif" style="font-size: 1.8rem; color: var(--gold-light); margin-top: 2rem; margin-bottom: 0.5rem; text-shadow: 0 0 15px rgba(197,160,89,0.4);">Kaderinizi Gökyüzünde Okuyun</h3>
-                            <p style="font-size: 1rem; opacity: 0.6; max-width: 320px; line-height: 1.6; font-style: italic;">Doğum anınızdaki gökyüzü haritasını oluşturmak için formu doldurun.</p>
-                        </div>
-                        <div id="chart-svg-container" style="display: none; width: 100%; height: 100%; max-width: 500px; max-height: 500px;"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- Cosmic Story Area -->
-            <div id="story-display" class="glass-card story-card" style="display: none; padding: 4rem 3rem; position: relative; overflow: hidden; background: linear-gradient(135deg, rgba(15,15,25,0.95), rgba(25,25,45,0.95)); border: 2px solid rgba(197,160,89,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(197,160,89,0.1);" data-reveal>
-                <div class="card-bg-decoration" style="position:absolute; top:-50px; right:-50px; width:200px; height:200px; background: radial-gradient(circle, rgba(197,160,89,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none;"></div>
-                <div class="card-bg-decoration" style="position:absolute; bottom:-50px; left:-50px; width:200px; height:200px; background: radial-gradient(circle, rgba(197,160,89,0.1) 0%, transparent 70%); border-radius:50%; pointer-events:none;"></div>
 
-                <div id="story-content" style="position: relative; z-index: 2;">
-                    <div style="text-align: center; margin-bottom: 3.5rem;">
-                        <h3 id="story-title" class="serif" style="color:var(--gold); font-size:2.5rem; margin-bottom:1rem; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Kozmik Analiz Raporu</h3>
-                        <div style="width: 80px; height: 2px; background: var(--gold); margin: 0 auto;"></div>
+                    <div class="chart-plate" data-reveal>
+                        <div class="plate-inner">
+                            <div class="chart-placeholder" id="chart-placeholder">
+                                <span class="ph-glyph">☉&#xFE0E; ☽&#xFE0E; ✳&#xFE0E;</span>
+                                <h3>Doğduğunuz An, Gökyüzü</h3>
+                                <p>Formu doldurduğunuzda, o anın gezegen konumları bu levhaya işlenecek.</p>
+                            </div>
+                            <div id="chart-svg-container" style="display: none;"></div>
+                        </div>
+                        <span class="plate-label">Levha — Doğum Anındaki Gökyüzü</span>
                     </div>
-                    
-                    <!-- Summary Cards -->
-                    <div class="summary-cards" style="display:flex; justify-content:center; gap:2.5rem; margin-bottom:4rem; flex-wrap:wrap;">
-                        <div class="stat-card premium-stat" style="min-width: 160px; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(197,160,89,0.2); transition: all 0.3s ease;">
-                            <div class="stat-label" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; opacity: 0.6;">Güneş Burcu</div>
-                            <div class="stat-number serif" id="val-sun" style="font-size: 1.8rem; color: var(--gold-light); text-shadow: 0 0 10px rgba(197,160,89,0.3);">...</div>
+                </div>
+
+                <!-- Ön okuma -->
+                <div class="reading" id="reading">
+                    <div class="reading-head">
+                        <h3 id="reading-title">Gökyüzü Ön Okuması</h3>
+                        <div class="head-rule"></div>
+                    </div>
+
+                    <div class="reading-summary">
+                        <div class="rs-cell">
+                            <span class="rs-label">Güneş</span>
+                            <span class="rs-value" id="val-sun">…</span>
                         </div>
-                        <div class="stat-card premium-stat" style="min-width: 160px; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(197,160,89,0.2); transition: all 0.3s ease;">
-                            <div class="stat-label" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; opacity: 0.6;">Ay Burcu</div>
-                            <div class="stat-number serif" id="val-moon" style="font-size: 1.8rem; color: var(--gold-light); text-shadow: 0 0 10px rgba(197,160,89,0.3);">...</div>
+                        <div class="rs-cell">
+                            <span class="rs-label">Ay</span>
+                            <span class="rs-value" id="val-moon">…</span>
                         </div>
-                        <div class="stat-card premium-stat" style="min-width: 160px; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(197,160,89,0.2); transition: all 0.3s ease;">
-                            <div class="stat-label" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; opacity: 0.6;">Yükselen</div>
-                            <div class="stat-number serif" id="val-asc" style="font-size: 1.8rem; color: var(--gold-light); text-shadow: 0 0 10px rgba(197,160,89,0.3);">...</div>
+                        <div class="rs-cell">
+                            <span class="rs-label">Yükselen</span>
+                            <span class="rs-value" id="val-asc">…</span>
                         </div>
                     </div>
-                    
-                    <!-- Data Vis & AI Analysis -->
-                    <div class="story-grid-layout" style="display:grid; grid-template-columns: 350px 1fr; gap: 4rem; align-items: start;">
-                        <!-- Radar Chart -->
-                        <div class="element-chart-wrapper">
-                            <div class="element-chart-container" style="background: rgba(0,0,0,0.4); border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                                <h4 class="serif" style="color:var(--gold); text-align:center; margin-bottom: 2rem; font-size: 1.3rem; letter-spacing: 1px;">Elementel Öz</h4>
-                                <div style="position: relative;">
-                                    <canvas id="elementChart"></canvas>
+
+                    <div class="reading-grid">
+                        <div class="elements-panel">
+                            <h4>Elementel Dağılım</h4>
+                            <div id="elements-panel-bars"></div>
+                        </div>
+                        <div class="reading-text-wrap">
+                            <h4>Ön Okuma</h4>
+                            <div class="reading-text" id="reading-text"></div>
+                            <div class="reading-cta">
+                                <div class="rc-text">
+                                    <strong>Bu yalnızca ilk katman.</strong>
+                                    <p>Evler, açılar ve dönemsel döngülerle bütün bir okuma için Özlem ile birebir seans planlayın.</p>
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <!-- AI Text -->
-                        <div class="ai-analysis-container" style="padding-top: 0;">
-                            <div style="background: rgba(255,255,255,0.02); padding: 3rem; border-radius: 20px; border-left: 4px solid var(--gold); position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                                <div style="position: absolute; top: 1rem; right: 2rem; font-size: 4rem; opacity: 0.05; color: var(--gold); font-family: serif;">"</div>
-                                <p id="ai-text" class="serif" style="font-size:1.2rem; line-height:2; opacity:0.95; white-space: pre-line; color: #f0f0f0;">Yıldızlar fısıldıyor... Yapay zeka analiziniz hazırlanıyor.</p>
-                            </div>
-                            
-                            <div style="display: flex; gap: 2rem; align-items: center; margin-top: 3.5rem; flex-wrap: wrap;">
-                                <div style="flex: 1; min-width: 250px;">
-                                    <p style="margin-bottom:0.5rem; font-weight: 500; color: var(--gold-light);">Derinleşmek ister misin?</p>
-                                    <p style="opacity:0.6; font-size: 0.9rem;">Astrolog Özlem ile birebir seansta tüm potansiyelini keşfet.</p>
-                                </div>
-                                <div style="display: flex; gap: 1rem;">
-                                    <button id="share-card-btn" class="cta-button secondary" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);">
-                                        <span>Kartı Paylaş 📸</span>
-                                    </button>
-                                    <a href="https://wa.me/905000000000" class="cta-button" target="_blank">
-                                        <span>Randevu Al ✨</span>
-                                    </a>
-                                </div>
+                                <a href="https://wa.me/905000000000" id="reading-wa" class="btn" target="_blank" rel="noopener" data-wa-label="Ön okuma sonrası">Seans Bilgisi Alın</a>
                             </div>
                         </div>
                     </div>
@@ -439,274 +465,334 @@
             </div>
         </section>
 
-        <!-- Libraries -->
-        <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <!-- ============ SEANSLAR ============ -->
+        <section id="seanslar">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <span class="kicker">Seanslar</span>
+                    <h2>Birebir Danışmanlık</h2>
+                    <div class="head-rule"></div>
+                    <p class="head-desc">Her seans, haritanız üzerinde günler süren bir ön hazırlığın ardından, canlı görüşmeyle yapılır. Fiyat ve takvim bilgisi için yazmanız yeterli.</p>
+                </div>
 
-        <!-- Services Section -->
-        <section id="services">
-            <div class="section-title" data-reveal>
-                <p>Kutsal Sunularımız</p>
-                <h2>Astrolojik Rehberlik</h2>
-            </div>
-            <div class="services-grid">
-                <div class="service-card" data-reveal>
-                    <div class="service-icon">☉</div>
-                    <h3 class="serif">Doğum Haritası Analizi</h3>
-                    <div class="service-price" style="font-size: 1.1rem; letter-spacing: 1px; color: var(--gold-light); cursor: pointer;" onclick="window.open('https://wa.me/905000000000?text=Doğum%20Haritası%20Analizi%20fiyat%20bilgisi%20almak%20istiyorum.', '_blank')">✦ Fiyat Bilgisi Alın</div>
-                    <p>Ruhunuzun bu dünyadaki pusulasını keşfedin. Potansiyelleriniz, zorluklarınız ve kadersel yolunuz üzerine derinlemesine bir inceleme.</p>
-                    <ul class="service-features">
-                        <li>Karakter ve Potansiyel Analizi</li>
-                        <li>Kariyer ve Finans Göstergeleri</li>
-                        <li>Ruhsal Tekamül Yolu</li>
-                    </ul>
-                    <a href="https://wa.me/905000000000?text=Doğum%20Haritası%20Analizi%20hakkında%20bilgi%20almak%20istiyorum." class="btn-secondary" target="_blank">Detaylı Bilgi Al →</a>
+                <div class="services-grid" data-reveal>
+                    <div class="service">
+                        <span class="service-glyph">☉&#xFE0E;</span>
+                        <h3>Doğum Haritası Analizi</h3>
+                        <p>Karakteriniz, potansiyelleriniz ve yaşam temalarınız üzerine, haritanın dört katmanını bütün olarak okuyan derinlemesine bir inceleme.</p>
+                        <ul>
+                            <li>Karakter ve potansiyel analizi</li>
+                            <li>Kariyer ve kaynak göstergeleri</li>
+                            <li>Dönemsel döngüler ve zamanlama</li>
+                        </ul>
+                        <a href="https://wa.me/905000000000?text=Merhaba,%20Doğum%20Haritası%20Analizi%20için%20bilgi%20almak%20istiyorum." class="link-arrow" target="_blank" rel="noopener" data-wa-label="Doğum Haritası Analizi">Bilgi Alın →</a>
+                    </div>
+                    <div class="service">
+                        <span class="service-flag">✳&#xFE0E; En çok tercih edilen</span>
+                        <span class="service-glyph">☽&#xFE0E;</span>
+                        <h3>Sinastri — İlişki Analizi</h3>
+                        <p>İki haritanın karşılaştırmalı okuması: iletişim dili, ortak dersler, bağın güçlü ve gelişime açık yönleri.</p>
+                        <ul>
+                            <li>İletişim ve uyum analizi</li>
+                            <li>Ortak yaşam potansiyeli</li>
+                            <li>İlişkinin dönemsel gündemi</li>
+                        </ul>
+                        <a href="https://wa.me/905000000000?text=Merhaba,%20Sinastri%20(ilişki%20analizi)%20için%20bilgi%20almak%20istiyorum." class="link-arrow" target="_blank" rel="noopener" data-wa-label="Sinastri">Bilgi Alın →</a>
+                    </div>
+                    <div class="service">
+                        <span class="service-glyph">♃&#xFE0E;</span>
+                        <h3>Solar Return — Yıllık Öngörü</h3>
+                        <p>Yeni yaşınızın haritası: önünüzdeki on iki ayın ana temaları, fırsat pencereleri ve dikkat isteyen dönemler.</p>
+                        <ul>
+                            <li>Yılın ana temaları</li>
+                            <li>Aylara göre önemli dönemler</li>
+                            <li>Fırsat ve risk değerlendirmesi</li>
+                        </ul>
+                        <a href="https://wa.me/905000000000?text=Merhaba,%20Solar%20Return%20(yıllık%20öngörü)%20için%20bilgi%20almak%20istiyorum." class="link-arrow" target="_blank" rel="noopener" data-wa-label="Solar Return">Bilgi Alın →</a>
+                    </div>
                 </div>
-                <div class="service-card featured" data-reveal>
-                    <div class="featured-badge">En Popüler</div>
-                    <div class="service-icon">♀♂</div>
-                    <h3 class="serif">Sinastri (İlişki Uyumu)</h3>
-                    <div class="service-price" style="font-size: 1.1rem; letter-spacing: 1px; color: var(--gold-light); cursor: pointer;" onclick="window.open('https://wa.me/905000000000?text=Sinastri%20analizi%20fiyat%20bilgisi%20almak%20istiyorum.', '_blank')">✦ Fiyat Bilgisi Alın</div>
-                    <p>İki ruhun gökyüzündeki dansı. Partnerinizle olan enerjisel uyumunuzu, ortak derslerinizi ve bağınızın gücünü anlayın.</p>
-                    <ul class="service-features">
-                        <li>İletişim ve Uyum Analizi</li>
-                        <li>Karmik Bağlantılar</li>
-                        <li>Ortak Yaşam Potansiyeli</li>
-                    </ul>
-                    <a href="https://wa.me/905000000000?text=Sinastri%20analizi%20hakkında%20bilgi%20almak%20istiyorum." class="btn-secondary" target="_blank">Detaylı Bilgi Al →</a>
-                </div>
-                <div class="service-card" data-reveal>
-                    <div class="service-icon">♃</div>
-                    <h3 class="serif">Solar Return (Yıllık)</h3>
-                    <div class="service-price" style="font-size: 1.1rem; letter-spacing: 1px; color: var(--gold-light); cursor: pointer;" onclick="window.open('https://wa.me/905000000000?text=Solar%20Return%20fiyat%20bilgisi%20almak%20istiyorum.', '_blank')">✦ Fiyat Bilgisi Alın</div>
-                    <p>Yeni yaşınızın getireceği temalar. Önünüzdeki bir yılın fırsatlarını ve dikkat etmeniz gereken dönemleri planlayın.</p>
-                    <ul class="service-features">
-                        <li>Yılın Ana Temaları</li>
-                        <li>Aylara Göre Önemli Tarihler</li>
-                        <li>Fırsat ve Risk Analizi</li>
-                    </ul>
-                    <a href="https://wa.me/905000000000?text=Yıllık%20Öngörü%20hakkında%20bilgi%20almak%20istiyorum." class="btn-secondary" target="_blank">Detaylı Bilgi Al →</a>
-                </div>
-            </div>
-        </section>
 
-        <!-- Cosmic Library (Blog) -->
-        <section id="testimonials" style="overflow: hidden;">
-            <div class="section-title" data-reveal>
-                <p>Kozmik Yankılar</p>
-                <h2>Danışan Yorumları</h2>
-            </div>
-            <div class="testimonials-wrapper" data-reveal>
-                <div class="testimonials-track">
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"Özlem hanım ile yaptığımız seans hayatımdaki pek çok düğümü çözmeme yardımcı oldu. Kendimi hiç bu kadar net görmemiştim."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>Elif Yılmaz</h4>
-                                <p>Girişimci • İstanbul</p>
-                            </div>
-                        </div>
+                <div class="process-grid" data-reveal>
+                    <div class="process-step">
+                        <span class="p-roman">I.</span>
+                        <h4>Bilgi & Takvim</h4>
+                        <p>Doğum gününüzü, saatinizi ve yerinizi iletirsiniz; uygun seans günü birlikte belirlenir.</p>
                     </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"İlişki analizi sayesinde eşimle olan iletişimimiz bambaşka bir boyuta taşındı. Gökyüzünün bu kadar detaylı rehberlik etmesi mucize gibi."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>C. D.</h4>
-                                <p>Gizli Danışan • Ankara</p>
-                            </div>
-                        </div>
+                    <div class="process-step">
+                        <span class="p-roman">II.</span>
+                        <h4>Ön Hazırlık</h4>
+                        <p>Özlem, haritanızı klasik tekniklerle inceler. Bu hazırlık iki üç gün sürer.</p>
                     </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"Yeni yaşımın haritasını çıkarmak bana büyük bir güven verdi. Hangi dönemde neye odaklanmam gerektiğini artık biliyorum."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>Selin Aksoy</h4>
-                                <p>Tasarımcı • İzmir</p>
-                            </div>
-                        </div>
+                    <div class="process-step">
+                        <span class="p-roman">III.</span>
+                        <h4>Birebir Seans</h4>
+                        <p>Canlı görüntülü veya sesli görüşmede haritanız, sorularınız eşliğinde bütün olarak okunur.</p>
                     </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"Kariyer döngüleri hakkındaki analiz, iş hayatımda doğru zamanda doğru adımlar atmamı sağladı. Özlem'nin bilgeliğine güveniyorum."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>B. Ö.</h4>
-                                <p>Yönetici • Bursa</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Cloned for seamless loop -->
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"Özlem hanım ile yaptığımız seans hayatımdaki pek çok düğümü çözmeme yardımcı oldu. Kendimi hiç bu kadar net görmemiştim."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>Elif Yılmaz</h4>
-                                <p>Girişimci • İstanbul</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"İlişki analizi sayesinde eşimle olan iletişimimiz bambaşka bir boyuta taşındı. Gökyüzünün bu kadar detaylı rehberlik etmesi mucize gibi."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>C. D.</h4>
-                                <p>Gizli Danışan • Ankara</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"Yeni yaşımın haritasını çıkarmak bana büyük bir güven verdi. Hangi dönemde neye odaklanmam gerektiğini artık biliyorum."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>Selin Aksoy</h4>
-                                <p>Tasarımcı • İzmir</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="testimonial-stars">★★★★★</div>
-                        <p class="testimonial-quote">"Kariyer döngüleri hakkındaki analiz, iş hayatımda doğru zamanda doğru adımlar atmamı sağladı. Özlem'nin bilgeliğine güveniyorum."</p>
-                        <div class="testimonial-author">
-                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop" alt="Client">
-                            <div class="testimonial-author-info">
-                                <h4>B. Ö.</h4>
-                                <p>Yönetici • Bursa</p>
-                            </div>
-                        </div>
+                    <div class="process-step">
+                        <span class="p-roman">IV.</span>
+                        <h4>Yazılı Rapor</h4>
+                        <p>Görüşme sonrası, önemli tarihleri ve kişisel döngülerinizi içeren PDF rapor e-postanıza gönderilir.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ Section -->
-        <section id="faq">
-            <div class="section-title" data-reveal>
-                <p>Aklınızdakiler</p>
-                <h2>Sıkça Sorulanlar</h2>
-            </div>
-            <div class="faq-container" data-reveal>
-                <div class="faq-item">
-                    <button class="faq-question">Doğum saatimi tam bilmiyorsam ne olur?</button>
-                    <div class="faq-answer">
-                        <p>Rektifikasyon (Doğum Saati Belirleme) teknikleri ile hayatınızdaki önemli olaylardan yola çıkarak doğum saatinizi dakikasına kadar hesaplayabiliyoruz.</p>
-                    </div>
+        <!-- ============ YAZILAR ============ -->
+        <section id="yazilar" style="background: var(--paper-warm); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <span class="kicker">Kütüphane</span>
+                    <h2>Seçme Yazılar</h2>
+                    <div class="head-rule"></div>
                 </div>
-                <div class="faq-item">
-                    <button class="faq-question">Astroloji kader mi demektir?</button>
-                    <div class="faq-answer">
-                        <p>Astroloji size potansiyellerinizi ve gökyüzü hava durumunu söyler. Bu yolda nasıl yürüyeceğiniz ve seçimleriniz sizin özgür iradenizdir.</p>
+
+                <div class="articles-list" data-reveal>
+                    <div class="article-row" data-article-id="enuma" tabindex="0" role="button">
+                        <span class="a-num">01</span>
+                        <div>
+                            <span class="a-cat">Tarih</span>
+                            <h3>Enûma Anu Enlil: Gökyüzünün İlk Kütüphanesi</h3>
+                            <p class="a-excerpt">Yaklaşık yetmiş kil tablete yazılmış Babil kehanet külliyatı, astrolojinin bilinen en eski sistemli kaydıdır.</p>
+                        </div>
+                        <span class="a-arrow">→</span>
                     </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">Online danışmanlık nasıl işliyor?</button>
-                    <div class="faq-answer">
-                        <p>WhatsApp veya Zoom üzerinden canlı bağlantı kurarak, ekranınızda haritanızı birlikte inceliyoruz. Seans sonrası detaylı bir PDF rapor da e-postanıza iletilir.</p>
+                    <div class="article-row" data-article-id="pluto-kova" tabindex="0" role="button">
+                        <span class="a-num">02</span>
+                        <div>
+                            <span class="a-cat">Gökyüzü Döngüleri</span>
+                            <h3>Plüton Kova Burcunda: Bir Devrin Değişimi</h3>
+                            <p class="a-excerpt">Yaklaşık yirmi yıl sürecek bu geçiş, teknoloji ve toplumsal yapı temalarını gündeme taşıyor.</p>
+                        </div>
+                        <span class="a-arrow">→</span>
                     </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">Hangi ödeme yöntemlerini kabul ediyorsunuz?</button>
-                    <div class="faq-answer">
-                        <p>Havale/EFT, kredi kartı ve PayPal ile ödeme yapabilirsiniz. Seans öncesi ödeme tamamlanması gerekmektedir.</p>
+                    <div class="article-row" data-article-id="saturn-donusu" tabindex="0" role="button">
+                        <span class="a-num">03</span>
+                        <div>
+                            <span class="a-cat">Gezegen Döngüleri</span>
+                            <h3>Satürn Dönüşü: Yirmi Dokuz Yaş Eşiği</h3>
+                            <p class="a-excerpt">Satürn'ün doğum haritasındaki yerine dönmesi, gelenekte olgunlaşmanın ana eşiği sayılır.</p>
+                        </div>
+                        <span class="a-arrow">→</span>
+                    </div>
+                    <div class="article-row" data-article-id="merkur-retro" tabindex="0" role="button">
+                        <span class="a-num">04</span>
+                        <div>
+                            <span class="a-cat">Kavramlar</span>
+                            <h3>Merkür Retrosu Gerçekte Nedir?</h3>
+                            <p class="a-excerpt">Gezegen geri gitmez; Dünya'dan bakışın yarattığı görsel bir yanılsamadır. Peki gelenek bunu nasıl yorumlar?</p>
+                        </div>
+                        <span class="a-arrow">→</span>
+                    </div>
+                    <div class="article-row" data-article-id="ay-dugum" tabindex="0" role="button">
+                        <span class="a-num">05</span>
+                        <div>
+                            <span class="a-cat">Doğum Haritası</span>
+                            <h3>Ay Düğümleri ve Karmik Eksen</h3>
+                            <p class="a-excerpt">Ay yörüngesinin ekliptiği kestiği iki nokta, haritada geçmiş alışkanlıklar ile gelişim yönünü anlatan bir eksen kurar.</p>
+                        </div>
+                        <span class="a-arrow">→</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Profile Section -->
-        <section id="about" class="profile-section">
-            <div class="profile-content">
-                <div class="profile-image" data-reveal>
-                    <img id="astrologer-portrait" src="https://images.unsplash.com/photo-1515023115689-589c33041d3c?q=80&w=1000&auto=format&fit=crop" alt="Astrolog Portresi">
-                    <div class="profile-badges">
-                        <span class="badge">ISAR Sertifikalı</span>
-                        <span class="badge">20+ Yıl Deneyim</span>
+        <!-- ============ HAKKINDA ============ -->
+        <section id="hakkinda">
+            <div class="container about-grid">
+                <div class="about-portrait" data-reveal>
+                    <div class="plate-frame">
+                        <img src="https://images.unsplash.com/photo-1515023115689-589c33041d3c?q=80&w=1000&auto=format&fit=crop" alt="Astrolog Özlem'in portresi" loading="lazy">
+                    </div>
+                    <div class="about-badges">
+                        <span>ISAR Sertifikalı</span>
+                        <span>20+ Yıl Deneyim</span>
                     </div>
                 </div>
-                <div class="profile-text" data-reveal>
-                    <h3 class="serif" style="color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-size: 1rem; margin-bottom: 1rem;">Göklerin Muhafızı</h3>
-                    <h2>Özlem Starwhisper</h2>
-                    <p>20 yılı aşkın süredir gökyüzünün dilini tercüme eden Özlem, kadim astroloji bilgilerini modern psikolojik yaklaşımlarla harmanlıyor. Binlerce danışanına hayat yolculuklarında rehberlik eden Özlem, yıldızların sadece birer ışık kaynağı değil, ruhumuzun aynası olduğuna inanıyor.</p>
-                    <p>Uluslararası Astroloji Araştırmaları Derneği (ISAR) sertifikalı bir profesyonel olarak, Özlem özellikle ruhsal büyüme, ilişki dinamikleri ve kariyer döngüleri üzerine uzmanlaşmıştır.</p>
-                    <div class="profile-cta">
-                        <a href="https://wa.me/905000000000?text=Merhaba%20Özlem,%20randevu%20almak%20istiyorum." class="cta-button" target="_blank">
-                            <span>WhatsApp ile Randevu Al</span>
-                        </a>
-                        <a href="#library" class="btn-secondary" style="margin-left: 1.5rem;">Yazılarımı Oku →</a>
+                <div class="about-text" data-reveal>
+                    <span class="kicker">Hakkında</span>
+                    <h2>Özlem</h2>
+                    <p class="dropcap">Yirmi yılı aşkın süredir gökyüzünün dilini tercüme ediyorum. Astrolojiyi bir fal aracı olarak değil; Babil'den bugüne taşınan, kendi tarihi ve usulü olan bir sembol dili olarak öğrendim ve öyle uyguluyorum. Klasik teknikleri modern psikolojik yaklaşımla birlikte kullanıyorum.</p>
+                    <p>Uluslararası Astroloji Araştırmaları Derneği (ISAR) sertifikalı bir profesyonel olarak, özellikle yaşam döngüleri, ilişki dinamikleri ve kariyer zamanlaması üzerine çalışıyorum. Bu sitedeki tarih bölümü, danışanlarımın en sık sorduğu soruya uzun bir cevaptır: "Astroloji gerçekten nereden geliyor?"</p>
+                    <div class="about-ctas">
+                        <a href="https://wa.me/905000000000?text=Merhaba%20Özlem,%20seans%20için%20bilgi%20almak%20istiyorum." class="btn" target="_blank" rel="noopener" data-wa-label="Hakkında bölümü">WhatsApp ile Yazın</a>
+                        <a href="#yazilar" class="link-arrow">Yazıları Okuyun →</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Newsletter Section -->
-        <section id="newsletter" style="min-height: auto; padding: 0 10% 80px;">
-            <div class="newsletter-card glass-card" style="text-align: center; max-width: 800px; margin: 0 auto; padding: 4rem;" data-reveal>
-                <div class="icon" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem;">✉</div>
-                <h3 class="serif" style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--gold-light);">Yıldız Bülteni</h3>
-                <p style="opacity: 0.8; margin-bottom: 2rem; font-size: 1.1rem;">Haftalık gökyüzü olayları, özel indirimler ve astrolojik rehberlik için e-posta bültenimize katılın.</p>
-                <form class="newsletter-form" style="display: flex; gap: 1rem; justify-content: center; max-width: 500px; margin: 0 auto;" onsubmit="event.preventDefault(); alert('Kayıt başarılı! Yıldızların rehberliği artık gelen kutunuzda.');">
-                    <input type="email" placeholder="E-posta adresiniz" required style="flex: 1; padding: 1rem; border-radius: 4px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white;">
-                    <button type="submit" class="cta-button" style="padding: 1rem 2rem;">Abone Ol</button>
-                </form>
+        <!-- ============ SSS ============ -->
+        <section id="sss" style="padding-top: 0;">
+            <div class="container">
+                <div class="section-head centered" data-reveal>
+                    <span class="kicker">Merak Edilenler</span>
+                    <h2>Sıkça Sorulanlar</h2>
+                    <div class="head-rule"></div>
+                </div>
+                <div class="faq-list" data-reveal>
+                    <div class="faq-item">
+                        <button class="faq-q" type="button">Doğum saatimi tam bilmiyorsam ne olur?</button>
+                        <div class="faq-a"><p>Rektifikasyon (doğum saati belirleme) teknikleriyle, hayatınızdaki önemli olayların tarihlerinden yola çıkarak doğum saatinizi büyük hassasiyetle geriye doğru hesaplayabiliyoruz. Seans öncesinde bu çalışma ayrıca yapılır.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" type="button">Astroloji kader mi demektir?</button>
+                        <div class="faq-a"><p>Hayır. Harita, potansiyelleri ve dönemlerin iklimini gösterir; bu iklimde nasıl yürüyeceğiniz sizin seçiminizdir. Klasik astrologlar da bunu "yıldızlar meylettirir, zorlamaz" diye özetlemiştir.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" type="button">Online seans nasıl işliyor?</button>
+                        <div class="faq-a"><p>Görüşme, tercihinize göre görüntülü veya sesli olarak yapılır; haritanız ekranda birlikte incelenir. Seans sonrasında önemli tarihleri içeren yazılı bir PDF rapor e-postanıza iletilir.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" type="button">Hangi ödeme yöntemleri geçerli?</button>
+                        <div class="faq-a"><p>Havale/EFT ve kredi kartı ile ödeme yapabilirsiniz. Seans saati, ödemenin ardından kesinleşir; ayrıntılar WhatsApp üzerinden paylaşılır.</p></div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- CTA Banner -->
-        <section id="cta-banner" class="cta-banner" style="min-height: auto; padding: 40px 10% 120px;">
-            <div class="cta-banner-content" data-reveal>
-                <h2 class="serif">Yıldızlar Sizi Bekliyor</h2>
-                <p>İlk danışmanlık seansınızda <strong>%20 indirim</strong> fırsatını kaçırmayın.</p>
-                <a href="https://wa.me/905000000000?text=Merhaba,%20ilk%20seans%20indirimi%20hakkında%20bilgi%20almak%20istiyorum." class="cta-button glow-pulse" target="_blank">
-                    <span>Hemen Randevu Al</span>
-                </a>
+        <!-- ============ DAVET ============ -->
+        <section class="invite">
+            <div class="container" data-reveal>
+                <span class="kicker">Davet</span>
+                <h2>Haritanız bir kez çizilir, ömür boyu okunur.</h2>
+                <p>Gökyüzünün dört bin yıllık dilini, sizin hikâyeniz üzerinden birlikte okuyalım.</p>
+                <a href="https://wa.me/905000000000?text=Merhaba,%20seans%20planlamak%20istiyorum." class="btn" target="_blank" rel="noopener" data-wa-label="Kapanış daveti">Seans Planlayın</a>
+            </div>
+        </section>
+
+        <!-- ============ KAYNAKÇA ============ -->
+        <section id="kaynakca" class="biblio">
+            <div class="container">
+                <div class="section-head" data-reveal>
+                    <span class="kicker">Usulüne Uygun</span>
+                    <h2>Kaynakça</h2>
+                    <div class="head-rule"></div>
+                    <p class="head-desc">Bu sitedeki tarihsel bilgiler aşağıdaki akademik kaynaklara dayanır; görsellerin künyeleri kendi altlarında ayrıca belirtilmiştir.</p>
+                </div>
+                <div class="biblio-grid" data-reveal>
+                    <div>
+                        <h3>Metin Kaynakları</h3>
+                        <ol>
+                            <li>White, G. (2008). <em>Babylonian Star-Lore: An Illustrated Guide to the Star-Lore and Constellations of Ancient Babylonia.</em> London: Solaria Publications.</li>
+                            <li>Rochberg, F. (2004). <em>The Heavenly Writing: Divination, Horoscopy, and Astronomy in Mesopotamian Culture.</em> Cambridge: Cambridge University Press.</li>
+                            <li>Ossendrijver, M. (2012). <em>Babylonian Mathematical Astronomy: Procedure Texts.</em> New York: Springer.</li>
+                            <li>Ossendrijver, M. (2022). On the unit UŠ = šuššān. <em>NABU — Nouvelles Assyriologiques Brèves et Utilitaires,</em> 2022/2, no. 68, 156–157.</li>
+                            <li>ZODIAC — Ancient Astral Science in Transformation. ERC Advanced Grant projesi (yür. M. Ossendrijver), Freie Universität Berlin, 2021–.</li>
+                            <li>Neugebauer, O. &amp; van Hoesen, H. B. (1959). <em>Greek Horoscopes.</em> Philadelphia: American Philosophical Society.</li>
+                            <li>Ptolemy. (1940). <em>Tetrabiblos</em> (F. E. Robbins, Ed. &amp; Trans.). Loeb Classical Library 435. Cambridge, MA: Harvard University Press.</li>
+                            <li>Campion, N. (2008). <em>A History of Western Astrology, Volume I: The Ancient World.</em> London: Continuum.</li>
+                            <li>Campion, N. (2009). <em>A History of Western Astrology, Volume II: The Medieval and Modern Worlds.</em> London: Continuum.</li>
+                            <li>Saliba, G. (2007). <em>Islamic Science and the Making of the European Renaissance.</em> Cambridge, MA: MIT Press.</li>
+                            <li>Beck, R. (2007). <em>A Brief History of Ancient Astrology.</em> Malden, MA &amp; Oxford: Blackwell Publishing.</li>
+                            <li>Jung, C. G. (1952). <em>Synchronizität als ein Prinzip akausaler Zusammenhänge.</em> Zürich: Rascher. [İng.: <em>Synchronicity: An Acausal Connecting Principle,</em> CW 8, Princeton University Press.]</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h3>Görseller & Telif</h3>
+                        <ol id="image-credits">
+                            <li>Levha I — Çivi yazılı planisfer, K.8538. British Museum, Londra. Fotoğraf: BabelStone, CC0. Wikimedia Commons aracılığıyla.</li>
+                            <li>Levha II — Dendera Zodyağı, D 38. Musée du Louvre, Paris. Kamu malı. Wikimedia Commons aracılığıyla.</li>
+                            <li>Levha III — Harley Aratea, Harley MS 647, f. 8v. British Library, Londra. Kamu malı. Wikimedia Commons aracılığıyla.</li>
+                            <li>Levha IV — Ömer bin Yusuf el-Muzafferî usturlabı, 91.1.535a–h. The Metropolitan Museum of Art, New York. CC0 (Açık Erişim). Wikimedia Commons aracılığıyla.</li>
+                            <li>Levha V — "Zodyak İnsanı", Très Riches Heures du Duc de Berry, MS 65, f. 14v. Musée Condé, Chantilly. Kamu malı (PD-Art). Wikimedia Commons aracılığıyla.</li>
+                        </ol>
+                        <p class="biblio-note">Zodyak çarkı, harita levhası ve sayfa süslemeleri bu site için özgün olarak çizilmiştir. Metinlerdeki dipnot numaraları soldaki listeye işaret eder.</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Blog Modal -->
-    <div class="blog-modal" id="blog-modal">
-        <div class="blog-modal-content glass-card">
-            <button class="blog-modal-close" id="blog-modal-close">&times;</button>
-            <div id="blog-modal-body"></div>
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+        <a class="wordmark" href="#top">
+            <span class="wm-name" style="font-size: 1.3rem;">Özlem</span>
+            <span class="wm-sub">Astroloji · Tarih · Danışmanlık</span>
+        </a>
+        <div class="footer-links">
+            <a href="#tarihce">Tarihçe</a>
+            <a href="#harita">Doğum Haritası</a>
+            <a href="#seanslar">Seanslar</a>
+            <a href="#kaynakca">Kaynakça</a>
+            <a href="https://wa.me/905000000000" target="_blank" rel="noopener" data-wa-label="Footer">WhatsApp</a>
+            <a href="#" target="_blank" rel="noopener">Instagram</a>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Özlem · Astroloji. Tüm hakları saklıdır. Bu sitedeki tarihsel içerik, kaynakçada belirtilen akademik yayınlardan usulüne uygun olarak derlenmiştir. Astrolojik yorumlar tıbbi, hukuki veya finansal tavsiye değildir.</p>
+        </div>
+    </footer>
+
+    <!-- ============ OKUMA MODALİ ============ -->
+    <div class="reader-modal" id="reader-modal" role="dialog" aria-modal="true">
+        <div class="reader-panel">
+            <button class="reader-close" id="reader-close" aria-label="Kapat">✕</button>
+            <div id="reader-body"></div>
         </div>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3 class="serif" style="color: var(--gold); font-size: 1.5rem;">☽ AstroCelestial</h3>
-                <p>Yıldızlar her zaman yolunuzu aydınlatsın.</p>
-            </div>
-            <div class="footer-links">
-                <a href="#services">Hizmetler</a>
-                <a href="#calculator">Doğum Haritası</a>
-                <a href="#about">Hakkımızda</a>
-                <a href="#faq">SSS</a>
-            </div>
-            <div class="footer-social">
-                <a href="https://wa.me/905000000000" target="_blank">WhatsApp</a>
-                <a href="#" target="_blank">Instagram</a>
-                <a href="#" target="_blank">Twitter</a>
-                <a href="#" target="_blank">Spotify (Podcast)</a>
-            </div>
+    <!-- ============ YAZI İÇERİKLERİ ============ -->
+    <template id="article-enuma">
+        <span class="a-cat">Tarih</span>
+        <h2>Enûma Anu Enlil: Gökyüzünün İlk Kütüphanesi</h2>
+        <div class="modal-rule"></div>
+        <div class="modal-text">
+            <p class="dropcap">Adını açılış dizesinden alan Enûma Anu Enlil — "Anu ve Enlil olduğunda…" — yaklaşık yetmiş kil tablete yazılmış devasa bir gök kehaneti külliyatıdır. İkinci binyıl Babil'inde derlenen bu seri, Ay ve Güneş tutulmalarından gezegen görünümlerine, hava olaylarından yıldız doğuşlarına kadar binlerce gözlemi "eğer… ise…" kalıbında kaydeder.</p>
+            <p>Serinin en iyi korunan kopyaları, Asur kralı Asurbanipal'in Ninova'daki kütüphanesinden çıkmıştır. Saray kâhinleri bu tabletlere bakarak krala düzenli raporlar yazar; gökyüzü, devletin gündelik yönetiminde ciddiye alınan bir danışma merciiydi.</p>
+            <blockquote>Astroloji, tarihinin başında kişisel bir merak değil; bir devlet bilimiydi.</blockquote>
+            <p>Bugün "burç yorumu" olarak bilinen bireysel astrolojinin doğması için bin yıl daha geçmesi gerekecekti: bilinen en eski kişisel doğum horoskopu, MÖ 410 civarına tarihlenen bir Babil tabletidir. Bu uzun yolculuğun ayrıntıları için sayfanın sonundaki kaynakçaya, özellikle Rochberg (2004) ve White (2008)'e bakabilirsiniz.</p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 AstroCelestial. Tüm hakları saklıdır.</p>
+    </template>
+
+    <template id="article-pluto-kova">
+        <span class="a-cat">Gökyüzü Döngüleri</span>
+        <h2>Plüton Kova Burcunda: Bir Devrin Değişimi</h2>
+        <div class="modal-rule"></div>
+        <div class="modal-text">
+            <p class="dropcap">Plüton, Güneş çevresindeki turunu yaklaşık 248 yılda tamamlar; bir burçta ortalama on beş-yirmi yıl kalır. Bu yüzden Plüton'un burç değiştirmesi, astrolojide bireysel günlük hayattan çok kuşakların ve toplumsal yapıların göstergesi olarak okunur.</p>
+            <p>Kova, gelenekte Satürn'ün yönettiği, toplumsal düzen, topluluklar ve yenilik fikriyle ilişkilendirilen bir hava burcudur. Plüton ise köklü dönüşümün, eskiyenin tasfiyesinin sembolüdür. İkisinin birleşimi, teknolojinin ve toplumsal örgütlenme biçimlerinin derinden yeniden şekillendiği bir dönem anlatısı kurar.</p>
+            <p>Tarihsel bir not: Plüton'un Kova'dan bir önceki geçişi 1778–1798 aralığına denk gelir — Fransız Devrimi'nin ve sanayi çağının eşiğinin yılları. Astroloji bu tür çakışmaları neden-sonuç olarak değil, sembolik bir takvim olarak okur; yorum, haritanızda Kova'nın hangi eve denk geldiğiyle kişiselleşir.</p>
         </div>
-    </footer>
+    </template>
+
+    <template id="article-saturn-donusu">
+        <span class="a-cat">Gezegen Döngüleri</span>
+        <h2>Satürn Dönüşü: Yirmi Dokuz Yaş Eşiği</h2>
+        <div class="modal-rule"></div>
+        <div class="modal-text">
+            <p class="dropcap">Satürn, zodyak turunu yaklaşık 29,5 yılda tamamlar ve doğum haritanızdaki yerine geri döner. "Satürn dönüşü" denen bu eşik, gelenekte gençlikten yetişkin sorumluluğuna geçişin ana sınavı sayılır.</p>
+            <p>Bu dönemde tipik olarak üç soru belirginleşir:</p>
+            <ul>
+                <li><strong>Meslek:</strong> Yaptığım iş gerçekten benim mi, yoksa başkalarının beklentisi mi?</li>
+                <li><strong>Bağlar:</strong> İlişkilerim beni büyütüyor mu, alışkanlıktan mı sürüyor?</li>
+                <li><strong>Kimlik:</strong> Hangi maskeleri bırakmanın vakti geldi?</li>
+            </ul>
+            <blockquote>Satürn gelenekte "büyük uğursuz" diye anılır; ama klasik metinlerde asıl işlevi cezalandırmak değil, yapıyı sağlamlaştırmaktır.</blockquote>
+            <p>İlk dönüş 27–30, ikincisi 56–60 yaş aralığına düşer. Haritanızda Satürn'ün burcu, evi ve açıları, bu eşiğin sizde hangi alanı sınayacağını gösterir — bu da birebir okumanın konusudur.</p>
+        </div>
+    </template>
+
+    <template id="article-merkur-retro">
+        <span class="a-cat">Kavramlar</span>
+        <h2>Merkür Retrosu Gerçekte Nedir?</h2>
+        <div class="modal-rule"></div>
+        <div class="modal-text">
+            <p class="dropcap">Önce astronomi: hiçbir gezegen geri gitmez. "Retro" görünümü, Dünya ile Merkür'ün farklı hızlarla dönmesinden doğan bir perspektif yanılsamasıdır — tıpkı yanınızdaki yavaş trenin geri gidiyormuş gibi görünmesi gibi. Merkür yılda ortalama üç kez, üçer haftalığına bu görünüme girer.</p>
+            <p>Gelenek ise görünümü sembolik okur: Merkür iletişimin, sözleşmelerin, yolculukların ve alışverişin göstergesi olduğundan, retro dönemleri yeni başlangıçlardan çok gözden geçirmenin zamanı sayılır. Klasik öğüt üç fiille özetlenir: yeniden düşün, yeniden düzenle, tamamla.</p>
+            <p>Panik listelerinin aksine, retro dönemi "hiçbir şey yapılmaz" demek değildir; aceleyle imza atmamak, yedek almak ve eski dosyaları kapatmak için elverişli bir tempo demektir. Merkür retrosunun sizi nasıl etkilediği ise haritanızda Merkür'ün konumuna göre kişiden kişiye değişir.</p>
+        </div>
+    </template>
+
+    <template id="article-ay-dugum">
+        <span class="a-cat">Doğum Haritası</span>
+        <h2>Ay Düğümleri ve Karmik Eksen</h2>
+        <div class="modal-rule"></div>
+        <div class="modal-text">
+            <p class="dropcap">Ay'ın yörünge düzlemi, Güneş'in gökyüzündeki yolu olan ekliptiği iki noktada keser. Astronomide tutulmaların gerçekleştiği bu iki nokta, astrolojide Kuzey ve Güney Ay Düğümü olarak haritanın en anlamlı eksenlerinden birini kurar.</p>
+            <p><strong>Güney Düğüm</strong>, gelenekte getirdiklerinizi anlatır: kendiliğinden bildiğiniz yetenekler, tanıdık gelen alışkanlıklar, konfor alanı. <strong>Kuzey Düğüm</strong> ise yönelmeniz gereken tarafı gösterir: başta yabancı gelen, ama gelişimin gerçekleştiği alan.</p>
+            <blockquote>Düğüm ekseni bir ceza-ödül listesi değil; alışkanlık ile gelişim arasındaki pusuladır.</blockquote>
+            <p>Düğümler yaklaşık 18,6 yılda zodyağı bir tur döner; bu yüzden 18–19 ve 37 yaş civarındaki "düğüm dönüşleri" gelenekte önemli yol ayrımları olarak izlenir. Kendi düğüm ekseninizin burç ve ev yerleşimi, seansta bakılan ana başlıklardan biridir.</p>
+        </div>
+    </template>
 
     <script type="module" src="./main.js"></script>
 </body>
