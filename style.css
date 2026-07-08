@@ -360,7 +360,10 @@ section { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--ink-faint);
+    line-height: 2;
 }
+
+.moon-icon { display: inline-block; line-height: 0; margin-right: 0.15rem; }
 
 /* ---------- Manifesto şeridi ---------- */
 
@@ -399,7 +402,39 @@ section { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
 
 /* ---------- Tarihçe / zaman çizelgesi ---------- */
 
-.timeline { position: relative; }
+.timeline { position: relative; padding-left: 28px; }
+
+/* Kaydırmayla akan mürekkep hattı */
+.timeline .rail {
+    position: absolute;
+    left: 6px;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: var(--rule-soft);
+}
+
+.timeline .rail-ink {
+    position: absolute;
+    left: 6px;
+    top: 0.4rem;
+    width: 1px;
+    max-height: calc(100% - 0.8rem);
+    height: 0;
+    background: linear-gradient(to bottom, var(--madder), var(--gold));
+    transition: height 0.25s linear;
+}
+
+.timeline .rail-ink::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -2.5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+}
 
 .era {
     display: grid;
@@ -480,11 +515,20 @@ figure.plate .plate-frame {
     background: var(--paper-warm);
 }
 
+figure.plate .plate-frame { overflow: hidden; cursor: pointer; }
+
 figure.plate img {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     filter: sepia(0.14) contrast(0.96) saturate(0.92);
+    transition: transform 1.4s cubic-bezier(0.2, 0.6, 0.2, 1), filter 0.8s ease;
+}
+
+figure.plate:hover img,
+figure.plate:focus-visible img {
+    transform: scale(1.045);
+    filter: sepia(0.05) contrast(1) saturate(1);
 }
 
 figure.plate figcaption {
@@ -649,6 +693,43 @@ figure.plate figcaption .credit {
 }
 
 .sign-cell .sign-meta .gold { color: var(--gold); }
+
+/* Babil adı (MUL.APIN) — dokununca açılır */
+.sign-cell { cursor: pointer; }
+
+.sign-babil { display: block; margin-top: 0.9rem; }
+
+.sign-babil .sb-label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.58rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--madder);
+    opacity: 0.55;
+    transition: opacity 0.3s ease;
+}
+.sign-cell:hover .sb-label, .sign-cell.open .sb-label { opacity: 1; }
+
+.sign-babil .sb-body {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    transition: max-height 0.45s ease, opacity 0.45s ease, margin-top 0.45s ease;
+}
+.sign-cell.open .sb-body { max-height: 6em; opacity: 1; margin-top: 0.45rem; }
+
+.sign-babil .sb-body em {
+    font-style: normal;
+    font-family: var(--font-label);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+}
 
 /* ---------- Harita (hesaplayıcı) ---------- */
 
@@ -1093,6 +1174,53 @@ figure.plate figcaption .credit {
     border-left: 2px solid var(--madder);
     padding-left: 1.2rem;
     margin: 1.5rem 0;
+}
+
+/* Levha vitrini */
+.plate-panel { max-width: 860px; text-align: center; }
+
+.plate-panel .pm-frame {
+    border: 1px solid var(--rule);
+    padding: 12px;
+    background: var(--paper-warm);
+    display: inline-block;
+    max-width: 100%;
+}
+
+.plate-panel .pm-frame img {
+    max-height: 64vh;
+    max-width: 100%;
+    width: auto;
+    margin-inline: auto;
+    object-fit: contain;
+    filter: sepia(0.06) contrast(0.98);
+}
+
+.plate-panel figcaption {
+    margin-top: 1.3rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin-inline: auto;
+}
+
+.plate-panel figcaption .plate-no {
+    font-family: var(--font-label);
+    font-size: 0.64rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--madder);
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.plate-panel figcaption .credit {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--ink-faint);
 }
 
 /* ---------- Hakkında ---------- */

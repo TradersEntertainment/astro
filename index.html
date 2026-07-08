@@ -22,7 +22,7 @@
                 <span class="wm-name">Özlem</span>
                 <span class="wm-sub">Astroloji · Tarih · Danışmanlık</span>
             </a>
-            <span class="masthead-meta right">Gökyüzünde <span class="madder" data-moon-phase>—</span></span>
+            <span class="masthead-meta right">Gökyüzünde <span class="moon-icon" id="moon-icon"></span> <span class="madder" data-moon-phase>—</span></span>
         </div>
     </header>
 
@@ -58,7 +58,7 @@
                 </div>
                 <div class="wheel-wrap" data-reveal>
                     <div id="zodiac-wheel"></div>
-                    <p class="wheel-caption">Zodyak Çarkı — On İki Burç, Dört Element</p>
+                    <p class="wheel-caption" id="wheel-caption">Zodyak Çarkı — On İki Burç, Dört Element</p>
                 </div>
             </div>
         </section>
@@ -305,75 +305,123 @@
                         <h4>Koç</h4>
                         <span class="sign-latin">Aries</span>
                         <span class="sign-meta">21 Mart – 19 Nisan<br>Ateş · Öncü · <span class="gold">Mars</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL LÚ.ḪUN.GÁ</em><br>"Kiralık İşçi"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♉&#xFE0E;</span>
                         <h4>Boğa</h4>
                         <span class="sign-latin">Taurus</span>
                         <span class="sign-meta">20 Nisan – 20 Mayıs<br>Toprak · Sabit · <span class="gold">Venüs</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL GU₄.AN.NA</em><br>"Göğün Boğası"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♊&#xFE0E;</span>
                         <h4>İkizler</h4>
                         <span class="sign-latin">Gemini</span>
                         <span class="sign-meta">21 Mayıs – 20 Haziran<br>Hava · Değişken · <span class="gold">Merkür</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL MAŠ.TAB.BA.GAL.GAL</em><br>"Büyük İkizler"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♋&#xFE0E;</span>
                         <h4>Yengeç</h4>
                         <span class="sign-latin">Cancer</span>
                         <span class="sign-meta">21 Haziran – 22 Temmuz<br>Su · Öncü · <span class="gold">Ay</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL AL.LUL</em><br>"Yengeç"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♌&#xFE0E;</span>
                         <h4>Aslan</h4>
                         <span class="sign-latin">Leo</span>
                         <span class="sign-meta">23 Temmuz – 22 Ağustos<br>Ateş · Sabit · <span class="gold">Güneş</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL UR.GU.LA</em><br>"Aslan"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♍&#xFE0E;</span>
                         <h4>Başak</h4>
                         <span class="sign-latin">Virgo</span>
                         <span class="sign-meta">23 Ağustos – 22 Eylül<br>Toprak · Değişken · <span class="gold">Merkür</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL AB.SÍN</em><br>"Saban İzi"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♎&#xFE0E;</span>
                         <h4>Terazi</h4>
                         <span class="sign-latin">Libra</span>
                         <span class="sign-meta">23 Eylül – 22 Ekim<br>Hava · Öncü · <span class="gold">Venüs</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL ZIB.BA.AN.NA</em><br>"Terazi — zibanītu"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♏&#xFE0E;</span>
                         <h4>Akrep</h4>
                         <span class="sign-latin">Scorpius</span>
                         <span class="sign-meta">23 Ekim – 21 Kasım<br>Su · Sabit · <span class="gold">Mars</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL GÍR.TAB</em><br>"Akrep"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♐&#xFE0E;</span>
                         <h4>Yay</h4>
                         <span class="sign-latin">Sagittarius</span>
                         <span class="sign-meta">22 Kasım – 21 Aralık<br>Ateş · Değişken · <span class="gold">Jüpiter</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL PA.BIL.SAG</em><br>"Tanrı Pabilsag"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♑&#xFE0E;</span>
                         <h4>Oğlak</h4>
                         <span class="sign-latin">Capricornus</span>
                         <span class="sign-meta">22 Aralık – 19 Ocak<br>Toprak · Öncü · <span class="gold">Satürn</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL SUḪUR.MÁŠ</em><br>"Keçi-Balık"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♒&#xFE0E;</span>
                         <h4>Kova</h4>
                         <span class="sign-latin">Aquarius</span>
                         <span class="sign-meta">20 Ocak – 18 Şubat<br>Hava · Sabit · <span class="gold">Satürn</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL GU.LA</em><br>"Büyük Olan — tanrı Ea"</span>
+                        </span>
                     </div>
                     <div class="sign-cell">
                         <span class="sign-glyph">♓&#xFE0E;</span>
                         <h4>Balık</h4>
                         <span class="sign-latin">Pisces</span>
                         <span class="sign-meta">19 Şubat – 20 Mart<br>Su · Değişken · <span class="gold">Jüpiter</span></span>
+                        <span class="sign-babil">
+                            <span class="sb-label">✳&#xFE0E; Babil adı</span>
+                            <span class="sb-body"><em>MUL KUN.MEŠ</em><br>"Kuyruklar — zibbātu"</span>
+                        </span>
                     </div>
                 </div>
-                <p class="form-smallprint" data-reveal style="margin-top: 1.2rem;">Yönetici gezegenler klasik (geleneksel) atamalara göre verilmiştir; modern okulda Akrep'e Plüton, Kova'ya Uranüs, Balık'a Neptün de atanır.</p>
+                <p class="form-smallprint" data-reveal style="margin-top: 1.2rem;">Yönetici gezegenler klasik (geleneksel) atamalara göre verilmiştir; modern okulda Akrep'e Plüton, Kova'ya Uranüs, Balık'a Neptün de atanır. Kartlara dokunarak her burcun MUL.APIN yıldız kataloğundaki Babil adını görebilirsiniz.<sup class="fn"><a href="#kaynakca">1</a></sup></p>
             </div>
         </section>
 
@@ -721,6 +769,14 @@
             <p>© 2026 Özlem · Astroloji. Tüm hakları saklıdır. Bu sitedeki tarihsel içerik, kaynakçada belirtilen akademik yayınlardan usulüne uygun olarak derlenmiştir. Astrolojik yorumlar tıbbi, hukuki veya finansal tavsiye değildir.</p>
         </div>
     </footer>
+
+    <!-- ============ LEVHA VİTRİNİ ============ -->
+    <div class="reader-modal plate-modal" id="plate-modal" role="dialog" aria-modal="true">
+        <div class="reader-panel plate-panel">
+            <button class="reader-close" id="plate-modal-close" aria-label="Kapat">✕</button>
+            <div id="plate-modal-body"></div>
+        </div>
+    </div>
 
     <!-- ============ OKUMA MODALİ ============ -->
     <div class="reader-modal" id="reader-modal" role="dialog" aria-modal="true">

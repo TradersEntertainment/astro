@@ -129,9 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (img.complete && img.naturalWidth === 0) hide();
     });
 
-    /* --- Görünürlük animasyonu --- */
+    /* --- Görünürlük animasyonu (kademeli) --- */
     const revealObs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); revealObs.unobserve(e.target); } });
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                setTimeout(() => e.target.classList.add('revealed'), i * 90);
+                revealObs.unobserve(e.target);
+            }
+        });
     }, { threshold: 0.08 });
     document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 
@@ -195,13 +200,53 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- Doğum haritası --- */
     initNatalForm();
 
-    /* --- Hero zodyak çarkı --- */
+    /* --- Hero zodyak çarkı (canlı gökyüzü) --- */
     initZodiacWheel();
+
+    /* --- Ay evresi ikonu --- */
+    const moonIconHost = document.getElementById('moon-icon');
+    if (moonIconHost) moonIconHost.innerHTML = moonIconSVG(now);
+
+    /* --- Tarihçe mürekkep hattı --- */
+    initTimelineRail();
+
+    /* --- Levha vitrini --- */
+    initPlateLightbox();
+
+    /* --- Burç kartları: Babil adları --- */
+    initSignCells();
 });
 
 /* ============================================================
-   HERO: el çizimi üslubunda zodyak çarkı
+   HERO: canlı gökyüzü usturlabı
+   Bugünün gerçek gezegen konumlarını gösterir ve açılışta
+   pergelle çiziliyormuş gibi kendini çizer.
    ============================================================ */
+
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function currentSky(date, coords) {
+    const astroTime = new Astronomy.AstroTime(date);
+    const bodies = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
+    const trNames = ['Güneş', 'Ay', 'Merkür', 'Venüs', 'Mars', 'Jüpiter', 'Satürn'];
+    const planets = bodies.map((p, i) => {
+        let lon = 0;
+        try { lon = Astronomy.Ecliptic(Astronomy.GeoVector(p, astroTime, true)).elon; }
+        catch (e) { if (p === 'Moon') lon = Astronomy.EclipticGeoMoon(astroTime).elon; }
+        return { name: trNames[i], degree: isNaN(lon) ? 0 : lon };
+    });
+
+    const gmst = Astronomy.SiderealTime(astroTime);
+    let lstDeg = (gmst * 15 + coords.lon) % 360;
+    if (lstDeg < 0) lstDeg += 360;
+    const epsDeg = 23.4392911, rad = Math.PI / 180;
+    const y = Math.cos(lstDeg * rad);
+    const x = -(Math.sin(lstDeg * rad) * Math.cos(epsDeg * rad) + Math.tan(coords.lat * rad) * Math.sin(epsDeg * rad));
+    let ascDeg = Math.atan2(y, x) / rad;
+    ascDeg = ((ascDeg % 360) + 360) % 360;
+
+    return { planets, ascDeg };
+}
 
 function initZodiacWheel() {
     const host = document.getElementById('zodiac-wheel');
@@ -219,50 +264,251 @@ function initZodiacWheel() {
     const GOLD_W = "#8f7431";
     const MADDER_W = "#93341f";
 
-    /* Sabit halkalar */
-    svg.append(mkCircle(c, c, 250, INK_FAINT_W, "none", 1));
-    svg.append(mkCircle(c, c, 236, INK_W, "none", 1.2));
-    svg.append(mkCircle(c, c, 178, INK_SOFT_W, "none", 0.8));
-    svg.append(mkCircle(c, c, 112, INK_FAINT_W, "none", 0.8));
-    svg.append(mkCircle(c, c, 4, INK_W, INK_W, 0));
-    svg.append(mkCircle(c, c, 11, INK_SOFT_W, "none", 0.8));
+    const drawQueue = []; // [el, gecikme_ms, tür]
+    const strokeDraw = (el, delay) => {
+        if (el.tagName === 'circle') {
+            const len = 2 * Math.PI * parseFloat(el.getAttribute('r'));
+            el.style.strokeDasharray = `${len}`;
+            el.style.strokeDashoffset = `${len}`;
+        }
+        drawQueue.push([el, delay, 'stroke']);
+    };
+    const fadeIn = (el, delay) => {
+        el.setAttribute('opacity', '0');
+        drawQueue.push([el, delay, 'fade']);
+    };
 
-    /* Dış halka derece çentikleri */
+    /* Halkalar — pergel çizimi */
+    const rings = [
+        mkCircle(c, c, 250, INK_FAINT_W, "none", 1),
+        mkCircle(c, c, 236, INK_W, "none", 1.2),
+        mkCircle(c, c, 178, INK_SOFT_W, "none", 0.8),
+        mkCircle(c, c, 112, INK_FAINT_W, "none", 0.8),
+    ];
+    rings.forEach((r, i) => { svg.append(r); strokeDraw(r, 150 + i * 220); });
+
+    const hub = mkCircle(c, c, 4, INK_W, INK_W, 0);
+    const hubRing = mkCircle(c, c, 11, INK_SOFT_W, "none", 0.8);
+    svg.append(hub, hubRing);
+    fadeIn(hub, 950); strokeDraw(hubRing, 1000);
+
+    /* Dönen dış çentik halkası (salt süs — astronomik kısım sabittir) */
+    const rotor = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    rotor.setAttribute("class", "wheel-rotor");
     for (let d = 0; d < 360; d += 5) {
         const a = d * Math.PI / 180;
-        const len = d % 30 === 0 ? 12 : (d % 10 === 0 ? 7 : 4);
-        svg.append(mkLine(c + Math.cos(a) * 236, c + Math.sin(a) * 236, c + Math.cos(a) * (236 + len), c + Math.sin(a) * (236 + len), d % 30 === 0 ? INK_W : INK_SOFT_W, d % 30 === 0 ? 1 : 0.6));
+        const len = d % 30 === 0 ? 10 : (d % 10 === 0 ? 6 : 3.5);
+        rotor.append(mkLine(c + Math.cos(a) * 238.5, c + Math.sin(a) * 238.5, c + Math.cos(a) * (238.5 + len), c + Math.sin(a) * (238.5 + len), d % 30 === 0 ? INK_SOFT_W : INK_FAINT_W, d % 30 === 0 ? 0.9 : 0.6));
     }
+    svg.append(rotor);
+    fadeIn(rotor, 700);
 
     /* El yazması üslubu: dağınık kızıl yıldızlar */
     const starPos = [[92, 120], [412, 96], [448, 300], [96, 396], [258, 62], [70, 258], [452, 190], [380, 440]];
-    starPos.forEach(([x, y]) => {
+    starPos.forEach(([x, y], i) => {
         const s = mkText(x, y, "✳", MADDER_W, "11px", "middle");
-        s.setAttribute("opacity", "0.55");
+        s.setAttribute("opacity", "0");
         svg.append(s);
+        drawQueue.push([s, 1900 + i * 110, 'fade-soft']);
     });
 
-    /* Dönen bölüm: burç dilimleri ve glifler */
-    const rotor = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    rotor.setAttribute("class", "wheel-rotor");
-
+    /* Burç dilimleri ve glifler (sabit; gezegen konumlarıyla hizalı) */
     for (let i = 0; i < 12; i++) {
-        const a = (i * 30 - 90) * Math.PI / 180;
-        rotor.append(mkLine(c + Math.cos(a) * 178, c + Math.sin(a) * 178, c + Math.cos(a) * 236, c + Math.sin(a) * 236, INK_SOFT_W, 0.8));
+        const a = (i * 30) * Math.PI / 180;
+        const spoke = mkLine(c + Math.cos(a) * 178, c + Math.sin(a) * 178, c + Math.cos(a) * 236, c + Math.sin(a) * 236, INK_SOFT_W, 0.8);
+        svg.append(spoke);
+        fadeIn(spoke, 900 + i * 45);
 
-        const ga = (i * 30 - 75) * Math.PI / 180;
+        const ga = (i * 30 + 15) * Math.PI / 180;
         const gx = c + Math.cos(ga) * 207, gy = c + Math.sin(ga) * 207;
-        const glyph = mkText(gx, gy, SIGN_GLYPHS[i] + "︎", GOLD_W, "24px", "middle");
-        rotor.append(glyph);
-
-        /* İç halkada element işareti: nokta rengi elemente göre */
-        const ex = c + Math.cos(ga) * 145, ey = c + Math.sin(ga) * 145;
-        const elColors = [MADDER_W, INK_W, GOLD_W, "#2c4a6e"]; // ateş, toprak, hava, su
-        rotor.append(mkCircle(ex, ey, 2.2, "none", elColors[i % 4], 0));
+        const glyph = mkText(gx, gy, SIGN_GLYPHS[i] + "︎", GOLD_W, "23px", "middle");
+        svg.append(glyph);
+        fadeIn(glyph, 1350 + i * 55);
     }
 
-    svg.append(rotor);
+    /* Bugünün gökyüzü: gerçek gezegen konumları + İstanbul yükseleni */
+    let sky = null;
+    try { sky = currentSky(new Date(), { lat: 41.0082, lon: 28.9784 }); } catch (e) { console.error('Gökyüzü hesabı:', e); }
+
+    if (sky) {
+        /* Yükselen işareti */
+        const aRad = sky.ascDeg * Math.PI / 180;
+        const ascLine = mkLine(c + Math.cos(aRad) * 112, c + Math.sin(aRad) * 112, c + Math.cos(aRad) * 178, c + Math.sin(aRad) * 178, MADDER_W, 1.1);
+        svg.append(ascLine);
+        fadeIn(ascLine, 2450);
+        const ascLbl = mkText(c + Math.cos(aRad) * 98, c + Math.sin(aRad) * 98, "ASC", MADDER_W, "9px", "middle");
+        ascLbl.style.fontFamily = "'Jost', sans-serif";
+        ascLbl.setAttribute("letter-spacing", "1.5");
+        svg.append(ascLbl);
+        fadeIn(ascLbl, 2550);
+
+        /* Gezegenler — bitişik olanları farklı yarıçapa dağıt */
+        const sorted = [...sky.planets].sort((a, b) => a.degree - b.degree);
+        let lastDeg = -999, tier = 0;
+        sorted.forEach((p, idx) => {
+            tier = (p.degree - lastDeg < 14) ? (tier + 1) % 3 : 0;
+            lastDeg = p.degree;
+            const pr = 152 - tier * 17;
+            const pa = p.degree * Math.PI / 180;
+            const px = c + Math.cos(pa) * pr, py = c + Math.sin(pa) * pr;
+
+            const mark = mkLine(c + Math.cos(pa) * 174, c + Math.sin(pa) * 174, c + Math.cos(pa) * 178, c + Math.sin(pa) * 178, INK_W, 1);
+            svg.append(mark);
+            fadeIn(mark, 2100 + idx * 130);
+
+            const pt = mkText(px, py, (PLANET_GLYPHS[p.name] || "✶") + "︎", INK_W, "17px", "middle");
+            svg.append(pt);
+            fadeIn(pt, 2150 + idx * 130);
+        });
+
+        /* Altyazı: tarih + yükselen */
+        const cap = document.getElementById('wheel-caption');
+        if (cap) {
+            const now = new Date();
+            const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+            cap.innerHTML = `Bugünün Gökyüzü — ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}<br>İstanbul'da şu an yükselen: <span style="color:var(--madder)">${signFromDegree(sky.ascDeg)}</span>`;
+        }
+    }
+
     host.append(svg);
+
+    /* Çizim animasyonunu başlat */
+    if (REDUCED_MOTION) {
+        drawQueue.forEach(([el, , type]) => {
+            if (type === 'stroke') { el.style.strokeDasharray = 'none'; el.style.strokeDashoffset = '0'; }
+            else el.setAttribute('opacity', el.dataset.op || (type === 'fade-soft' ? '0.55' : '1'));
+        });
+        return;
+    }
+    requestAnimationFrame(() => {
+        drawQueue.forEach(([el, delay, type]) => {
+            setTimeout(() => {
+                if (type === 'stroke') {
+                    el.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                    el.style.strokeDashoffset = '0';
+                } else {
+                    el.style.transition = 'opacity 0.9s ease';
+                    el.setAttribute('opacity', type === 'fade-soft' ? '0.55' : '1');
+                }
+            }, delay);
+        });
+    });
+}
+
+/* ============================================================
+   Masthead: gerçek ay evresini çizen mürekkep ikonu
+   ============================================================ */
+
+function moonIconSVG(date) {
+    let phase;
+    try { phase = Astronomy.MoonPhase(date); } // 0 yeni ay, 90 ilk dördün, 180 dolunay
+    catch (e) { return ''; }
+
+    const r = 7, cx = 9, cy = 9;
+    const rad = phase * Math.PI / 180;
+    const rx = Math.abs(Math.cos(rad)) * r;
+    const waxing = phase <= 180;
+    const gibbous = (1 - Math.cos(rad)) / 2 > 0.5;
+
+    /* Aydınlık bölge: dış yarım daire + terminatör elipsi */
+    const side = waxing ? 1 : 0; // büyüyen ay sağdan aydınlanır
+    const term = gibbous ? (1 - side) : side;
+    const lit = `M ${cx} ${cy - r} A ${r} ${r} 0 0 ${side} ${cx} ${cy + r} A ${rx} ${r} 0 0 ${term} ${cx} ${cy - r} Z`;
+
+    return `<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" style="vertical-align:-3px">
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(38,34,25,0.15)"/>
+        <path d="${lit}" fill="#8f7431"/>
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#262219" stroke-width="0.8"/>
+    </svg>`;
+}
+
+/* ============================================================
+   Tarihçe: kaydırmayla akan mürekkep hattı
+   ============================================================ */
+
+function initTimelineRail() {
+    const timeline = document.querySelector('.timeline');
+    if (!timeline) return;
+
+    const rail = document.createElement('div');
+    rail.className = 'rail';
+    const ink = document.createElement('div');
+    ink.className = 'rail-ink';
+    timeline.append(rail, ink);
+
+    if (REDUCED_MOTION) { ink.style.height = '100%'; return; }
+
+    let ticking = false;
+    const update = () => {
+        const rect = timeline.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const progress = Math.min(1, Math.max(0, (vh * 0.72 - rect.top) / rect.height));
+        ink.style.height = (progress * 100).toFixed(2) + '%';
+        ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+}
+
+/* ============================================================
+   Levhalar: müze vitrini (lightbox)
+   ============================================================ */
+
+function initPlateLightbox() {
+    const modal = document.getElementById('plate-modal');
+    if (!modal) return;
+    const body = document.getElementById('plate-modal-body');
+
+    document.querySelectorAll('#figure-row figure.plate').forEach(fig => {
+        fig.setAttribute('tabindex', '0');
+        fig.setAttribute('role', 'button');
+        const open = () => {
+            const img = fig.querySelector('img');
+            const cap = fig.querySelector('figcaption');
+            if (!img || img.naturalWidth === 0) return;
+            body.innerHTML = '';
+            const frame = document.createElement('div');
+            frame.className = 'pm-frame';
+            const big = document.createElement('img');
+            big.src = img.currentSrc || img.src;
+            big.alt = img.alt;
+            frame.append(big);
+            const capEl = document.createElement('figcaption');
+            if (cap) capEl.innerHTML = cap.innerHTML;
+            body.append(frame, capEl);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            logUserAction('Levha incelendi', { Levha: (cap?.querySelector('.plate-no')?.textContent || img.alt).trim() });
+        };
+        fig.addEventListener('click', open);
+        fig.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    });
+
+    const close = () => { modal.classList.remove('active'); document.body.style.overflow = ''; };
+    document.getElementById('plate-modal-close').addEventListener('click', close);
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+}
+
+/* ============================================================
+   Burç kataloğu: Babil adları (MUL.APIN)
+   ============================================================ */
+
+function initSignCells() {
+    document.querySelectorAll('.sign-cell').forEach(cell => {
+        if (!cell.querySelector('.sign-babil')) return;
+        cell.setAttribute('tabindex', '0');
+        cell.setAttribute('role', 'button');
+        const toggle = () => {
+            const wasOpen = cell.classList.contains('open');
+            document.querySelectorAll('.sign-cell.open').forEach(o => o.classList.remove('open'));
+            if (!wasOpen) cell.classList.add('open');
+        };
+        cell.addEventListener('click', toggle);
+        cell.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    });
 }
 
 /* ============================================================
