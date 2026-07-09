@@ -387,11 +387,11 @@ function drawStoryImage(firstName, c) {
     ctx.font = '400 46px "Jost", sans-serif';
     ctx.save();
     ctx.letterSpacing = '18px';
-    ctx.fillText('Ö Z L E M', W / 2, 210);
+    ctx.fillText('( SİTE ADI )', W / 2, 210); // SİTE ADI: marka adı kesinleşince değiştirin
     ctx.restore();
     ctx.fillStyle = GOLD;
     ctx.font = '400 24px "Jost", sans-serif';
-    ctx.fillText('A S T R O L O J İ  ·  T A R İ H  ·  D A N I Ş M A N L I K', W / 2, 262);
+    ctx.fillText('A S T R O L O J İ  ·  D A N I Ş M A N L I K', W / 2, 262);
 
     /* Ayraç */
     ctx.strokeStyle = GOLD; ctx.lineWidth = 1;
