@@ -326,6 +326,7 @@ function initNatalForm() {
             dlBtn.textContent = 'Hazırlanıyor…';
             try {
                 await document.fonts.ready;
+                await document.fonts.load('34px "Astro Symbols"', '✳♈').catch(() => {});
                 const url = drawStoryImage(lastReading.firstName, lastReading.c);
                 const a = document.createElement('a');
                 a.href = url;
@@ -377,7 +378,7 @@ function drawStoryImage(firstName, c) {
 
     /* Köşe yıldızları */
     ctx.fillStyle = MADDER;
-    ctx.font = '34px "Cormorant Garamond", serif';
+    ctx.font = '34px "Astro Symbols", "Cormorant Garamond", serif';
     ctx.textAlign = 'center';
     [[100, 116], [W - 100, 116], [100, H - 96], [W - 100, H - 96]].forEach(([x, y]) => ctx.fillText('✳', x, y));
 
@@ -416,7 +417,7 @@ function drawStoryImage(firstName, c) {
         ctx.fillText(label.toLocaleUpperCase('tr'), W / 2, y);
         ctx.restore();
         ctx.fillStyle = MADDER;
-        ctx.font = '90px "Cormorant Garamond", serif';
+        ctx.font = '90px "Astro Symbols", "Cormorant Garamond", serif';
         ctx.fillText(SIGN_GLYPHS[SIGNS.indexOf(sign)] + '︎', W / 2 - 150, y + 120);
         ctx.fillStyle = INK;
         ctx.font = '500 96px "Cormorant Garamond", serif';
@@ -501,7 +502,7 @@ function initZodiacWheel() {
 
     const starPos = [[92, 120], [412, 96], [448, 300], [96, 396], [258, 62], [70, 258], [452, 190], [380, 440]];
     starPos.forEach(([x, y], i) => {
-        const s = mkText(x, y, "✳", MADDER_W, "11px", "middle");
+        const s = mkText(x, y, "✳︎", MADDER_W, "11px", "middle");
         s.setAttribute("opacity", "0");
         svg.append(s);
         drawQueue.push([s, 1900 + i * 110, 'fade-soft']);

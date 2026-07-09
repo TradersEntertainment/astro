@@ -271,7 +271,7 @@ export function mkText(x, y, c, col, sz, a) {
     e.setAttribute("x", x); e.setAttribute("y", y);
     e.setAttribute("fill", col); e.setAttribute("font-size", sz); e.setAttribute("text-anchor", a);
     e.setAttribute("dominant-baseline", "middle");
-    e.style.fontFamily = "'Cormorant Garamond', serif";
+    e.style.fontFamily = "'Astro Symbols', 'Cormorant Garamond', serif";
     e.textContent = c;
     return e;
 }

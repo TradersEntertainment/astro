@@ -18,6 +18,19 @@
 @import "@fontsource/spectral/300-italic.css";
 @import "@fontsource/spectral/400-italic.css";
 
+/* Astrolojik glifler için sembol fontu (Noto Sans Symbols alt kümesi, OFL lisanslı —
+   bkz. fonts/OFL-noto-sans-symbols.txt). unicode-range yalnızca sembol bloklarını
+   kapsar; böylece iOS'un renkli emojileri hiçbir cihazda devreye giremez ve
+   burç/gezegen işaretleri her platformda aynı mürekkep üslubuyla çizilir. */
+@font-face {
+    font-family: "Astro Symbols";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./fonts/astro-symbols.woff2") format("woff2");
+    unicode-range: U+25A1, U+25B3, U+2600-26FF, U+2700-27BF;
+}
+
 :root {
     --paper: #f3ecdd;
     --paper-warm: #ede2ca;
@@ -32,9 +45,9 @@
     --rule: rgba(38, 34, 25, 0.22);
     --rule-soft: rgba(38, 34, 25, 0.1);
 
-    --font-display: "Cormorant Garamond", "Times New Roman", serif;
-    --font-body: "Spectral", Georgia, serif;
-    --font-label: "Jost", "Helvetica Neue", sans-serif;
+    --font-display: "Astro Symbols", "Cormorant Garamond", "Times New Roman", serif;
+    --font-body: "Astro Symbols", "Spectral", Georgia, serif;
+    --font-label: "Astro Symbols", "Jost", "Helvetica Neue", sans-serif;
 
     --measure: 62ch;
     --pad-x: clamp(1.25rem, 5vw, 3rem);
