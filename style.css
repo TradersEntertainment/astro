@@ -583,6 +583,48 @@ figure.plate figcaption .credit {
     color: var(--ink-faint);
 }
 
+/* Uzmanlık sayfası kenar levhası (era-note içinde) */
+.uz-plate {
+    margin: 1.2rem 0 0;
+    font-style: normal;
+}
+
+.uz-plate .plate-frame {
+    border: 1px solid var(--rule);
+    padding: 7px;
+    background: var(--paper-warm);
+}
+
+.uz-plate img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: sepia(0.12) contrast(0.97) saturate(0.94);
+}
+
+.uz-plate figcaption {
+    margin-top: 0.7rem;
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    font-style: normal;
+    line-height: 1.55;
+    color: var(--ink-faint);
+}
+
+.uz-plate figcaption .plate-no {
+    font-family: var(--font-label);
+    font-size: 0.58rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--madder);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+@media (max-width: 1024px) {
+    .uz-plate { max-width: 340px; }
+}
+
 /* ---------- Alıntı arası ---------- */
 
 .interlude {
