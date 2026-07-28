@@ -1,0 +1,619 @@
+/* ============================================================
+   ( AKADEMİ ADI ) — Yaratıcı Drama Akademisi
+   "Sahne" tasarım dili: krem sahne, bordo perde, amber spot.
+   ============================================================ */
+
+@import "@fontsource/fraunces/400.css";
+@import "@fontsource/fraunces/600.css";
+@import "@fontsource/fraunces/400-italic.css";
+@import "@fontsource/fraunces/600-italic.css";
+@import "@fontsource/figtree/400.css";
+@import "@fontsource/figtree/500.css";
+@import "@fontsource/figtree/700.css";
+
+:root {
+    --stage: #faf5ec;
+    --stage-warm: #f3ead9;
+    --ink: #29211b;
+    --ink-soft: #5d5148;
+    --ink-faint: #93857a;
+    --curtain: #8a2332;
+    --curtain-deep: #5f1622;
+    --spot: #e8a63d;
+    --spot-soft: #f2c377;
+    --night: #212c46;
+    --rule: rgba(41, 33, 27, 0.16);
+    --rule-soft: rgba(41, 33, 27, 0.08);
+
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Figtree", "Helvetica Neue", sans-serif;
+
+    --pad-x: clamp(1.25rem, 5vw, 3rem);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+body {
+    background: var(--stage);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 1.04rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: 1120px; margin-inline: auto; padding-inline: var(--pad-x); }
+
+section { padding-block: clamp(4rem, 8vw, 6.5rem); }
+
+/* ---------- Tipografi yardımcıları ---------- */
+
+.kicker {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--curtain);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; }
+
+.section-head { max-width: 700px; margin-bottom: clamp(2.2rem, 5vw, 3.5rem); }
+.section-head h2 { font-size: clamp(1.9rem, 4vw, 2.9rem); }
+.section-head .head-desc { margin-top: 1rem; color: var(--ink-soft); max-width: 56ch; }
+.section-head .head-rule { width: 56px; height: 3px; background: var(--spot); border-radius: 2px; margin-top: 1.2rem; }
+
+/* ---------- Butonlar ---------- */
+
+.btn {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    padding: 0.95rem 1.9rem;
+    background: var(--curtain);
+    color: var(--stage);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 14px rgba(95, 22, 34, 0.25);
+}
+.btn:hover { background: var(--curtain-deep); transform: translateY(-2px); }
+
+.btn-spot {
+    background: var(--spot);
+    color: var(--ink);
+    box-shadow: 0 4px 14px rgba(232, 166, 61, 0.35);
+}
+.btn-spot:hover { background: var(--spot-soft); }
+
+.btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    box-shadow: none;
+}
+.btn-ghost:hover { background: var(--ink); color: var(--stage); transform: translateY(-2px); }
+
+.link-more {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--curtain);
+    border-bottom: 2px solid var(--spot);
+    padding-bottom: 1px;
+    transition: color 0.2s ease;
+}
+.link-more:hover { color: var(--curtain-deep); }
+
+/* ---------- Masthead ---------- */
+
+.masthead {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: rgba(250, 245, 236, 0.94);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+}
+
+.masthead-inner {
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 0.85rem var(--pad-x);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.brand { display: flex; align-items: center; gap: 0.7rem; margin-right: auto; }
+
+.brand .brand-mark {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--curtain);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.brand .brand-mark::after {
+    content: "";
+    position: absolute;
+    left: 50%; bottom: -35%;
+    width: 70%; aspect-ratio: 1;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--spot) 0%, var(--spot) 55%, transparent 72%);
+}
+
+.brand .brand-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.1;
+}
+.brand .brand-sub {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.masthead nav { display: flex; align-items: center; gap: clamp(0.9rem, 2vw, 1.6rem); }
+
+.masthead nav a {
+    font-weight: 500;
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+.masthead nav a:hover { color: var(--curtain); }
+
+.masthead .btn { padding: 0.6rem 1.2rem; font-size: 0.78rem; }
+
+/* ---------- Hero: perde açılışı ---------- */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(5rem, 11vw, 8.5rem);
+    background:
+        radial-gradient(ellipse 60% 55% at 50% 38%, rgba(232, 166, 61, 0.22), transparent 70%),
+        var(--stage);
+}
+
+.hero .curtain {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 56%;
+    z-index: 5;
+    background:
+        repeating-linear-gradient(90deg, transparent 0 42px, rgba(0,0,0,0.14) 42px 66px),
+        linear-gradient(180deg, var(--curtain) 0%, var(--curtain-deep) 100%);
+    transition: transform 1.6s cubic-bezier(0.72, 0, 0.22, 1);
+}
+.hero .curtain-l { left: 0; border-right: 6px solid var(--curtain-deep); }
+.hero .curtain-r { right: 0; border-left: 6px solid var(--curtain-deep); }
+.hero.open .curtain-l { transform: translateX(-101%); }
+.hero.open .curtain-r { transform: translateX(101%); }
+
+.hero-inner { position: relative; z-index: 2; text-align: center; max-width: 780px; margin-inline: auto; }
+
+.hero .scene-tag {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--curtain);
+    border: 1px solid var(--curtain);
+    border-radius: 999px;
+    padding: 0.4rem 1.1rem;
+    margin-bottom: 1.6rem;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    letter-spacing: -0.01em;
+}
+.hero h1 em { font-style: italic; color: var(--curtain); }
+
+.hero .hero-lede {
+    margin: 1.4rem auto 2.4rem;
+    max-width: 52ch;
+    font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+    color: var(--ink-soft);
+}
+
+.hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* MEB şeridi */
+.meb-strip {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--stage-warm);
+    padding: 1.1rem var(--pad-x);
+}
+.meb-strip .meb-inner {
+    max-width: 1120px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.meb-strip .meb-rosette {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--curtain);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--curtain);
+    flex-shrink: 0;
+}
+.meb-strip p { font-size: 0.92rem; color: var(--ink-soft); }
+.meb-strip strong { color: var(--ink); font-weight: 700; }
+
+/* ---------- Program kartları ---------- */
+
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.2rem, 3vw, 2rem);
+}
+
+.program {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    padding: clamp(1.6rem, 3.5vw, 2.2rem);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.program:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(41, 33, 27, 0.1); }
+
+.program .p-age {
+    display: inline-block;
+    align-self: flex-start;
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--stage-warm);
+    color: var(--curtain);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: 1.1rem;
+}
+.program.featured .p-age { background: var(--spot); color: var(--ink); }
+
+.program h3 { font-size: 1.45rem; margin-bottom: 0.6rem; }
+
+.program > p { font-size: 0.95rem; color: var(--ink-soft); margin-bottom: 1.2rem; }
+
+.program ul { list-style: none; margin-bottom: 1.4rem; flex-grow: 1; }
+.program ul li {
+    font-size: 0.92rem;
+    padding: 0.42rem 0 0.42rem 1.7rem;
+    position: relative;
+}
+.program ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.78rem;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--spot);
+}
+
+.chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.chip {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--rule);
+    color: var(--ink-soft);
+    border-radius: 999px;
+    padding: 0.32rem 0.8rem;
+}
+.chip.live { border-color: var(--curtain); color: var(--curtain); }
+.chip.live::before { content: "● "; font-size: 0.6rem; }
+
+.program .p-note { font-size: 0.82rem; color: var(--ink-faint); margin-bottom: 1rem; }
+
+/* ---------- Format şeridi ---------- */
+
+.formats { background: var(--stage-warm); border-block: 1px solid var(--rule); }
+
+.formats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 4vw, 3rem); }
+
+.format h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.format .f-ico {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    display: grid;
+    place-items: center;
+    margin-bottom: 1rem;
+}
+.format .f-ico svg { width: 22px; height: 22px; stroke: var(--curtain); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.format p { font-size: 0.93rem; color: var(--ink-soft); }
+.format .soon {
+    display: inline-block;
+    margin-left: 0.4rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--spot);
+    border: 1px solid var(--spot);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    vertical-align: middle;
+}
+
+/* ---------- Yöntem (gece sahnesi) ---------- */
+
+.method {
+    background:
+        radial-gradient(ellipse 50% 45% at 50% 0%, rgba(232, 166, 61, 0.15), transparent 70%),
+        var(--night);
+    color: var(--stage);
+}
+
+.method .kicker { color: var(--spot); }
+.method .section-head .head-desc { color: rgba(250, 245, 236, 0.72); }
+
+.method-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+}
+
+.method-text p { max-width: 62ch; color: rgba(250, 245, 236, 0.88); }
+.method-text p + p { margin-top: 1rem; }
+.method-text .m-src {
+    margin-top: 1.4rem;
+    font-size: 0.8rem;
+    color: rgba(250, 245, 236, 0.55);
+    border-left: 3px solid var(--spot);
+    padding-left: 0.9rem;
+}
+
+.method-points { display: grid; gap: 1rem; }
+.method-point {
+    background: rgba(250, 245, 236, 0.06);
+    border: 1px solid rgba(250, 245, 236, 0.14);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+}
+.method-point h4 { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; margin-bottom: 0.3rem; color: var(--spot-soft); }
+.method-point p { font-size: 0.9rem; color: rgba(250, 245, 236, 0.78); }
+
+/* ---------- Eğitmen ---------- */
+
+.tutor-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+}
+
+.tutor-portrait {
+    aspect-ratio: 4 / 5;
+    border-radius: 20px;
+    background: linear-gradient(160deg, var(--curtain) 0%, var(--curtain-deep) 100%);
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.tutor-portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 20%, rgba(232, 166, 61, 0.25), transparent 65%);
+}
+.tutor-portrait .monogram {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(4rem, 9vw, 7rem);
+    color: var(--stage);
+    z-index: 1;
+}
+.tutor-portrait .ph-note {
+    position: absolute;
+    bottom: 1rem; left: 0; right: 0;
+    text-align: center;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250, 245, 236, 0.55);
+    z-index: 1;
+}
+
+.tutor-text h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 1rem; }
+.tutor-text p { max-width: 58ch; color: var(--ink-soft); }
+.tutor-text p + p { margin-top: 0.9rem; }
+
+.cert-frame {
+    margin-top: 1.8rem;
+    border: 2px dashed var(--curtain);
+    border-radius: 14px;
+    background: #fff;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.cert-frame .meb-rosette { width: 44px; height: 44px; font-size: 1rem; }
+.cert-frame .c-title { font-weight: 700; font-size: 0.95rem; }
+.cert-frame .c-sub { font-size: 0.82rem; color: var(--ink-faint); }
+
+/* ---------- Takvim ---------- */
+
+.schedule-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid var(--rule); }
+.schedule-table th {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--stage);
+    background: var(--curtain);
+    padding: 0.9rem 1.2rem;
+}
+.schedule-table td { padding: 1rem 1.2rem; font-size: 0.94rem; border-top: 1px solid var(--rule-soft); }
+.schedule-table td.soft { color: var(--ink-faint); }
+
+.enroll-steps {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.2rem, 3vw, 2rem);
+}
+.enroll-step { text-align: left; }
+.enroll-step .s-num {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--spot);
+    color: var(--ink);
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    margin-bottom: 0.8rem;
+}
+.enroll-step h4 { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.enroll-step p { font-size: 0.9rem; color: var(--ink-soft); }
+
+/* ---------- SSS ---------- */
+
+.faq-list { max-width: 760px; margin-inline: auto; }
+.faq-item { background: #fff; border: 1px solid var(--rule); border-radius: 14px; margin-bottom: 0.8rem; overflow: hidden; }
+.faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    text-align: left;
+    padding: 1.1rem 3rem 1.1rem 1.4rem;
+    cursor: pointer;
+    position: relative;
+}
+.faq-q::after {
+    content: "+";
+    position: absolute;
+    right: 1.2rem; top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--curtain);
+    transition: transform 0.3s ease;
+}
+.faq-item.active .faq-q::after { transform: translateY(-50%) rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.faq-a p { padding: 0 1.4rem 1.2rem; font-size: 0.93rem; color: var(--ink-soft); }
+
+/* ---------- Tanışma CTA bandı ---------- */
+
+.invite {
+    background:
+        radial-gradient(ellipse 55% 60% at 50% 100%, rgba(232, 166, 61, 0.25), transparent 70%),
+        linear-gradient(180deg, var(--curtain) 0%, var(--curtain-deep) 100%);
+    color: var(--stage);
+    text-align: center;
+}
+.invite h2 { font-size: clamp(1.9rem, 4.5vw, 3rem); max-width: 24ch; margin-inline: auto; }
+.invite p { margin: 1rem auto 2rem; max-width: 50ch; color: rgba(250, 245, 236, 0.8); }
+
+/* ---------- Footer ---------- */
+
+.site-footer { border-top: 1px solid var(--rule); padding: 2.5rem var(--pad-x); }
+.footer-inner {
+    max-width: 1120px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+.footer-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.footer-links a { font-size: 0.85rem; color: var(--ink-soft); }
+.footer-links a:hover { color: var(--curtain); }
+.footer-note { width: 100%; margin-top: 1.2rem; font-size: 0.78rem; color: var(--ink-faint); }
+
+/* WhatsApp yüzen buton */
+.whatsapp-float {
+    position: fixed;
+    bottom: 1.5rem; right: 1.5rem;
+    z-index: 950;
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    background: var(--curtain);
+    color: var(--stage);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 24px rgba(95, 22, 34, 0.35);
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+.whatsapp-float:hover { background: var(--curtain-deep); transform: translateY(-3px); }
+.whatsapp-float svg { width: 26px; height: 26px; }
+
+/* ---------- Görünürlük animasyonu ---------- */
+
+[data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
+[data-reveal].revealed { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+    .hero .curtain { display: none; }
+}
+
+/* ---------- Duyarlılık ---------- */
+
+@media (max-width: 960px) {
+    .programs-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+    .method-grid { grid-template-columns: 1fr; }
+    .tutor-grid { grid-template-columns: 1fr; }
+    .tutor-portrait { max-width: 380px; }
+    .formats-grid { grid-template-columns: 1fr; }
+    .enroll-steps { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+    .masthead nav { display: none; }
+    .schedule-wrap { overflow-x: auto; }
+    .schedule-table { min-width: 560px; }
+}
