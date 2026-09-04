@@ -200,8 +200,6 @@ dialog.lightbox::backdrop { background: rgba(17, 24, 41, 0.78); backdrop-filter:
 .nav-toggle span { display: block; width: 18px; height: 2px; background: currentColor; position: relative; }
 .nav-toggle span::before, .nav-toggle span::after { content: ""; position: absolute; left: 0; width: 18px; height: 2px; background: currentColor; }
 .nav-toggle span::before { top: -6px; } .nav-toggle span::after { top: 6px; }
-.rail { position: absolute; left: 0; bottom: -2px; height: 2px; width: 100%; background: var(--spot); transform-origin: left; transform: scaleX(0); }
-html[data-motion="reduced"] .rail { display: none; }
 
 /* ---------- Yapışkan mobil CTA ---------- */
 .cta-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-ctabar); padding: 0.6rem var(--pad-x) calc(0.6rem + env(safe-area-inset-bottom)); background: rgba(248, 243, 234, 0.96); border-top: 1px solid var(--rule); display: none; transform: translateY(110%); transition: transform 0.35s var(--ease-out); }

@@ -134,7 +134,6 @@ html[data-motion="full"]:not(.motion-ready) .hero__inner > *,
 html[data-motion="full"]:not(.motion-ready) .hero__hint,
 html[data-motion="full"]:not(.motion-ready) .spot-cone,
 html[data-motion="full"]:not(.motion-ready) .spot-pool { opacity: 0; }
-.hero-line { padding-bottom: 0.08em; margin-bottom: -0.08em; }
 
 /* Hero fotoğrafı yoksa CSS sahne zeminine ahşap dokusu (yalnız o durumda indirilir) */
 .stage-bg:has(.media--missing) .stage-bg__floor {

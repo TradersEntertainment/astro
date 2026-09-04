@@ -7,7 +7,7 @@ import { sfx } from '../sfx.js';
 const GLYPHS = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ0123456789:—()';
 const rnd = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 
-function buildCell(cell) {
+function buildCell(cell, perCell = false) {
     const text = cell.textContent.trim();
     if (!text) return [];
     const original = cell.innerHTML;
@@ -16,7 +16,7 @@ function buildCell(cell) {
     const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = text;
     const wrap = document.createElement('span'); wrap.className = 'flaps'; wrap.setAttribute('aria-hidden', 'true');
     const flaps = [];
-    if (text.length > 14) {
+    if (perCell || text.length > 14) {
         const f = document.createElement('span'); f.className = 'flap flap--word'; f.dataset.final = text; f.textContent = text; wrap.appendChild(f); flaps.push(f);
     } else {
         for (const ch of text) {
@@ -39,16 +39,18 @@ export const board = {
     init(table, c, ctx) {
         let built = false, killed = false, tl = null;
         const cells = [...table.querySelectorAll('th, td')];
-        const restore = () => { cells.forEach((cell) => { if (cell.dataset.original != null) { cell.innerHTML = cell.dataset.original; delete cell.dataset.original; } }); table.classList.remove('board--flap'); };
+        const restore = () => { cells.forEach((cell) => { if (cell.dataset.original != null) { cell.innerHTML = cell.dataset.original; delete cell.dataset.original; } }); table.classList.remove('board--flap'); table.querySelector('colgroup')?.remove(); table.style.tableLayout = ''; table.style.width = ''; };
 
         const flip = (flaps, stagger = 0.012) => {
             const dur = 0.42;
             const timeline = gsap.timeline();
             flaps.forEach((f) => { f.dataset.settled = ''; });
-            timeline.from(flaps, { rotationX: -90, transformPerspective: 600, transformOrigin: '50% 50%', duration: dur, stagger, ease: 'power2.out' }, 0);
-            let lastSfx = 0;
+            timeline.from(flaps, { scaleY: 0.04, transformOrigin: '50% 50%', duration: dur, stagger, ease: 'power2.out' }, 0);
+            let lastSfx = 0, lastWrite = -1;
             timeline.eventCallback('onUpdate', () => {
                 const t = timeline.time();
+                if (t - lastWrite < 0.05 && t < timeline.duration()) return;
+                lastWrite = t;
                 flaps.forEach((f, i) => {
                     const start = i * stagger;
                     if (t < start) return;
@@ -65,14 +67,24 @@ export const board = {
             if (built || killed) return;
             built = true;
             ctx.add(() => {
+                // sütun genişliklerini önce ölç → flap'ler yazı değiştirirken tablo yeniden akmaz
+                const firstRow = table.querySelector('tr');
+                if (firstRow) {
+                    const widths = [...firstRow.children].map((c) => c.getBoundingClientRect().width);
+                    const cg = document.createElement('colgroup');
+                    widths.forEach((w) => { const col = document.createElement('col'); col.style.width = `${Math.ceil(w)}px`; cg.appendChild(col); });
+                    table.prepend(cg);
+                    table.style.tableLayout = 'fixed';
+                    table.style.width = `${Math.ceil(widths.reduce((a, b) => a + b, 0))}px`;
+                }
                 table.classList.add('board--flap');
-                const flaps = cells.flatMap(buildCell);
+                const flaps = cells.flatMap((cell) => buildCell(cell, !!c.mobile));
                 tl = gsap.timeline({ scrollTrigger: { id: 'board', trigger: table, start: 'top 80%', once: true } });
-                tl.add(flip(flaps, 0.012));
+                tl.add(flip(flaps, c.mobile ? 0.05 : 0.012));
                 // gerçek veri geldiğinde: document.dispatchEvent(new CustomEvent('board:update', { detail: { cell, text } }))
                 state.boardUpdate = (cell, text) => {
                     cell.textContent = text;
-                    const fl = buildCell(cell);
+                    const fl = buildCell(cell, !!c.mobile);
                     if (fl.length) flip(fl, 0.03);
                 };
             });

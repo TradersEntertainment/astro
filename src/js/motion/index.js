@@ -2,7 +2,9 @@
 // Modül: { name, sel?, needs?(conditions), init(root, conditions, ctx) → cleanup? }
 import { gsap, ScrollTrigger } from '../gsap.js';
 import { isReduced, onMotionChange } from '../prefs.js';
-import { BP_DESKTOP } from '../config.js';
+import { BP_DESKTOP, DEBUG } from '../config.js';
+
+const OFF = DEBUG ? new Set((new URLSearchParams(location.search).get('off') || '').split(',').filter(Boolean)) : new Set();
 
 const html = document.documentElement;
 let mm = null;
@@ -18,6 +20,7 @@ function run(modules) {
         const c = ctx.conditions;
         const cleanups = [];
         for (const m of modules) {
+            if (OFF.has('all') || OFF.has(m.name)) continue;
             const root = m.sel ? document.querySelector(m.sel) : document;
             if (!root || (m.needs && !m.needs(c))) continue;
             try {

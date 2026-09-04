@@ -20,15 +20,16 @@ export const finale = {
 
         gsap.set(l, { xPercent: -100, x: 0 });
         gsap.set(r, { xPercent: 100, x: 0 });
-        if (call) gsap.set(call, { opacity: 1 });
+        if (call) gsap.set(call, { autoAlpha: 0, z: 0.01 });
         if (emblem.length) gsap.set(emblem, { drawSVG: '0%' });
         if (brand) gsap.set(brand, { opacity: 0, y: 14 });
         if (brandName) gsap.set(brandName, { letterSpacing: '0.4em' });
 
+        const wrap = sec.closest('.finale-wrap');
         const tl = gsap.timeline({
             defaults: { ease: 'none' },
-            scrollTrigger: c.desktop
-                ? { id: 'finale', trigger: sec, start: 'top top', end: '+=90%', pin: true, pinSpacing: true, anticipatePin: 1, scrub: SCRUB }
+            scrollTrigger: c.desktop && wrap
+                ? { id: 'finale', trigger: wrap, start: 'top top', end: 'bottom bottom', scrub: SCRUB }
                 : { id: 'finale', trigger: sec, start: 'top 85%', end: 'bottom bottom', scrub: SCRUB },
         });
         let chased = false;
@@ -43,6 +44,7 @@ export const finale = {
         tl.to(l, { xPercent: 0, duration: 0.34, ease: 'power1.inOut' }, 0.36)
           .to(r, { xPercent: 0, duration: 0.34, ease: 'power1.inOut' }, 0.36);
         // .7–1: amblem işlenir, marka adı belirir
+        if (call) tl.set(call, { autoAlpha: 1 }, 0.69);
         if (emblem.length) tl.to(emblem, { drawSVG: '0% 100%', duration: 0.24, stagger: 0.01 }, 0.7);
         if (brand) tl.to(brand, { opacity: 1, y: 0, duration: 0.14 }, 0.84);
         if (brandName) tl.to(brandName, { letterSpacing: '0.06em', duration: 0.16 }, 0.84);

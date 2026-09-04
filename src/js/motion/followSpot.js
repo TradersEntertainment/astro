@@ -40,6 +40,7 @@ export const followSpot = {
         } else {
             let y = innerHeight * 0.5;
             const tick = () => {
+                if (!light.classList.contains('is-on')) return;
                 const target = innerHeight * (0.5 + state.dir * state.speed * 0.22);
                 y += (target - y) * 0.08;
                 toX(innerWidth / 2); toY(y);

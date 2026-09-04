@@ -130,7 +130,7 @@ html.no-js .cert::after, html[data-motion="reduced"] .cert::after, html.no-js .c
 /* ---------- Gişe: Solari panosu ---------- */
 .board--flap th, .board--flap td { white-space: nowrap; }
 .flaps { display: inline-flex; gap: 2px; vertical-align: middle; user-select: none; }
-.flap { display: inline-block; width: 0.74em; height: 1.45em; line-height: 1.45em; text-align: center; overflow: hidden; border-radius: 3px; background: var(--night-2); color: var(--spot-2); font-weight: 600; font-variant-numeric: tabular-nums; position: relative; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06); backface-visibility: hidden; }
+.flap { display: inline-block; width: 0.74em; height: 1.45em; line-height: 1.45em; text-align: center; overflow: hidden; border-radius: 3px; background: var(--night-2); color: var(--spot-2); font-weight: 600; font-variant-numeric: tabular-nums; position: relative; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06); }
 .flap--space { background: transparent; box-shadow: none; width: 0.4em; }
 .flap--word { width: auto; padding: 0 0.45em; }
 .flap::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, 0.55); }
@@ -222,4 +222,29 @@ html.no-js .entry-stub, html[data-motion="reduced"] .entry-stub { display: none;
 .trust { perspective: 1000px; }
 
 /* Dekor taşmaları (ölçekli damga, yıkama bandı vb.) yatay kaydırma yaratmasın; clip sticky'yi bozmaz */
-html { overflow-x: clip; }
+html, body { overflow-x: clip; }
+
+/* ---------- Mobil performans: pahalı filtre/karışım/bulanıklıklar yalnız masaüstünde ---------- */
+@media (max-width: 899px) {
+    .cursor-light { mix-blend-mode: normal; opacity: 0; background: radial-gradient(circle, rgba(255, 222, 160, 0.16) 0%, rgba(255, 222, 160, 0.06) 40%, transparent 68%); }
+    .cursor-light.is-on { opacity: 1; }
+    .finale__emblem .em, .method__figure .mask-rim { filter: none; }
+    .masthead--solid { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(248, 243, 234, 0.97); }
+    .hero .foots { filter: none; }
+    .lightbar li.is-active { filter: none; }
+    .stamp { mix-blend-mode: normal; opacity: 0.85; }
+}
+
+/* ---------- Finale: masaüstünde sticky sahne (pin yerine; layout shift üretmez) ---------- */
+@media (min-width: 900px) {
+    html[data-motion="full"] .finale-wrap { height: 190vh; }
+    html[data-motion="full"] .finale { position: sticky; top: 0; height: 100vh; display: grid; align-content: center; }
+}
+
+/* ---------- Mobil masthead: üç düğme + marka sığsın ---------- */
+@media (max-width: 899px) {
+    .masthead__inner { gap: 0.5rem; }
+    .brand__sub { display: none; }
+    .brand__name { font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw; display: block; }
+    .brand { min-width: 0; }
+}

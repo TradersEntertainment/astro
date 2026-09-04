@@ -41,6 +41,21 @@ Negatif (Midjourney `--no` / diğer araçlarda negatif prompt):
 | `sahne-arkasi-1600.webp` (opsiyonel) | Eğitmen bölümü arka planı | 16:10 | `theatre backstage detail: coiled hemp ropes on a wooden rail, a stepladder, a single bare work lamp, dark velvet folds, no people --ar 16:10` |
 | `doku-ahsap-2048.webp` (opsiyonel) | Sahne zemini dokusu | 2:1, döşenebilir | `old worn wooden stage floorboards texture, top-down, seamless tileable, warm brown tones, subtle scuffs --ar 2:1 --tile` |
 
+## v3 için opsiyonel ek görseller
+
+| Dosya | Yer | Prompt (stil kilidi + negatif eklenir) |
+|---|---|---|
+| `salon-koltuklar-1920.webp`, `-1280.webp` (16:9) | Açılışın ilk karesi: seyirci salonu (yoksa koltuk siluetleri) | `rows of empty red velvet theatre seats seen from the back of a dark auditorium, seats in soft-focus foreground, closed bordeaux stage curtain far away lit by a single warm spotlight, house lights dimming, no people --ar 16:9` |
+| `doku-kadife-1024.webp` (1:1, döşenebilir) | Final tam kapanış / sayfa geçişi perdesi dokusu | `close-up of deep bordeaux velvet theatre curtain fabric with soft vertical pleats, warm side light catching the nap, seamless tileable texture, no people --ar 1:1 --tile` |
+| `sahne-arkasi-1600.webp` (16:10) | Eğitmen bölümü paralaks arka planı | `theatre backstage detail: coiled hemp ropes on a wooden rail, a stepladder, a single bare work lamp, dark velvet folds, no people --ar 16:10` |
+
+Opsiyonel videolar (sessiz, döngü, ≤ 1.5 MB, 1280×720 WebM/MP4; `prefers-reduced-motion`'da oynatılmaz):
+
+| Dosya | Yer | Prompt (video aracı için) |
+|---|---|---|
+| `hero-haze-720.webm` (6–8 sn döngü) | Hero arka planı: spot içinde süzülen sis | `static camera, empty small black-box theatre stage, single warm spotlight beam from upper left, slow drifting stage haze and dust motes in the beam, dark velvet backdrop, no people, seamless loop, no camera movement, cinematic, 24fps` |
+| `perde-sway-720.webm` (6 sn döngü) | Final kapalı perde: hafif dalgalanan kadife | `static close shot of a closed deep bordeaux velvet theatre curtain, pleats swaying very gently as if from a draft, warm side light, seamless loop, no camera movement, no people` |
+
 ## Dışa aktarma
 
 - WebP, kalite 78–82; meta veriler silinir. Squoosh veya `sharp` ile boyutlandırın.

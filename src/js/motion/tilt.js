@@ -41,9 +41,12 @@ export const tilt = {
         } else {
             const rx = tickets.map((t) => gsap.quickTo(t, 'rotationX', { duration: 0.6, ease: 'power2' }));
             const ry = tickets.map((t) => gsap.quickTo(t, 'rotationY', { duration: 0.9, ease: 'power2' }));
-            let gy = 0;
+            let gy = 0, inView = false;
+            const io = new IntersectionObserver(([en]) => { inView = en.isIntersecting; }, { threshold: 0.05 });
+            io.observe(wrap);
+            cleanups.push(() => io.disconnect());
             const tick = () => {
-                if (!armed) return;
+                if (!armed || !inView) return;
                 const v = -state.dir * state.speed * 7;
                 tickets.forEach((t, i) => { rx[i](t.classList.contains('is-open') ? 0 : v); ry[i](gy); });
             };
