@@ -5,7 +5,8 @@ import { initMedia } from './ui/media.js';
 import { initWhatsApp } from './ui/whatsapp.js';
 import { startMotion } from './motion/index.js';
 import { opening } from './motion/opening.js';
-import { heroScroll } from './motion/parallax.js';
+import { velocity } from './motion/velocity.js';
+import { dolly } from './motion/dolly.js';
 import { spotlight } from './motion/spotlight.js';
 import { dust } from './motion/dust.js';
 import { reveals } from './motion/reveals.js';
@@ -20,5 +21,5 @@ initMedia();
 initWhatsApp();
 document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = String(new Date().getFullYear()); });
 
-startMotion([opening, heroScroll, spotlight, dust, reveals, marquee, finale]);
+startMotion([velocity, opening, dolly, spotlight, dust, reveals, marquee, finale]);
 initDebug();

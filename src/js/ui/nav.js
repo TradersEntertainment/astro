@@ -1,4 +1,4 @@
-// Masthead durumları (hero üstünde şeffaf → krem), mobil menü, ilerleme çizgisi, yapışkan mobil CTA.
+// Masthead durumları (hero üstünde şeffaf → krem), mobil menü, ışık çubuğu (sahne başına lamba), yapışkan mobil CTA.
 // GSAP'a bağımlı değil; azaltılmış hareket modunda da çalışır.
 import { BP_DESKTOP, MASTHEAD_H } from '../config.js';
 
@@ -7,10 +7,11 @@ export function initNav() {
     if (!masthead) return;
     const nav = document.getElementById('nav');
     const toggle = masthead.querySelector('.nav-toggle');
-    const rail = masthead.querySelector('.rail');
+    const lightbar = masthead.querySelector('.lightbar');
     const hero = document.querySelector('.hero');
     const finale = document.querySelector('.finale');
     const ctaBar = document.getElementById('cta-bar');
+    const scenes = [...document.querySelectorAll('.scene')];
 
     if (nav && toggle) {
         const setOpen = (open) => {
@@ -26,8 +27,16 @@ export function initNav() {
         matchMedia(`(min-width: ${BP_DESKTOP}px)`).addEventListener('change', (e) => { if (e.matches) setOpen(false); });
     }
 
+    // Işık çubuğu: her .scene için bir lamba
+    let cells = [];
+    if (lightbar && scenes.length) {
+        lightbar.innerHTML = scenes.map(() => '<li></li>').join('');
+        cells = [...lightbar.children];
+    }
+
     let solid = null;
     let barVisible = null;
+    let active = -1;
     let ticking = false;
     const update = () => {
         ticking = false;
@@ -39,14 +48,18 @@ export function initNav() {
             masthead.classList.toggle('masthead--solid', solid);
             masthead.classList.toggle('masthead--over', !solid);
         }
-        if (rail) {
-            const max = document.documentElement.scrollHeight - vh;
-            const p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
-            rail.style.transform = `scaleX(${p.toFixed(4)})`;
+        if (cells.length) {
+            let last = -1;
+            scenes.forEach((s, i) => { if (s.getBoundingClientRect().top <= vh * 0.5) last = i; });
+            if (last !== active) {
+                active = last;
+                cells.forEach((c, i) => { c.classList.toggle('is-lit', i <= last); c.classList.toggle('is-active', i === last); });
+            }
         }
         if (ctaBar) {
-            const finaleTop = finale ? finale.getBoundingClientRect().top : Infinity;
-            const want = heroBottom < vh * 0.4 && finaleTop > vh * 0.55;
+            const finaleRect = finale ? finale.getBoundingClientRect() : null;
+            const inFinale = finaleRect ? finaleRect.top <= vh * 0.55 && finaleRect.bottom > vh * 0.5 : false;
+            const want = heroBottom < vh * 0.4 && !inFinale;
             if (want !== barVisible) { barVisible = want; ctaBar.classList.toggle('cta-bar--visible', want); }
         }
     };

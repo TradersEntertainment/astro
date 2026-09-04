@@ -1,0 +1,50 @@
+/* ============================================================
+   v3 efekt katmanı — tül, koltuklar, sahne kenarı, damga, yırtılma, flap, silme,
+   salon kısılması, amblem, imleç spotu, ışık çubuğu, sayfa geçişi.
+   Tümü aria-hidden dekor; yalnız transform/opacity/clip-path animasyonu.
+   Son durumlar: html.no-js / [data-motion="reduced"] → dekor gizli, içerik görünür.
+   ============================================================ */
+
+/* ---------- Salon (seyirci) katmanı: açılışın ilk karesi ---------- */
+.house { position: absolute; inset: 0; z-index: 6; pointer-events: none; overflow: hidden; background: #05070d; transform-origin: 50% 38%; }
+.house-seats { position: absolute; left: -2%; right: -2%; bottom: 0; width: 104%; height: 34%; }
+.house .media--house { position: absolute; inset: 0; border-radius: 0; background: transparent; }
+.house .media--house img { object-position: 50% 42%; }
+.house .media--house .media__fallback { display: none; }
+.house-wash { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(255, 196, 130, 0.38), rgba(255, 196, 130, 0.08) 55%, transparent 80%); }
+html.no-js .house, html[data-motion="reduced"] .house { display: none; }
+
+/* ---------- Tül perde (gaz): ana perdenin arkasında, sahnenin önünde ---------- */
+.scrim {
+    position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0.6;
+    background:
+        repeating-linear-gradient(0deg, rgba(12, 16, 30, 0.55) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(90deg, rgba(12, 16, 30, 0.4) 0 1px, transparent 1px 3px),
+        linear-gradient(180deg, rgba(10, 14, 26, 0.35), rgba(10, 14, 26, 0.15));
+}
+html.no-js .scrim, html[data-motion="reduced"] .scrim { display: none; }
+
+/* ---------- Sahne kenarı (apron) — rampa ışıkları üstünde durur ---------- */
+.stage-lip { position: absolute; left: 0; right: 0; bottom: 0; height: 22px; z-index: var(--z-frame); pointer-events: none; background: linear-gradient(180deg, var(--brass-2), var(--brass) 16%, #4a3320 20%, #2b1e15); box-shadow: 0 -8px 22px rgba(0, 0, 0, 0.5); }
+.hero .foots { bottom: 22px; }
+
+/* ---------- Yeniden oynat ---------- */
+.replay { position: absolute; right: clamp(1rem, 4vw, 3rem); bottom: 2.2rem; z-index: var(--z-content); width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(244, 201, 121, 0.55); color: var(--spot-2); background: rgba(17, 24, 41, 0.6); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.3s var(--ease-out); }
+.replay svg { width: 18px; height: 18px; }
+.replay:hover { transform: rotate(-30deg); }
+.hero.is-done .replay { opacity: 1; pointer-events: auto; }
+.hero.is-scrolled .replay, .hero.is-scrolled .hero__hint { opacity: 0 !important; pointer-events: none; }
+html.no-js .replay, html[data-motion="reduced"] .replay { display: none; }
+
+/* ---------- Işık çubuğu (masthead altı ilerleme): her sahne için bir lamba ---------- */
+.lightbar { position: absolute; left: 0; right: 0; bottom: -3px; height: 4px; margin: 0; padding: 0; list-style: none; display: flex; justify-content: space-evenly; align-items: center; pointer-events: none; }
+.lightbar li { width: clamp(18px, 4vw, 40px); height: 3px; border-radius: 2px; background: rgba(182, 137, 59, 0.28); transition: background 0.35s ease, box-shadow 0.35s ease; }
+.lightbar li.is-lit { background: var(--brass-2); }
+.lightbar li.is-active { background: var(--spot-2); box-shadow: 0 0 8px 2px rgba(244, 201, 121, 0.65); filter: brightness(calc(1 + var(--speed, 0) * 1.2)); }
+.masthead--solid .lightbar li { background: rgba(182, 137, 59, 0.22); }
+.masthead--solid .lightbar li.is-lit { background: var(--brass); }
+.masthead--solid .lightbar li.is-active { background: var(--spot); }
+
+/* ---------- Kaydırma hızı ile canlanan küçük şeyler (saf CSS, --speed) ---------- */
+.brand__mark::after { opacity: calc(0.8 + var(--speed, 0) * 0.2); transform: translateX(-50%) scale(calc(1 + var(--speed, 0) * 0.35)); transition: transform 0.25s ease; }
+.hero .foots { filter: brightness(calc(1 + var(--speed, 0) * 0.7)); }
