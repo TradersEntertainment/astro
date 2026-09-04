@@ -91,6 +91,10 @@
                 <a href="#takvim">Takvim</a>
                 <a href="#sss">SSS</a>
             </nav>
+            <button class="sound-toggle" type="button" aria-pressed="false" aria-label="Sesi aç" title="Sesi aç">
+                <svg class="st-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9l5 6M21 9l-5 6"/></svg>
+                <svg class="st-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13"/></svg>
+            </button>
             <button class="motion-toggle" type="button" aria-pressed="false" aria-label="Animasyonları azalt" title="Animasyonları azalt">
                 <svg class="mt-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12c3-6 5-6 8 0s5 6 8 0"/></svg>
                 <svg class="mt-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/></svg>
@@ -355,6 +359,7 @@
 
         <!-- ============ PERDE III — EĞİTMEN ============ -->
         <section class="section scene" id="egitmen" aria-labelledby="egitmen-title">
+            <figure class="media media--backstage" data-media="sahne-arkasi" aria-hidden="true"><img src="/media/sahne-arkasi-1600.webp" width="1600" height="1000" alt="" loading="lazy" decoding="async"><div class="media__fallback"></div></figure>
             <div class="container">
                 <div class="scene-label" data-reveal><span class="scene-label__num">Perde III</span><span class="scene-label__rule" aria-hidden="true"></span><span class="scene-label__title">Sahne Arkası · Eğitmen</span></div>
                 <div class="tutor">
@@ -362,6 +367,7 @@
                         <figure class="media media--portrait" data-media="ozlem-portre">
                             <img src="/media/ozlem-portre-1200.webp" width="1200" height="1500" alt="Yaratıcı drama eğitmeni Özlem" loading="lazy" decoding="async">
                             <div class="media__fallback"><span class="monogram">Ö</span></div>
+                            <div class="mini-curtain" aria-hidden="true"><div class="mini-curtain__leg mini-curtain__leg--l"></div><div class="mini-curtain__leg mini-curtain__leg--r"></div><div class="mini-curtain__rod"></div></div>
                         </figure>
                     </div>
                     <div class="tutor__text">
@@ -438,6 +444,20 @@
                 <div class="curtain__leg curtain__leg--l"><div class="curtain__pleats"></div><div class="curtain__shade"></div><div class="curtain__edge"></div></div>
                 <div class="curtain__leg curtain__leg--r"><div class="curtain__pleats"></div><div class="curtain__shade"></div><div class="curtain__edge"></div></div>
             </div>
+            <div class="finale__call" aria-hidden="true">
+                <svg class="finale__emblem" viewBox="0 0 320 320" focusable="false">
+                    <circle class="em" cx="160" cy="160" r="118"/>
+                    <circle class="em" cx="160" cy="160" r="104"/>
+                    <path class="em" d="M60 210c10 34 40 62 78 74M260 210c-10 34-40 62-78 74"/>
+                    <path class="em" d="M62 206c12-4 22 2 26 12-12 4-22-2-26-12zM72 232c12-2 22 6 24 16-12 2-22-6-24-16zM90 254c12 0 20 8 21 18-12 0-20-8-21-18zM112 272c12 2 18 10 18 20-12-2-18-10-18-20zM258 206c-12-4-22 2-26 12 12 4 22-2 26-12zM248 232c-12-2-22 6-24 16 12 2 22-6 24-16zM230 254c-12 0-20 8-21 18 12 0 20-8 21-18zM208 272c-12 2-18 10-18 20 12-2 18-10 18-20z"/>
+                    <path class="em" d="M124 112c-22 0-34 18-34 44 0 30 16 52 34 56 18-4 34-26 34-56 0-26-12-44-34-44z"/>
+                    <path class="em" d="M104 150c8-6 18-6 26 0M128 150c8-6 18-6 26 0M104 178c10 14 30 14 40 0"/>
+                    <path class="em" d="M196 112c-22 0-34 18-34 44 0 30 16 52 34 56 18-4 34-26 34-56 0-26-12-44-34-44z"/>
+                    <path class="em" d="M176 154c8 6 18 6 26 0M200 154c8 6 18 6 26 0M178 190c10-14 30-14 40 0"/>
+                    <path class="em" d="M160 44l4 10 10 1-8 7 3 10-9-6-9 6 3-10-8-7 10-1z"/>
+                </svg>
+                <div class="finale__brand"><span class="finale__brand-name">( AKADEMİ ADI )</span><span class="finale__brand-sub">Yaratıcı Drama Akademisi</span></div>
+            </div>
             <div class="container finale__inner">
                 <div class="marquee" data-reveal aria-hidden="true">
                     <div class="marquee__bulbs"><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span><span class="marquee__bulb"></span></div>
@@ -465,6 +485,7 @@
                     <a href="#takvim">Takvim</a>
                     <a href="#" rel="noopener">Instagram</a>
                     <a href="/kvkk.html">KVKK &amp; Veli Onamı</a>
+                    <a href="https://wa.me/905000000000?text=Merhaba,%20ücretsiz%20tanışma%20dersine%20katılmak%20istiyorum.%20Yaş%20grubu:%20" class="btn btn--spot btn--sm footer__wa" target="_blank" rel="noopener"><svg class="wa" aria-hidden="true"><use href="#sym-wa"/></svg>Tanışma Dersi</a>
                     <button class="motion-toggle" type="button" aria-pressed="false" aria-label="Animasyonları azalt" title="Animasyonları azalt">
                         <svg class="mt-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12c3-6 5-6 8 0s5 6 8 0"/></svg>
                         <svg class="mt-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/></svg>

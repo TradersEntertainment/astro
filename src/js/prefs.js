@@ -39,6 +39,11 @@ export function onMotionChange(fn) {
     return () => listeners.delete(fn);
 }
 
+// Sayfalar arası perde geçişi (View Transitions): azaltılmış harekette atlanır
+for (const ev of ['pageswap', 'pagereveal']) {
+    addEventListener(ev, (e) => { if (e.viewTransition && isReduced()) e.viewTransition.skipTransition(); });
+}
+
 export function initMotionToggles() {
     buttons = [...document.querySelectorAll('.motion-toggle')];
     buttons.forEach((b) => b.addEventListener('click', () => setReduced(!isReduced())));

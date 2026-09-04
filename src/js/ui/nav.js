@@ -58,7 +58,7 @@ export function initNav() {
         }
         if (ctaBar) {
             const finaleRect = finale ? finale.getBoundingClientRect() : null;
-            const inFinale = finaleRect ? finaleRect.top <= vh * 0.55 && finaleRect.bottom > vh * 0.5 : false;
+            const inFinale = finaleRect ? finaleRect.top <= vh * 0.55 && finaleRect.bottom > vh * 0.85 : false;
             const want = heroBottom < vh * 0.4 && !inFinale;
             if (want !== barVisible) { barVisible = want; ctaBar.classList.toggle('cta-bar--visible', want); }
         }
