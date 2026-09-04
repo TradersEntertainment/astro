@@ -11,6 +11,7 @@ import { spotlight } from './motion/spotlight.js';
 import { dust } from './motion/dust.js';
 import { reveals } from './motion/reveals.js';
 import { marquee } from './motion/marquee.js';
+import { wipes } from './motion/wipes.js';
 import { finale } from './motion/finale.js';
 import { initDebug } from './debug.js';
 
@@ -21,5 +22,5 @@ initMedia();
 initWhatsApp();
 document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = String(new Date().getFullYear()); });
 
-startMotion([velocity, opening, dolly, spotlight, dust, reveals, marquee, finale]);
+startMotion([velocity, opening, dolly, spotlight, dust, reveals, wipes, marquee, finale]);
 initDebug();

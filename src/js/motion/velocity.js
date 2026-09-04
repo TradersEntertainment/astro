@@ -23,7 +23,7 @@ export const velocity = {
             // hızlı yükselir, yavaş söner
             const k = target > state.speed ? 0.35 : Math.min(1, dt / 420);
             state.speed += (target - state.speed) * k;
-            target *= 0.86;
+            target *= 0.8;
             if (state.speed < 0.002) state.speed = 0;
             const css = Math.round(state.speed * 100) / 100;
             if (css !== lastCss) { lastCss = css; html.style.setProperty('--speed', String(css)); }

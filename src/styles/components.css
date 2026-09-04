@@ -60,7 +60,7 @@ html.no-js .scene-label__rule, html[data-motion="reduced"] .scene-label__rule { 
     background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r-2);
     position: relative; overflow: visible;
     box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 10px 30px rgba(36, 29, 24, 0.06);
-    transition: box-shadow 0.3s ease, transform 0.3s var(--ease-out);
+    transition: box-shadow 0.3s ease;
 }
 .ticket:hover { box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 18px 40px rgba(36, 29, 24, 0.1); }
 .ticket--featured { border-color: var(--brass-2); }
@@ -69,7 +69,7 @@ html.no-js .scene-label__rule, html[data-motion="reduced"] .scene-label__rule { 
     background: var(--spot); color: var(--ink); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
     padding: 0.3rem 0.75rem; border-radius: 999px;
 }
-.ticket__main { padding: clamp(1.4rem, 3vw, 2rem); min-width: 0; }
+.ticket__main { padding: clamp(1.4rem, 3vw, 2rem); min-width: 0; position: relative; }
 .ticket__age { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--curtain); background: var(--stage-2); border-radius: 999px; padding: 0.3rem 0.8rem; margin-bottom: 0.9rem; }
 .ticket__title { font-size: var(--step-2); margin-bottom: 0.5rem; }
 .ticket__desc { color: var(--ink-2); font-size: var(--step--1); margin-bottom: 1rem; }
