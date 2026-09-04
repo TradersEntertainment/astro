@@ -1,0 +1,54 @@
+/* ============================================================
+   Tokens — "Tiyatro Gecesi" tasarım dili
+   Lacivert kurumsal zemin · bordo yalnız perde ve birincil buton
+   amber = ışık · pirinç = yapısal vurgu
+   ============================================================ */
+:root {
+    --stage: #f8f3ea;
+    --stage-2: #efe6d6;
+    --paper: #fffcf6;
+    --ink: #241d18;
+    --ink-2: #574b42;
+    --ink-3: #8b7d72;
+    --rule: rgba(36, 29, 24, 0.14);
+    --rule-soft: rgba(36, 29, 24, 0.07);
+    --curtain: #7f1f2e;
+    --curtain-2: #5a1520;
+    --curtain-3: #3d0e17;
+    --brass: #b6893b;
+    --brass-2: #d8b36a;
+    --spot: #e9a83f;
+    --spot-2: #f4c979;
+    --spot-glow: rgba(255, 214, 140, 0.55);
+    --night: #1b2540;
+    --night-2: #111829;
+    --night-text: rgba(248, 243, 234, 0.9);
+    --night-text-2: rgba(248, 243, 234, 0.68);
+    --night-rule: rgba(248, 243, 234, 0.14);
+    --focus: #ffd27a;
+
+    --font-display: "Fraunces", "Fraunces Fallback", Georgia, serif;
+    --font-body: "Figtree Variable", "Figtree Fallback", "Helvetica Neue", Arial, sans-serif;
+
+    --step--2: clamp(0.72rem, 0.70rem + 0.10vw, 0.78rem);
+    --step--1: clamp(0.86rem, 0.84rem + 0.15vw, 0.94rem);
+    --step-0: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
+    --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);
+    --step-2: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+    --step-3: clamp(2rem, 1.6rem + 1.8vw, 3rem);
+    --step-4: clamp(2.6rem, 1.8rem + 3.6vw, 4.8rem);
+
+    --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+    --space-5: 1.5rem; --space-6: 2rem; --space-7: 3rem; --space-8: 4rem;
+    --section-y: clamp(4.5rem, 9vw, 8rem);
+    --pad-x: clamp(1.25rem, 5vw, 3rem);
+    --masthead-h: 68px;
+
+    --r-1: 8px; --r-2: 14px; --r-3: 22px;
+
+    --z-stage: 0; --z-light: 1; --z-curtain: 5; --z-frame: 7; --z-content: 8; --z-overlight: 9;
+    --z-masthead: 900; --z-ctabar: 920; --z-dialog: 1000;
+
+    --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}

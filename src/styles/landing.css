@@ -1,0 +1,10 @@
+/* Reklam landing'i — menüsüz, tek CTA */
+.landing .hero { min-height: 92svh; }
+.landing .hero__inner { padding-top: clamp(3rem, 8vh, 5rem); }
+.trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.trust__item { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--r-2); padding: 1.3rem 1.4rem; display: flex; gap: 0.9rem; align-items: flex-start; }
+.trust__item h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+.trust__item p { font-size: var(--step--1); color: var(--ink-2); }
+.landing-media { max-width: 520px; margin: 0 auto 2.5rem; }
+.landing-media .media { aspect-ratio: 4 / 5; }
+@media (max-width: 899px) { .trust { grid-template-columns: 1fr; } }

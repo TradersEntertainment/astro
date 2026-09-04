@@ -1,0 +1,68 @@
+/* ============================================================
+   Sahneler — bölüm yerleşimleri
+   ============================================================ */
+
+/* Program notu şeridi */
+.notu { padding-block: 1.4rem; border-block: 1px solid var(--rule); }
+.notu__inner { display: flex; align-items: center; justify-content: center; gap: 1.2rem 2.2rem; flex-wrap: wrap; text-align: center; }
+.notu__item { display: inline-flex; align-items: center; gap: 0.7rem; font-size: var(--step--1); color: var(--ink-2); }
+.notu__item strong { color: var(--ink); font-weight: 700; }
+.notu__sep { width: 1px; height: 22px; background: var(--rule); }
+
+/* Perde I — biletler */
+.tickets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.2rem, 3vw, 2rem); align-items: start; }
+.tickets .media { aspect-ratio: 4 / 3; }
+
+/* Perde II — yöntem */
+.method { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.method__figure { position: sticky; top: calc(var(--masthead-h) + 24px); }
+.method__figure svg { width: min(100%, 420px); height: auto; margin-inline: auto; }
+.method__figure .mask-face { fill: url(#faceGrad); stroke: var(--brass); stroke-width: 1.5; }
+.method__figure .mask-feature { fill: var(--night-2); stroke: var(--brass); stroke-width: 1.2; }
+.method__figure .mask-ribbon { fill: none; stroke: var(--curtain); stroke-width: 6; stroke-linecap: round; opacity: 0.7; }
+.method__figure .mask-cone { fill: url(#coneGrad); opacity: 0.6; }
+.method__caption { text-align: center; margin-top: 0.8rem; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--night-text-2); }
+.method__text p { color: var(--night-text); max-width: 62ch; }
+.method__text p + p { margin-top: 1rem; }
+.method__src { margin-top: 1.4rem; font-size: 0.82rem; color: var(--night-text-2); border-left: 3px solid var(--spot); padding-left: 0.9rem; }
+.method__points { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; margin-top: 2rem; }
+.method__point { background: rgba(248, 243, 234, 0.06); border: 1px solid var(--night-rule); border-radius: var(--r-2); padding: 1.1rem 1.25rem; }
+.method__point h4 { font-size: 1.05rem; color: var(--spot-2); margin-bottom: 0.3rem; }
+.method__point p { font-size: 0.9rem; color: var(--night-text-2); }
+
+/* Ara — formatlar */
+.formats { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 4vw, 3rem); }
+.format__ico { width: 48px; height: 48px; border-radius: 12px; background: var(--paper); border: 1px solid var(--rule); display: grid; place-items: center; margin-bottom: 1rem; }
+.format__ico svg { width: 22px; height: 22px; fill: none; stroke: var(--curtain); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.format h3 { font-size: var(--step-1); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.format p { font-size: var(--step--1); color: var(--ink-2); }
+
+/* Perde III — eğitmen */
+.tutor { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.tutor__portrait { position: sticky; top: calc(var(--masthead-h) + 24px); }
+.tutor__portrait .media { aspect-ratio: 4 / 5; }
+.tutor__text h2 { margin-bottom: 1rem; }
+.tutor__text p { color: var(--ink-2); max-width: 58ch; }
+.tutor__text p + p { margin-top: 0.9rem; }
+.tutor__text .cert { margin-top: 1.8rem; }
+
+/* Perde IV — gişe */
+.takvim__desc { color: var(--ink-2); max-width: 58ch; margin-bottom: 1.6rem; }
+
+/* Final */
+.finale__inner { position: relative; z-index: 3; text-align: center; padding-block: clamp(5rem, 12vw, 9rem); }
+.finale__inner h2 { color: var(--stage); max-width: 22ch; margin: 1.4rem auto 1rem; }
+.finale__inner p { color: var(--night-text-2); max-width: 50ch; margin: 0 auto 2rem; }
+.finale__legal { margin-top: 1.4rem; font-size: 0.78rem; color: var(--night-text-2); }
+.finale__legal a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 959px) {
+    .tickets { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
+    .method { grid-template-columns: 1fr; }
+    .method__figure { position: static; }
+    .method__figure svg { width: min(100%, 260px); }
+    .method__points { grid-template-columns: 1fr; }
+    .formats { grid-template-columns: 1fr; }
+    .tutor { grid-template-columns: 1fr; }
+    .tutor__portrait { position: static; max-width: 360px; }
+}

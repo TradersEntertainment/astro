@@ -1,0 +1,137 @@
+/* ============================================================
+   Dekor — sahne, perde, proscenium, rampa ışıkları, spot, toz, final perdesi
+   Tümü aria-hidden; yalnızca transform/opacity animasyonu.
+   ============================================================ */
+
+/* ---------- Hero sahnesi ---------- */
+.hero {
+    position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden;
+    background: var(--night-2); color: var(--night-text); padding-top: var(--masthead-h);
+    isolation: isolate;
+}
+
+.stage-bg { position: absolute; inset: 0; z-index: var(--z-stage); pointer-events: none; }
+.stage-bg__backdrop {
+    position: absolute; inset: 0 0 34% 0;
+    background:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.18) 0 14px, transparent 14px 72px, rgba(255,255,255,0.025) 72px 86px, transparent 86px 140px),
+        linear-gradient(180deg, #0d1322 0%, var(--night) 55%, #232f4f 100%);
+}
+.stage-bg__floor {
+    position: absolute; left: -10%; right: -10%; bottom: 0; height: 36%;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,0.55), transparent 35%, rgba(0,0,0,0.35) 100%),
+        repeating-linear-gradient(90deg, #3a2a1e 0 118px, #46332a 118px 122px, #3f2e22 122px 240px, #2f2118 240px 244px),
+        #3a2a1e;
+    transform-origin: 50% 100%;
+}
+.stage-bg__floor::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 42% 60% at 50% 38%, rgba(255, 214, 140, 0.32), transparent 70%);
+}
+.stage-bg .media--hero { position: absolute; inset: 0; border-radius: 0; background: transparent; opacity: 0.88; }
+.stage-bg .media--hero .media__fallback { background: transparent; }
+.stage-bg .media--hero .media__caption { display: none; }
+
+/* ---------- Proscenium ---------- */
+.frame { position: absolute; z-index: var(--z-frame); pointer-events: none; }
+.frame__top { top: 0; left: 0; right: 0; height: 64px; background: linear-gradient(180deg, #2a1c12 0%, #4a3320 45%, #2a1c12 100%); box-shadow: 0 2px 0 var(--brass), 0 14px 30px rgba(0,0,0,0.45); }
+.frame__top::before, .frame__top::after { content: ""; position: absolute; bottom: -10px; width: 12px; height: 12px; background: var(--brass); }
+.frame__top::before { left: 42px; } .frame__top::after { right: 42px; }
+.frame__side { top: 0; bottom: 0; width: 48px; background: linear-gradient(90deg, #2a1c12, #4a3320 50%, #2a1c12); }
+.frame__side--l { left: 0; box-shadow: 2px 0 0 var(--brass); }
+.frame__side--r { right: 0; box-shadow: -2px 0 0 var(--brass); }
+
+/* ---------- Perde ---------- */
+.curtain { position: absolute; inset: 0; z-index: var(--z-curtain); pointer-events: none; overflow: hidden; }
+.curtain__leg { position: absolute; top: 0; bottom: 0; width: 56%; }
+.curtain__leg--l { left: 0; }
+.curtain__leg--r { right: 0; }
+.curtain__pleats {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(60% 30% at 50% 0%, rgba(255,255,255,0.08), transparent),
+        linear-gradient(180deg, rgba(0,0,0,0.28), transparent 22%, transparent 78%, rgba(0,0,0,0.38)),
+        repeating-linear-gradient(90deg, var(--curtain-3) 0 6px, var(--curtain-2) 6px 30px, var(--curtain) 30px 52px, var(--curtain-2) 52px 76px);
+}
+.curtain__leg--l .curtain__pleats { transform-origin: right center; }
+.curtain__leg--r .curtain__pleats { transform-origin: left center; }
+.curtain__shade { position: absolute; inset: 0; opacity: 0; }
+.curtain__leg--l .curtain__shade { background: linear-gradient(90deg, rgba(0,0,0,0.5), transparent 60%); }
+.curtain__leg--r .curtain__shade { background: linear-gradient(270deg, rgba(0,0,0,0.5), transparent 60%); }
+.curtain__edge { position: absolute; top: 0; bottom: 0; width: 9px; background: linear-gradient(90deg, var(--brass-2), var(--brass) 50%, var(--curtain-3)); }
+.curtain__leg--l .curtain__edge { right: 0; }
+.curtain__leg--r .curtain__edge { left: 0; transform: scaleX(-1); }
+.curtain__valance { position: absolute; top: 0; left: 0; width: 100%; height: clamp(70px, 9vw, 132px); z-index: 2; }
+.curtain__valance .valance-body { fill: var(--curtain-2); }
+.curtain__valance .valance-band { fill: var(--curtain-3); }
+.curtain__valance .valance-braid { fill: none; stroke: var(--brass); stroke-width: 2.5; }
+.curtain__valance .tassel { transform-box: fill-box; transform-origin: 50% 0; }
+.curtain__valance .tassel-head { fill: var(--brass-2); }
+.curtain__valance .tassel-thread { stroke: var(--brass); stroke-width: 2; stroke-linecap: round; }
+
+/* Son durumlar: JS yok / azaltılmış hareket → perde açık, içerik hiç kapanmaz */
+html.no-js .hero .curtain__leg--l, html[data-motion="reduced"] .hero .curtain__leg--l { transform: translateX(-88%); }
+html.no-js .hero .curtain__leg--r, html[data-motion="reduced"] .hero .curtain__leg--r { transform: translateX(88%); }
+html.no-js .hero .curtain__pleats, html[data-motion="reduced"] .hero .curtain__pleats { transform: scaleX(0.42); }
+html.no-js .hero .curtain__shade, html[data-motion="reduced"] .hero .curtain__shade { opacity: 0.55; }
+@media (max-width: 899px) {
+    html.no-js .hero .curtain__leg--l, html[data-motion="reduced"] .hero .curtain__leg--l { transform: translateX(-94%); }
+    html.no-js .hero .curtain__leg--r, html[data-motion="reduced"] .hero .curtain__leg--r { transform: translateX(94%); }
+}
+
+/* ---------- Rampa ışıkları ---------- */
+.foots { position: absolute; left: 0; right: 0; bottom: 0; height: 12px; display: flex; justify-content: space-evenly; align-items: flex-end; z-index: var(--z-frame); pointer-events: none; }
+.lamp { position: relative; width: 18px; height: 10px; }
+.lamp__hood { position: absolute; inset: 0; border-radius: 9px 9px 0 0; background: linear-gradient(180deg, var(--brass-2), var(--brass)); box-shadow: 0 -1px 0 rgba(255,255,255,0.25) inset; }
+.lamp__glow { position: absolute; left: 50%; bottom: 0; width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, var(--spot-glow), transparent 65%); transform: translate(-50%, 50%) scale(0.5); opacity: 0; }
+@media (min-width: 900px) and (hover: hover) { .lamp__glow { mix-blend-mode: screen; } }
+@media (max-width: 899px) { .lamp:nth-child(n+6) { display: none; } }
+.foot-wash { position: absolute; left: 0; right: 0; bottom: 0; height: 40vh; background: linear-gradient(0deg, rgba(255, 205, 120, 0.35), transparent 40%); opacity: 0; z-index: var(--z-light); pointer-events: none; }
+html.no-js .lamp__glow, html[data-motion="reduced"] .lamp__glow { opacity: 1; transform: translate(-50%, 50%) scale(1); }
+html.no-js .foot-wash, html[data-motion="reduced"] .foot-wash { opacity: 0.7; }
+
+/* ---------- Spot ---------- */
+.spot-cone {
+    position: absolute; top: -8%; left: 50%; width: 62vw; height: 118%; translate: -50% 0;
+    transform-origin: 50% 0; z-index: var(--z-light); pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 222, 160, 0.22), rgba(255, 222, 160, 0) 85%);
+    clip-path: polygon(48.5% 0, 51.5% 0, 100% 100%, 0 100%);
+}
+.spot-pool {
+    position: absolute; left: 50%; top: 46%; width: 60vmin; height: 60vmin; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 222, 160, 0.30) 0%, rgba(255, 222, 160, 0.12) 40%, transparent 68%);
+    z-index: var(--z-overlight); pointer-events: none; will-change: transform; transform: translate(-50%, -50%);
+}
+@media (min-width: 900px) and (hover: hover) { .spot-pool { mix-blend-mode: soft-light; } }
+
+/* ---------- Toz ---------- */
+.dust { position: absolute; inset: 0; z-index: var(--z-light); pointer-events: none; }
+html[data-motion="reduced"] .dust, html.no-js .dust { display: none; }
+
+/* ---------- Hero içeriği ---------- */
+.hero__inner { position: relative; z-index: var(--z-content); text-align: center; max-width: 840px; margin-inline: auto; padding: clamp(4rem, 10vh, 7rem) var(--pad-x) clamp(6rem, 14vh, 9rem); }
+.hero__tag { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: var(--step--2); letter-spacing: 0.32em; text-transform: uppercase; color: var(--spot-2); border: 1px solid rgba(244, 201, 121, 0.55); border-radius: 999px; padding: 0.45rem 1.1rem; margin-bottom: 1.6rem; }
+.hero__tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--spot-2); box-shadow: 0 0 10px 2px rgba(244, 201, 121, 0.6); }
+.hero h1 { color: var(--stage); text-shadow: 0 2px 30px rgba(0,0,0,0.35); }
+.hero h1 em { color: var(--spot-2); }
+.hero__lede { margin: 1.4rem auto 2.2rem; max-width: 56ch; color: var(--night-text-2); font-size: var(--step-1); line-height: 1.55; }
+.hero__ctas { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+.hero__hint { position: absolute; left: 50%; bottom: 2.2rem; translate: -50% 0; z-index: var(--z-content); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-size: 0.66rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--night-text-2); pointer-events: none; }
+.hero__hint::after { content: ""; width: 1px; height: 34px; background: linear-gradient(180deg, var(--spot-2), transparent); }
+
+/* ---------- Final perdesi ---------- */
+.finale { position: relative; overflow: hidden; isolation: isolate; }
+.finale .curtain { z-index: 2; }
+.finale .curtain__leg--l { transform: translateX(-100%); }
+.finale .curtain__leg--r { transform: translateX(100%); }
+html.no-js .finale .curtain__leg--l, html[data-motion="reduced"] .finale .curtain__leg--l { transform: translateX(-64%); }
+html.no-js .finale .curtain__leg--r, html[data-motion="reduced"] .finale .curtain__leg--r { transform: translateX(64%); }
+.finale > .container { position: relative; z-index: 3; }
+
+/* Tam hareket modunda GSAP başlangıç durumlarını yazana kadar hero içeriğini gizle; JS gelmezse <head> 5 sn içinde reduced'a düşer */
+html[data-motion="full"]:not(.motion-ready) .hero__inner > *,
+html[data-motion="full"]:not(.motion-ready) .hero__hint,
+html[data-motion="full"]:not(.motion-ready) .spot-cone,
+html[data-motion="full"]:not(.motion-ready) .spot-pool { opacity: 0; }
+.hero-line { padding-bottom: 0.08em; margin-bottom: -0.08em; }

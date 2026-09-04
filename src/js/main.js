@@ -1,0 +1,33 @@
+import { initMotionToggles } from './prefs.js';
+import { initNav } from './ui/nav.js';
+import { initTickets } from './ui/tickets.js';
+import { initFaq } from './ui/faq.js';
+import { initMedia } from './ui/media.js';
+import { initDialogs } from './ui/dialog.js';
+import { initWhatsApp } from './ui/whatsapp.js';
+import { startMotion } from './motion/index.js';
+import { opening } from './motion/opening.js';
+import { heroScroll } from './motion/parallax.js';
+import { spotlight } from './motion/spotlight.js';
+import { dust } from './motion/dust.js';
+import { reveals } from './motion/reveals.js';
+import { sceneLabels } from './motion/sceneLabels.js';
+import { ticketsMotion } from './motion/tickets.js';
+import { masks } from './motion/masks.js';
+import { formats } from './motion/formats.js';
+import { certificate } from './motion/certificate.js';
+import { marquee } from './motion/marquee.js';
+import { finale } from './motion/finale.js';
+import { initDebug } from './debug.js';
+
+initMotionToggles();
+initNav();
+initTickets();
+initFaq();
+initMedia();
+initDialogs();
+initWhatsApp();
+document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = String(new Date().getFullYear()); });
+
+startMotion([opening, heroScroll, spotlight, dust, reveals, sceneLabels, ticketsMotion, masks, formats, certificate, marquee, finale]);
+initDebug();
